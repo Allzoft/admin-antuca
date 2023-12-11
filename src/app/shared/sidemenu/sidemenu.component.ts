@@ -22,12 +22,6 @@ export class SidemenuComponent {
   public layoutService = inject(LayoutService);
   public messageService = inject(MessageService);
 
-  public menuItems = routes
-    .map((route) => route.children)
-    .flat()
-    .filter((route) => route && route.path)
-    .filter((route) => !route?.path?.includes(':'));
-
   public toogleMenu() {
     this.layoutService.onMenuToggle();
   }
@@ -55,7 +49,37 @@ export class SidemenuComponent {
         {
           label: 'Órdenes',
           icon: 'pi pi-megaphone',
-          url: 'dashboard/orders'
+          routerLink: ['/dashboard/orders'],
+        },
+        {
+          label: 'Menú',
+          icon: 'pi pi-book',
+          routerLink: ['/dashboard/menu-items'],
+        },
+        {
+          label: 'Mis clientes',
+          icon: 'pi pi-users',
+          routerLink: ['/dashboard/clients'],
+        },
+      ],
+    },
+    {
+      label: 'Administración',
+      items: [
+        {
+          label: 'Usuarios',
+          icon: 'pi pi-users',
+          routerLink: ['/dashboard/users'],
+        },
+        {
+          label: 'Estados',
+          icon: 'pi pi-tags',
+          routerLink: ['/dashboard/states'],
+        },
+        {
+          label: 'Modos de pago',
+          icon: 'pi pi-money-bill',
+          routerLink: ['/dashboard/payments-type'],
         },
       ],
     },

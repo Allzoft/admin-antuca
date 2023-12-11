@@ -25,6 +25,38 @@ export const routes: Routes = [
             './dashboard/pages/clients/clients.component'
           ),
       },
+      {
+        path: 'menu-items',
+        title: 'Menu Items',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/menu-items/menu-items.component'
+          ),
+      },
+      {
+        path: 'payments-type',
+        title: 'Menu Items',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/payments-type/payments-type.component'
+          ),
+      },
+      {
+        path: 'users',
+        title: 'Users list',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/users/users.component'
+          ),
+      },
+      {
+        path: 'states',
+        title: 'State',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/states/states.component'
+          ),
+      },
     ]
   },
   {
