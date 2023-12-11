@@ -74,6 +74,7 @@ export class CustomersService {
         customer: JSON.parse(localStorage.getItem('customer')!),
         token: localStorage.getItem('token')!,
       });
+      this.router.navigateByUrl('/dashboard')
     } else {
       console.log(1);
 

@@ -61,14 +61,14 @@ export default class AuthComponent {
         });
         setTimeout(() => {
           this.route.navigateByUrl('/dashboard');
-        }, 1500);
+        }, 3000);
       },
       (error) => {
         this.accessDenied = true;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'La contraseña o mail son incorrectos',
+          detail: 'La contraseña o correo son incorrectos',
         });
       }
     );

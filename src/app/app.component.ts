@@ -13,9 +13,7 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class AppComponent implements OnInit {
   title = 'admin';
-  constructor(private primengConfig: PrimeNGConfig){
-    this.primengConfig.ripple = true;
-  }
+  constructor(private primengConfig: PrimeNGConfig) {}
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
