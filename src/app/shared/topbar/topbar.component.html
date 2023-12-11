@@ -1,6 +1,4 @@
-<div
-  class="flex justify-content-between w-full bg-bluegray-800 px-4 shadow-4"
->
+<div class="flex justify-content-between w-full bg-bluegray-800 px-4 shadow-4">
   <div class="flex align-items-center">
     <p-button
       #menubutton
@@ -16,6 +14,7 @@
   </div>
 
   <ul class="list-none flex gap-2 justify-content-center align-items-center">
+    @if (!layoutService.isMobile()) {
     <li class="topbar-search">
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
@@ -23,24 +22,43 @@
           pInputText
           type="text"
           placeholder="Buscar"
-          class="w-12rem sm:w-full focus:border-orange-500"
+          class="w-12rem sm:w-full focus:border-orange-500 border-round-3xl"
           style="height: 40px;"
         />
       </span>
     </li>
-    <li class="topbar-profile">
-      <button
-        type="button"
-        class="p-link avatar"
-        (click)="onProfileButtonClick()"
+    }
+    <li class="topbar-profile flex justify-content-center align-items-center">
+      <p-button
+        severity="warning"
+        styleClass="text-white border-white text-sm"
+        [rounded]="true"
+        [outlined]="true"
+        [style]="{'height': '40px'}"
+        (onClick)="onProfileButtonClick()"
       >
         <img
           [src]="customer!.photo | image"
-          class="border-circle"
-          style="width: 40px; height: 40px; margin-top: 4px;"
+          class="border-circle -ml-2"
+          style="height: 26px; width: 26px;"
           alt="Profile"
         />
-      </button>
+        <span class="ml-2 -mr-2 font-bold">{{ customer.name }}</span>
+      </p-button>
+      <p-button
+        severity="warning"
+        [rounded]="true"
+        class="ml-2"
+        icon="pi pi-sign-out text-white"
+        [text]="true"
+        [style]="{'height': '35px', 'width': '35px'}"
+        (onClick)="closeSession()"
+      >
+      </p-button>
     </li>
   </ul>
 </div>
+<p-confirmDialog
+  styleClass="w-auto md:w-5"
+  position="bottom"
+></p-confirmDialog>

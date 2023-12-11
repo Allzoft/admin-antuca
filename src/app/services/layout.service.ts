@@ -52,6 +52,7 @@ export class LayoutService {
   overlayOpen$ = this.overlayOpen.asObservable();
 
   constructor(){
+    console.log(this.state.profileSidebarVisible);
 
   }
 

@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { LayoutService } from '../../services/layout.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { CustomersService } from '@services/customers.service';
 import { Customer } from '@interfaces/customer';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-topbar',
@@ -18,12 +19,15 @@ import { PipesModule } from '../../pipes/pipes.module';
     BreadcrumbModule,
     InputTextModule,
     PipesModule,
+    ConfirmDialogModule,
   ],
+  providers: [ConfirmationService],
   templateUrl: './topbar.component.html',
 })
 export class TopbarComponent {
   public layoutService = inject(LayoutService);
   private customerService = inject(CustomersService);
+  private confirmationService = inject(ConfirmationService);
 
   items: MenuItem[] = [{ label: 'Cliente' }, { label: 'Pedidos' }];
 
@@ -34,7 +38,25 @@ export class TopbarComponent {
   onMenuButtonClick() {
     this.layoutService.onMenuToggle();
   }
+
   onProfileButtonClick() {
     this.layoutService.showProfileSidebar();
+    console.log(this.layoutService.state.profileSidebarVisible);
+  }
+
+  closeSession() {
+    this.confirmationService.confirm({
+      message: '¿Está seguro que desea cerrar sesión?',
+      acceptLabel: 'Si',
+      acceptButtonStyleClass:
+        'p-button-rounded bg-primary-900 border-primary-900 hover:bg-primary hover:border-primary text-white p-button-outlined w-7rem',
+      rejectLabel: 'No',
+      rejectButtonStyleClass: 'p-button-rounded p-button-warning w-7rem',
+      header: 'Confirmación',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.customerService.closeSession();
+      },
+    });;
   }
 }

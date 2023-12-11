@@ -1,6 +1,6 @@
 <div class="flex transition-ease-in-out transition-duration-500">
   <app-sidemenu
-    class="z-3 transition-ease-in-out transition-duration-500"
+    class="z-1 transition-ease-in-out transition-duration-500"
     [ngClass]="{
       '-translate-x-100 fixed w-1': layoutService.state.staticMenuDesktopInactive,
       'w-3 flex': !layoutService.state.staticMenuDesktopInactive && !layoutService.isMobile(),
@@ -10,14 +10,11 @@
   />
 
   <div
-    class="flex flex-column z-2 transition-ease-in-out transition-delay-1000 transition-duration-500 transition-all w-12"
+    class="flex flex-column transition-ease-in-out transition-delay-1000 transition-duration-500 transition-all w-12"
   >
     <app-topbar />
     <!-- <app-breadcrumb class="content-breadcrumb"></app-breadcrumb> -->
-    <div class="layout-content bg-white">
-      <router-outlet />
-    </div>
+
+    <router-outlet />
   </div>
-  <!-- <app-profilemenu></app-profilemenu> -->
-  <!-- <app-config></app-config> -->
 </div>

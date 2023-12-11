@@ -1,6 +1,7 @@
 export interface Customer {
   id_customer: number;
   name: string;
+  lastname: string;
   id: string;
   email: string;
   token: string;
