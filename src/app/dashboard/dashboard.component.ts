@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {  Component, inject } from '@angular/core';
+import { CustomersService } from '@services/customers.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,4 +10,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   ],
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent { }
+export default class DashboardComponent {
+  private customerService = inject(CustomersService)
+
+}

@@ -6,8 +6,12 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/auth.component'),
   },
   {
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard/dashboard.component'),
+  },
+  {
     path: '',
-    redirectTo: '/auth',
+    redirectTo: '/dashboard',
     pathMatch: 'full',
   },
 ];

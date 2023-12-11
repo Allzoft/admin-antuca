@@ -1,90 +1,92 @@
-<section class="bg-gray-50 dark:bg-gray-900">
+<section class="bg-gray-900 h-screen">
   <div
-    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+    class="flex flex-column align-items-center justify-content-center px-4 py-5 mx-auto md:h-screen lg:py-0"
   >
     <a
       href="#"
-      class="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
+      class="flex align-items-center text-2xl font-semibold text-white"
     >
       <img
-        class="w-48 h-48 mr-2"
+        class="w-12rem h-12rem"
         src="../../assets/logo-antuca.svg"
         alt="logo"
       />
     </a>
     <div
-      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+      class="md:w-4 w-12 border-round-lg shadow border md:mt-0 xl:p-0 bg-gray-800 border-gray-700"
     >
-      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1
-          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
-        >
+      <div class="px-4 pt-2 pb-5 md:px-5 flex flex-column gap-3">
+        <h1 class="text-lg font-bold md:text-2xl text-white">
           Ingresa con tus crendenciales
         </h1>
-        <form class="space-y-4 md:space-y-6" action="#">
-          <div>
-            <label
-              for="email"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Correo</label
-            >
+        <div>
+          <label for="email" class="block mb-1 text-sm font-medium text-white"
+            >Correo</label
+          >
+          <div class="relative">
             <input
+              pInputText
               type="email"
               name="email"
+              [(ngModel)]="email"
               id="email"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
               placeholder="name@antucarestaurante.com"
-              required=""
+              [required]="true"
             />
           </div>
-          <div>
-            <label
-              for="password"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Contraseña</label
-            >
+        </div>
+        <div>
+          <label
+            for="password"
+            class="block mb-2 text-sm font-medium text-white"
+            >Contraseña</label
+          >
+          <div class="relative">
             <input
-              type="password"
+              pInputText
+              [type]="showPassword ? 'text':'password'"
               name="password"
+              [(ngModel)]="password"
               id="password"
               placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
               required=""
             />
+            <i
+              [ngClass]="showPassword ? 'pi pi-eye absolute top-0 right-0 mt-2 mr-2 pt-1 cursor-pointer':'pi pi-eye-slash absolute top-0 right-0 mt-2 mr-2 pt-1 cursor-pointer' "
+              (click)="showPassword = !showPassword"
+            ></i>
           </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <!-- TODO -->
-                <input
-                  id="remember"
-                  aria-describedby="remember"
-                  type="checkbox"
-                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-orange-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-orange-600 dark:ring-offset-gray-800"
-                  required=""
-                />
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="remember" class="text-gray-500 dark:text-gray-300"
-                  >Remember me</label
-                >
-              </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <p-checkbox
+                name="yourName"
+                value="YourValue"
+                [(ngModel)]="remember"
+                [ngModelOptions]="{standalone: true}"
+                type="checkbox"
+                styleClass=" cursor-pointer border border-gray-300 border-rounded-lg bg-gray-50 focus:ring-3 checked:bg-orange-500 checked:border-transparent focus:ring-primary-300 bg-gray-700 border-gray-600 focus:ring-primary-600 ring-offset-gray-800"
+              />
             </div>
-            <a
-              href="#"
-              class="text-sm font-medium text-orange-600 hover:underline dark:text-orange-500"
-              >Forgot password?</a
-            >
+            <div class="ml-3 text-sm">
+              <label for="remember" class="text-gray-500 text-gray-300"
+                >Recuerdame</label
+              >
+            </div>
           </div>
-          <button
-            type="submit"
-            class="w-full text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-          >
-            Ingresar
-          </button>
-
-        </form>
+        </div>
+        <p-button
+          severity="warning"
+          label="Ingresar"
+          styleClass="w-full"
+          (click)="authCustomer()"
+        ></p-button>
       </div>
     </div>
   </div>
 </section>
+
+<p-toast position="top-center"></p-toast>
