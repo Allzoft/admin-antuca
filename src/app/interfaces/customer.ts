@@ -8,9 +8,9 @@ export interface Customer {
   code_country: string;
   phone: string;
   photo: string;
-  status: number;
-  created_at: Date;
-  updated_at: Date;
+  status?: number;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export interface CustomerResponse {

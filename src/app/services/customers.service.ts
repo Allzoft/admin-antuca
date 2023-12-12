@@ -101,7 +101,25 @@ export class CustomersService {
     this.router.navigateByUrl('/auth');
   }
 
-  getUsers(): Observable<Customer[]> {
+  public getUsers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.env.url_api}/customers`);
   }
+
+  public deleteUser(id: number) {
+    return this.http.delete(`${this.env.url_api}/customers/${id}`);
+  }
+
+  public updateUser(id: number, user: Partial<Customer>) {
+    if (this.customer()!.id_customer === id) {
+      const updateCustomer = { ...this.customer()!, ...user };
+      localStorage.setItem('customer', JSON.stringify(updateCustomer));
+      this.#state.set({
+        loading: false,
+        customer: updateCustomer,
+        token: localStorage.getItem('token')!,
+      });
+    }
+    return this.http.patch(`${this.env.url_api}/customers/${id}`, user);
+  }
+
 }
