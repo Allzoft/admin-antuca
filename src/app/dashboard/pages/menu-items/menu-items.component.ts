@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ItemsService } from '@services/items.service';
 import { TitleComponent } from '@shared/title/title.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -17,4 +18,7 @@ import { DataViewModule } from 'primeng/dataview';
   ],
   templateUrl: './menu-items.component.html',
 })
-export default class MenuItemsComponent {}
+export default class MenuItemsComponent {
+  public itemsService = inject(ItemsService)
+  public items = this.itemsService.items
+}
