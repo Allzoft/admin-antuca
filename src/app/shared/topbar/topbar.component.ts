@@ -49,7 +49,7 @@ export class TopbarComponent {
       message: '¿Está seguro que desea cerrar sesión?',
       acceptLabel: 'Si',
       acceptButtonStyleClass:
-        'p-button-rounded bg-primary-900 border-primary-900 hover:bg-primary hover:border-primary text-white p-button-outlined w-7rem',
+        'p-button-rounded p-button-success w-7rem',
       rejectLabel: 'No',
       rejectButtonStyleClass: 'p-button-rounded p-button-warning w-7rem',
       header: 'Confirmación',

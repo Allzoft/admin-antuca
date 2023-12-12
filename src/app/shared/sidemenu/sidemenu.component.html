@@ -5,7 +5,8 @@
     <img
       src="../../../assets/logo-antuca.svg"
       alt="logo-antuca"
-      class="w-full"
+      class="w-full cursor-pointer"
+      (click)="this.router.navigateByUrl('/dashboard')"
     />
     @if (layoutService.isMobile()) {
     <p-button

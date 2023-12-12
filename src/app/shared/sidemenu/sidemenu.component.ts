@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { routes } from '../../app.routes';
-import { RouterModule, provideRouter } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LayoutService } from '@services/layout.service';
 
 import { ButtonModule } from 'primeng/button';
@@ -21,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
 export class SidemenuComponent {
   public layoutService = inject(LayoutService);
   public messageService = inject(MessageService);
+  public router = inject(Router);
 
   public toogleMenu() {
     this.layoutService.onMenuToggle();

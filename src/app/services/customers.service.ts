@@ -5,9 +5,9 @@ import {
   CustomerLogin,
   CustomerResponse,
 } from '@interfaces/customer';
-import { environment } from '@environment/environment';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '@environment/environment';
 
 interface State {
   customer: Customer | undefined;
@@ -20,6 +20,8 @@ interface State {
 })
 export class CustomersService {
   private router = inject(Router);
+
+  public env = environment;
 
   private http = inject(HttpClient);
   #state = signal<State>({
@@ -73,7 +75,9 @@ export class CustomersService {
         customer: JSON.parse(localStorage.getItem('customer')!),
         token: localStorage.getItem('token')!,
       });
-      this.router.navigateByUrl('/dashboard');
+      if (this.router.url.includes('/auth')) {
+        this.router.navigateByUrl('/dashboard');
+      }
     } else {
       console.log(1);
 
@@ -95,5 +99,9 @@ export class CustomersService {
       token: undefined,
     });
     this.router.navigateByUrl('/auth');
+  }
+
+  getUsers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(`${this.env.url_api}/customers`);
   }
 }

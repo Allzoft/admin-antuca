@@ -11,7 +11,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'orders',
-        title: 'Orders',
+        title: 'Órdemes',
         loadComponent: () =>
           import(
             './dashboard/pages/orders/orders.component'
@@ -19,7 +19,7 @@ export const routes: Routes = [
       },
       {
         path: 'clients',
-        title: 'Clients',
+        title: 'Clientes',
         loadComponent: () =>
           import(
             './dashboard/pages/clients/clients.component'
@@ -35,7 +35,7 @@ export const routes: Routes = [
       },
       {
         path: 'payments-type',
-        title: 'Menu Items',
+        title: 'Tipos de pago',
         loadComponent: () =>
           import(
             './dashboard/pages/payments-type/payments-type.component'
@@ -43,7 +43,7 @@ export const routes: Routes = [
       },
       {
         path: 'users',
-        title: 'Users list',
+        title: 'Lista de usuarios',
         loadComponent: () =>
           import(
             './dashboard/pages/users/users.component'
@@ -51,12 +51,13 @@ export const routes: Routes = [
       },
       {
         path: 'states',
-        title: 'State',
+        title: 'Estados',
         loadComponent: () =>
           import(
             './dashboard/pages/states/states.component'
           ),
       },
+
     ]
   },
   {

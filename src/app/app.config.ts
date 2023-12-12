@@ -6,9 +6,10 @@ import {
 } from '@angular/router';
 
 import { routes } from './app.routes';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { authInterceptor } from '@services/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,5 +25,6 @@ export const appConfig: ApplicationConfig = {
       RouterModule,
       BrowserAnimationsModule
     ),
+    provideHttpClient(withInterceptors([authInterceptor]))
   ],
 };
