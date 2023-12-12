@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Customer } from '@interfaces/customer';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [CommonModule],
+  providers: [DialogService],
   templateUrl: './user.component.html',
 })
 export default class UserComponent {
@@ -21,6 +22,9 @@ export default class UserComponent {
     photo: '',
     token: '',
   };
+
+  public ref: DynamicDialogRef | undefined;
+
 
 
 
