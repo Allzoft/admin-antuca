@@ -67,13 +67,23 @@
                 <span class="text-2xl font-semibold"
                   >{{ 'Bs' + item.price }}</span
                 >
-                <p-button
-                  icon="pi pi-pencil font-medium text-xl"
-                  [rounded]="true"
-                  severity="warning"
-                  [outlined]="true"
-                  class="md:align-self-end "
-                />
+                <div class="flex gap-2">
+                  <p-button
+                    icon="pi pi-pencil font-medium text-xl"
+                    [rounded]="true"
+                    severity="warning"
+                    [outlined]="true"
+                    class="md:align-self-end"
+                  />
+                  <p-button
+                    icon="pi pi-trash font-medium text-xl"
+                    [rounded]="true"
+                    severity="danger"
+                    [outlined]="true"
+                    class="md:align-self-end"
+                    (onClick)="deleteItem(item)"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -82,3 +92,8 @@
     </ng-template>
   </p-dataView>
 </p-card>
+<p-toast></p-toast>
+<p-confirmDialog
+  styleClass="w-auto md:w-5"
+  position="bottom"
+></p-confirmDialog>

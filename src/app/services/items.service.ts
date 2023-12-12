@@ -31,8 +31,8 @@ export class ItemsService {
   }
 
   private saveStorage(items: Items[]) {
-    if (localStorage.getItem('items')){
-      const itemsStorage = localStorage.getItem('items')
+    if (localStorage.getItem('items')) {
+      const itemsStorage = localStorage.getItem('items');
     }
     localStorage.setItem('items', JSON.stringify(items));
   }
@@ -46,7 +46,7 @@ export class ItemsService {
     } else {
       this.getItems().subscribe((res) => {
         this.#state.set({
-          loading: true,
+          loading: false,
           items: res,
         });
         localStorage.setItem('items', JSON.stringify(this.#state().items));
@@ -69,6 +69,13 @@ export class ItemsService {
   }
 
   public deleteItems(id: number) {
+    this.#state.set({
+      loading: false,
+      items: this.items().filter((i) => i.id_item !== id),
+    });
+
+    localStorage.setItem('items', JSON.stringify(this.#state().items));
+
     return this.http.delete(`${this.env.url_api}/items/${id}`);
   }
 }
