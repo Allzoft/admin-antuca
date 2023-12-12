@@ -31,10 +31,11 @@ export class ItemsService {
   }
 
   private saveStorage(items: Items[]) {
-    if (localStorage.getItem('items')) {
-      const itemsStorage = localStorage.getItem('items');
+    if (items.length > 0) {
+      localStorage.setItem('items', JSON.stringify(this.#state().items));
+    } else {
+      localStorage.removeItem('items');
     }
-    localStorage.setItem('items', JSON.stringify(items));
   }
 
   private loadStorage() {
@@ -73,8 +74,7 @@ export class ItemsService {
       loading: false,
       items: this.items().filter((i) => i.id_item !== id),
     });
-
-    localStorage.setItem('items', JSON.stringify(this.#state().items));
+    this.saveStorage(this.#state().items);
 
     return this.http.delete(`${this.env.url_api}/items/${id}`);
   }
