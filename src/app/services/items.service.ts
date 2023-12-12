@@ -30,10 +30,12 @@ export class ItemsService {
     this.loadStorage();
   }
 
-  // private saveStorage(resCustomer: CustomerResponse) {
-  //   localStorage.setItem('customer', JSON.stringify(resCustomer.customer));
-  //   localStorage.setItem('token', resCustomer.access_token.toString());
-  // }
+  private saveStorage(items: Items[]) {
+    if (localStorage.getItem('items')){
+      const itemsStorage = localStorage.getItem('items')
+    }
+    localStorage.setItem('items', JSON.stringify(items));
+  }
 
   private loadStorage() {
     if (localStorage.getItem('items')) {
@@ -47,7 +49,7 @@ export class ItemsService {
           loading: true,
           items: res,
         });
-        localStorage.setItem('items', this.#state().items.toString());
+        localStorage.setItem('items', JSON.stringify(this.#state().items));
       });
     }
   }
