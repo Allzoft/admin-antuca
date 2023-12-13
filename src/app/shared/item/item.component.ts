@@ -119,6 +119,8 @@ export class ItemComponent {
     };
     if (this.item.id_item === 0) {
       this.itemsService.postItem(newItem).subscribe((resItem) => {
+        console.log(resItem);
+
         this.ref.close(resItem);
       });
     } else {

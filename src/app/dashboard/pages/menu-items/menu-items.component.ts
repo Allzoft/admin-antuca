@@ -99,9 +99,9 @@ export default class MenuItemsComponent implements OnDestroy {
     this.ref.onClose.subscribe((item: Items) => {
       if (item) {
         this.messageService.add({
-          severity: 'info',
+          severity: 'successs',
           summary: 'Exito!',
-          detail: `Item ${item.name} creado o actualizo exitosamente`,
+          detail: `Item ${item.name} actualizado exitosamente`,
         });
       }
     });
@@ -112,6 +112,16 @@ export default class MenuItemsComponent implements OnDestroy {
       header: 'Nuevo plato',
       draggable: true,
       styleClass: 'w-11 md:w-5',
+    });
+
+    this.ref.onClose.subscribe((item: Items) => {
+      if (item) {
+        this.messageService.add({
+          severity: 'successs',
+          summary: 'Exito!',
+          detail: `Item ${item.name} creado exitosamente`,
+        });
+      }
     });
   }
 
