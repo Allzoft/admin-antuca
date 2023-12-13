@@ -102,7 +102,7 @@
     <div class="w-full">
       <p-button
         styleClass="w-full"
-        [label]="'Actualizar'"
+        [label]="this.config.data ? 'Actualizar' : 'Crear'"
         severity="success"
         size="small"
         (onClick)="saveItem()"

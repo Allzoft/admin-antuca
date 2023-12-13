@@ -32,7 +32,7 @@
       />
     </span>
   </div>
-  <p-dataView #dv [value]="items()" [rows]="5" [paginator]="true">
+  <p-dataView #dv [value]="items()">
     <ng-template pTemplate="list" let-products>
       <div class="grid grid-nogutter mt-2">
         <div class="col-12" *ngFor="let item of items(); let first = first">
