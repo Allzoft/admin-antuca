@@ -69,7 +69,6 @@ export class CustomersService {
 
   private loadStorage() {
     if (localStorage.getItem('token')) {
-      console.log(0);
       this.#state.set({
         loading: false,
         customer: JSON.parse(localStorage.getItem('customer')!),
@@ -79,8 +78,6 @@ export class CustomersService {
         this.router.navigateByUrl('/dashboard');
       }
     } else {
-      console.log(1);
-
       this.#state.set({
         loading: true,
         customer: undefined,
@@ -121,5 +118,4 @@ export class CustomersService {
     }
     return this.http.patch(`${this.env.url_api}/customers/${id}`, user);
   }
-
 }

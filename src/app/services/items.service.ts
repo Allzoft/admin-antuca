@@ -24,7 +24,6 @@ export class ItemsService {
   });
 
   public items = computed(() => this.#state().items);
-  public selectItem: Items | undefined
   public loading = computed(() => this.#state().loading);
 
   constructor() {
@@ -46,28 +45,51 @@ export class ItemsService {
         items: JSON.parse(localStorage.getItem('items')!),
       });
     } else {
-      this.getItems().subscribe((res) => {
-        this.#state.set({
-          loading: false,
-          items: res,
-        });
-        localStorage.setItem('items', JSON.stringify(this.#state().items));
-      });
+      this.getItems();
     }
   }
 
   public postItem(item: Partial<Items>): Observable<Items> {
-    //TODO STORAGE
-    return this.http.post<Items>(`${this.env.url_api}/items`, item);
+    return this.http.post<Items>(`${this.env.url_api}/items`, item).pipe(
+      tap((resItem) => {
+        const oldItems = this.#state().items;
+        oldItems.push(resItem);
+        this.#state.set({
+          loading: false,
+          items: oldItems,
+        });
+        this.saveStorage(this.#state().items);
+      })
+    );
   }
 
-  public getItems(): Observable<Items[]> {
-    return this.http.get<Items[]>(`${this.env.url_api}/items`);
+  public getItems(): void {
+    this.#state.set({
+      loading: true,
+      items: this.#state().items,
+    });
+    this.http.get<Items[]>(`${this.env.url_api}/items`).subscribe((res) => {
+      this.#state.set({
+        loading: false,
+        items: res,
+      });
+      localStorage.setItem('items', JSON.stringify(this.#state().items));
+    });
   }
 
   public updateItem(id: number, item: Partial<Items>): Observable<Items> {
-    //TODO STORAGE
-    return this.http.patch<Items>(`${this.env.url_api}/items/${id}`, item);
+    return this.http.patch<Items>(`${this.env.url_api}/items/${id}`, item).pipe(
+      tap((resItem) => {
+        const oldItems = this.#state().items;
+        const index = oldItems.findIndex((i) => i.id_item === resItem.id_item);
+        oldItems[index] = resItem;
+        this.#state.set({
+          loading: false,
+          items: oldItems,
+        });
+        this.saveStorage(this.#state().items);
+      })
+    );
   }
 
   public deleteItems(id: number) {

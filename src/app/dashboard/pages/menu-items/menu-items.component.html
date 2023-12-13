@@ -2,11 +2,20 @@
   <app-title title="Menú" />
   <div class="flex gap-3 justify-content-center align-items-center">
     <p-button
+      severity="info"
+      [outlined]="true"
+      [rounded]="true"
+      [icon]="itemsService.loading() ? 'pi pi-spin pi-spinner font-medium text-xl' : 'pi pi-refresh font-medium text-xl'"
+      size="small"
+      (onClick)="refreshData()"
+    ></p-button>
+    <p-button
       severity="success"
       icon="pi pi-plus font-medium"
       label="Nuevo plato"
       [rounded]="true"
-      styleClass="text-sm"
+      styleClass="text-lg"
+      (onClick)="createItem()"
     ></p-button>
   </div>
 </div>
@@ -52,7 +61,13 @@
                 <div class="flex align-items-center gap-3">
                   <span class="flex align-items-center gap-2">
                     <i class="pi pi-tag"></i>
+                    @if (item.type_item === 0) {
+                    <span class="font-semibold">Sopa o entrante</span>
+                    } @if (item.type_item === 1) {
                     <span class="font-semibold">Segundo</span>
+                    } @if (item.type_item === 2) {
+                    <span class="font-semibold">Otro</span>
+                    }
                   </span>
                   @if (item.available === 1) {
                   <p-tag value="Disponible" severity="success" />
@@ -93,8 +108,5 @@
     </ng-template>
   </p-dataView>
 </p-card>
-<p-toast></p-toast>
-<p-confirmDialog
-  styleClass="w-auto md:w-5"
-  position="bottom"
-></p-confirmDialog>
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>

@@ -1,5 +1,5 @@
 <div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
-  <div class="flex w-full gap-5">
+  <div class="flex w-full gap-3 md:gap-5">
     <div class="flex flex-column gap-2 w-full">
       <label for="username">Nombre</label>
       <span class="p-input-icon-left">
@@ -10,6 +10,8 @@
           pInputText
           [(ngModel)]="item.name"
           class="w-full p-inputtext-sm"
+          [ngClass]="{'ng-invalid ng-dirty': inputDirt}"
+          [ngClass]="{'ng-invalid ng-dirty': item.name.length === 0}"
         />
       </span>
     </div>
@@ -30,7 +32,7 @@
   <div class="flex flex-column gap-2 w-full">
     <label for="username">Descripción</label>
     <textarea
-      rows="3"
+      rows="2"
       cols="30"
       pInputTextarea
       [(ngModel)]="item.description"
@@ -41,7 +43,9 @@
   <div class="flex flex-column md:flex-row w-full gap-5">
     <div class="flex flex-column w-full gap-2">
       <label for="username">Disponibilidad</label>
-      <div class="flex gap-2 w-full justify-content-between">
+      <div
+        class="flex gap-2 w-full justify-content-around md:justify-content-between"
+      >
         @for (availalbe of typeAvailable; track $index) {
         <p-button
           [label]="availalbe.label"
@@ -68,31 +72,41 @@
   <div class="flex flex-column w-full gap-3 align-items-center -mb-3">
     @if (item.photo === '') {
     <div
-      class="flex justify-content-center align-items-center w-9 md:w-6 h-10rem border-1 border-round-lg border-gray-600"
+      class="flex flex-column justify-content-center align-items-center w-7 md:w-4 h-6rem md:h-7rem border-1 border-round-lg border-gray-600"
     >
-      <i class="pi pi-image text-3xl text-gray-600"></i>
+      <i class="pi pi-image text-3xl text-gray-600 mt-2"></i>
+      <p class="text-gray-600 text-xs mt-1">No hay imagen</p>
     </div>
     } @else {
     <div
-      class="flex justify-content-center align-items-center w-9 md:w-6 h-10rem border-round-lg"
+      class="flex justify-content-center align-items-center w-7 md:w-4 h-6rem md:h-7rem border-round-lg"
     >
       <p-image [src]="url + item.photo" imageClass="w-full" />
     </div>
     }
 
-    <div class="w-full flex justify-content-between">
+    <div
+      class="w-full flex flex-column justify-content-end align-items-end gap-3"
+    >
       <p-fileUpload
         mode="basic"
-        chooseLabel="Choose"
-        name="demo[]"
-        url="https://www.primefaces.org/cdn/api/upload.php"
+        name="file[]"
+        [auto]="true"
         accept="image/*"
-        [maxFileSize]="1000000"
         styleClass="p-button-help p-button-sm"
         chooseLabel="Subir imagen"
-        ></p-fileUpload>
-        <!-- (onUpload)="onUpload($event)" -->
-      <p-button label="Guardar" severity="success" size="small"></p-button>
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event)"
+      ></p-fileUpload>
+    </div>
+    <div class="w-full">
+      <p-button
+        styleClass="w-full"
+        [label]="'Actualizar'"
+        severity="success"
+        size="small"
+        (onClick)="saveItem()"
+      ></p-button>
     </div>
   </div>
 </div>

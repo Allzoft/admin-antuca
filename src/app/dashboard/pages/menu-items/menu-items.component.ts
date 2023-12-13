@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { ItemsService } from '@services/items.service';
 import { TitleComponent } from '@shared/title/title.component';
 import { ButtonModule } from 'primeng/button';
@@ -15,7 +15,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Items } from '@interfaces/items';
 import { ToastModule } from 'primeng/toast';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { ItemComponent } from '@shared/item/item.component';
 
 @Component({
@@ -36,19 +40,30 @@ import { ItemComponent } from '@shared/item/item.component';
     ConfirmDialogModule,
     ToastModule,
   ],
-  providers: [ConfirmationService, MessageService, DialogService, DynamicDialogConfig],
+  providers: [
+    ConfirmationService,
+    MessageService,
+    DialogService,
+    DynamicDialogConfig,
+  ],
   templateUrl: './menu-items.component.html',
 })
-export default class MenuItemsComponent {
+export default class MenuItemsComponent implements OnDestroy {
   public itemsService = inject(ItemsService);
   public dialogService = inject(DialogService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
-  public configRef = inject(DynamicDialogConfig)
+  public configRef = inject(DynamicDialogConfig);
 
   public items = this.itemsService.items;
   public star = 4;
   public ref: DynamicDialogRef | undefined;
+
+  ngOnDestroy(): void {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
 
   public deleteItem(item: Items) {
     this.confirmationService.confirm({
@@ -72,27 +87,35 @@ export default class MenuItemsComponent {
   }
 
   public showItem(item: Items) {
-    this.itemsService.selectItem = item
     this.ref = this.dialogService.open(ItemComponent, {
-      data: {
-        item: item,
-        id: 654654
-      },
       header: item.name,
       draggable: true,
       styleClass: 'w-11 md:w-5',
+      data: {
+        item: item,
+      },
     });
 
     this.ref.onClose.subscribe((item: Items) => {
-      console.log(item);
-
       if (item) {
         this.messageService.add({
           severity: 'info',
-          summary: 'item Selected',
-          detail: item.name,
+          summary: 'Exito!',
+          detail: `Item ${item.name} creado o actualizo exitosamente`,
         });
       }
     });
+  }
+
+  public createItem() {
+    this.ref = this.dialogService.open(ItemComponent, {
+      header: 'Nuevo plato',
+      draggable: true,
+      styleClass: 'w-11 md:w-5',
+    });
+  }
+
+  public refreshData() {
+    this.itemsService.getItems();
   }
 }
