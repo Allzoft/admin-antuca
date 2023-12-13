@@ -51,6 +51,9 @@ export class LayoutService {
 
   overlayOpen$ = this.overlayOpen.asObservable();
 
+  constructor() {
+    console.log(this.state);
+  }
 
   onMenuToggle() {
     if (this.isOverlay()) {
@@ -71,8 +74,6 @@ export class LayoutService {
         this.overlayOpen.next(null);
       }
     }
-    console.log(this.state);
-
   }
 
   onOverlaySubmenuOpen() {

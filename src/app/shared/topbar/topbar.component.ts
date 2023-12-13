@@ -41,7 +41,7 @@ export class TopbarComponent {
 
   onProfileButtonClick() {
     this.layoutService.showProfileSidebar();
-    console.log(this.layoutService.state.profileSidebarVisible);
+    console.log(this.layoutService.state);
   }
 
   closeSession() {

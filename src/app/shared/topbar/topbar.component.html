@@ -1,4 +1,7 @@
-<div class="flex justify-content-between w-full bg-bluegray-800 px-4 shadow-4">
+<div
+  class="z-1 flex justify-content-between w-12 bg-bluegray-800 px-4 shadow-4"
+  [ngClass]="{'fixed':layoutService.isMobile()}"
+>
   <div class="flex align-items-center">
     <p-button
       #menubutton
@@ -58,7 +61,4 @@
     </li>
   </ul>
 </div>
-<p-confirmDialog
-  styleClass="w-auto md:w-5"
-  position="bottom"
-></p-confirmDialog>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>
