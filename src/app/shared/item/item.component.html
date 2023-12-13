@@ -1,0 +1,98 @@
+<div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
+  <div class="flex w-full gap-5">
+    <div class="flex flex-column gap-2 w-full">
+      <label for="username">Nombre</label>
+      <span class="p-input-icon-left">
+        <i class="pi pi-book"></i>
+        <input
+          id="username"
+          type="text"
+          pInputText
+          [(ngModel)]="item.name"
+          class="w-full p-inputtext-sm"
+        />
+      </span>
+    </div>
+
+    <div class="flex flex-column gap-2 w-full">
+      <label for="username">Precio</label>
+      <p-inputNumber
+        inputId="integeronly"
+        mode="decimal"
+        [minFractionDigits]="2"
+        [(ngModel)]="item.price"
+        inputStyleClass="w-full p-inputtext-sm"
+        styleClass="w-full"
+        prefix="Bs. "
+      />
+    </div>
+  </div>
+  <div class="flex flex-column gap-2 w-full">
+    <label for="username">Descripción</label>
+    <textarea
+      rows="3"
+      cols="30"
+      pInputTextarea
+      [(ngModel)]="item.description"
+      [autoResize]="true"
+      class="w-full"
+    ></textarea>
+  </div>
+  <div class="flex flex-column md:flex-row w-full gap-5">
+    <div class="flex flex-column w-full gap-2">
+      <label for="username">Disponibilidad</label>
+      <div class="flex gap-2 w-full justify-content-between">
+        @for (availalbe of typeAvailable; track $index) {
+        <p-button
+          [label]="availalbe.label"
+          [severity]="availalbe.label === 'Disponible' ? 'success':'danger'"
+          [outlined]="!availalbe.isSelect"
+          size="small"
+          (onClick)="selectTypeAvailable($index)"
+        ></p-button>
+        }
+      </div>
+    </div>
+
+    <div class="flex flex-column w-full gap-2">
+      <label for="username">Tipo de plato</label>
+      <p-dropdown
+        inputId="integeronly"
+        [(ngModel)]="type_item"
+        [options]="typeItems"
+        optionLabel="label"
+        styleClass="p-inputtext-sm w-full"
+      />
+    </div>
+  </div>
+  <div class="flex flex-column w-full gap-3 align-items-center -mb-3">
+    @if (item.photo === '') {
+    <div
+      class="flex justify-content-center align-items-center w-9 md:w-6 h-10rem border-1 border-round-lg border-gray-600"
+    >
+      <i class="pi pi-image text-3xl text-gray-600"></i>
+    </div>
+    } @else {
+    <div
+      class="flex justify-content-center align-items-center w-9 md:w-6 h-10rem border-round-lg"
+    >
+      <p-image [src]="url + item.photo" imageClass="w-full" />
+    </div>
+    }
+
+    <div class="w-full flex justify-content-between">
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Choose"
+        name="demo[]"
+        url="https://www.primefaces.org/cdn/api/upload.php"
+        accept="image/*"
+        [maxFileSize]="1000000"
+        styleClass="p-button-help p-button-sm"
+        chooseLabel="Subir imagen"
+        ></p-fileUpload>
+        <!-- (onUpload)="onUpload($event)" -->
+      <p-button label="Guardar" severity="success" size="small"></p-button>
+    </div>
+  </div>
+</div>

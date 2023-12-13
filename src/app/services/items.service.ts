@@ -24,6 +24,7 @@ export class ItemsService {
   });
 
   public items = computed(() => this.#state().items);
+  public selectItem: Items | undefined
   public loading = computed(() => this.#state().loading);
 
   constructor() {

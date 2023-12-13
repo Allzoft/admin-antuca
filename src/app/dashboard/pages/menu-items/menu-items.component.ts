@@ -15,6 +15,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Items } from '@interfaces/items';
 import { ToastModule } from 'primeng/toast';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ItemComponent } from '@shared/item/item.component';
 
 @Component({
   selector: 'app-menu-items',
@@ -34,15 +36,19 @@ import { ToastModule } from 'primeng/toast';
     ConfirmDialogModule,
     ToastModule,
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService, DialogService, DynamicDialogConfig],
   templateUrl: './menu-items.component.html',
 })
 export default class MenuItemsComponent {
   public itemsService = inject(ItemsService);
-  public items = this.itemsService.items;
-  private confirmationService = inject(ConfirmationService);
+  public dialogService = inject(DialogService);
   private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+  public configRef = inject(DynamicDialogConfig)
+
+  public items = this.itemsService.items;
   public star = 4;
+  public ref: DynamicDialogRef | undefined;
 
   public deleteItem(item: Items) {
     this.confirmationService.confirm({
@@ -62,6 +68,31 @@ export default class MenuItemsComponent {
           });
         });
       },
+    });
+  }
+
+  public showItem(item: Items) {
+    this.itemsService.selectItem = item
+    this.ref = this.dialogService.open(ItemComponent, {
+      data: {
+        item: item,
+        id: 654654
+      },
+      header: item.name,
+      draggable: true,
+      styleClass: 'w-11 md:w-5',
+    });
+
+    this.ref.onClose.subscribe((item: Items) => {
+      console.log(item);
+
+      if (item) {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'item Selected',
+          detail: item.name,
+        });
+      }
     });
   }
 }
