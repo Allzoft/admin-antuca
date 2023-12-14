@@ -11,7 +11,7 @@ import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ImageModule } from 'primeng/image';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Items } from '@interfaces/items';
 import { ToastModule } from 'primeng/toast';
@@ -21,6 +21,7 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { ItemComponent } from '@shared/item/item.component';
+import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-menu-items',
@@ -39,6 +40,7 @@ import { ItemComponent } from '@shared/item/item.component';
     ImageModule,
     ConfirmDialogModule,
     ToastModule,
+    DropdownModule,
   ],
   providers: [
     ConfirmationService,
@@ -59,6 +61,13 @@ export default class MenuItemsComponent implements OnDestroy {
   public filteredItems = [...this.itemsService.items()];
   public star = 4;
   public ref: DynamicDialogRef | undefined;
+
+  public sortOptions: { value: string; severity: string }[] = [
+    { value: 'Disponible', severity: 'success' },
+    { value: 'Agotado', severity: 'danger' },
+  ];
+
+  selectSort: { value: string; severity: string } | undefined;
 
   ngOnDestroy(): void {
     if (this.ref) {
@@ -146,8 +155,21 @@ export default class MenuItemsComponent implements OnDestroy {
       return wordsPresent.length === filterWords.length;
     });
 
-    this.itemsService.filterItems(itemsFiltered)
-
+    this.itemsService.filterItems(itemsFiltered);
   }
 
+  sortData(event: DropdownChangeEvent) {
+    console.log(event.value);
+    if (event.value.value === 'Disponible') {
+      const newOrderItems = this.items().sort(
+        (a: Items, b: Items) => b.available - a.available
+      );
+      this.itemsService.filterItems(newOrderItems);
+    } else {
+      const newOrderItems = this.items().sort(
+        (a: Items, b: Items) => a.available - b.available
+      );
+      this.itemsService.filterItems(newOrderItems);
+    }
+  }
 }

@@ -20,20 +20,44 @@
   </div>
 </div>
 <p-card>
-  <div class="flex w-full justify-content-end align-items-center">
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input
-        pInputText
-        type="text"
-        placeholder="Buscar item"
-        (input)="customGlobalFilter($event)"
-        class="focus:border-orange-500 border-round-lg"
-        style="height: 40px;"
-      />
-    </span>
-  </div>
   <p-dataView #dv [value]="items()" [rows]="5" [paginator]="true">
+    <ng-template pTemplate="header">
+      <div class="flex flex-column md:flex-row md:justify-content-between">
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="selectSort"
+          optionLabel="name"
+          placeholder="Ordenar por diponibilidad"
+          (onChange)="sortData($event)"
+          styleClass="mb-2 md:mb-0"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="selectSort">
+              <p-tag
+                [value]="selectSort.value"
+                [severity]="selectSort.severity"
+              />
+            </div>
+          </ng-template>
+          <ng-template let-item pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <p-tag [value]="item.value" [severity]="item.severity" />
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            placeholder="Buscar item"
+            (input)="customGlobalFilter($event)"
+            class="focus:border-orange-500 border-round-lg"
+            style="height: 40px;"
+          />
+        </span>
+      </div>
+    </ng-template>
     <ng-template pTemplate="list" let-products>
       <div class="grid grid-nogutter mt-2">
         <div class="col-12" *ngFor="let item of products; let first = first">
