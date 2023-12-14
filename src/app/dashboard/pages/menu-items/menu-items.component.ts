@@ -55,7 +55,8 @@ export default class MenuItemsComponent implements OnDestroy {
   private confirmationService = inject(ConfirmationService);
   public configRef = inject(DynamicDialogConfig);
 
-  public items = this.itemsService.items;
+  public items = [...this.itemsService.items()];
+  public filteredItems = [...this.items];
   public star = 4;
   public ref: DynamicDialogRef | undefined;
 
@@ -127,5 +128,28 @@ export default class MenuItemsComponent implements OnDestroy {
 
   public refreshData() {
     this.itemsService.getItems();
+  }
+
+  public customGlobalFilter(event: any) {
+    const filterValue = event.target.value.trim().toLowerCase();
+    const filterWords = filterValue.split(' ');
+
+    this.filteredItems = this.items.filter((rowData: Items) => {
+      const fullName = `${rowData.name}`.toLowerCase();
+
+      // Verificar si la entrada del usuario contiene solo números
+
+      // Verificar si el nombre completo coincide exactamente con el filtro
+      if (fullName === filterValue) {
+        return true;
+      }
+
+      // Verificar si todas las palabras del filtro están presentes en el nombre completo
+      const wordsPresent = filterWords.filter((word: any) => {
+        return fullName.includes(word);
+      });
+
+      return wordsPresent.length === filterWords.length;
+    });
   }
 }

@@ -27,19 +27,19 @@
         pInputText
         type="text"
         placeholder="Buscar item"
+        (input)="customGlobalFilter($event)"
         class="focus:border-orange-500 border-round-lg"
         style="height: 40px;"
       />
     </span>
   </div>
-  <p-dataView #dv [value]="items()">
+  <p-dataView #dv [value]="filteredItems">
     <ng-template pTemplate="list" let-products>
       <div class="grid grid-nogutter mt-2">
-        <div class="col-12" *ngFor="let item of items(); let first = first">
+        <div class="col-12" *ngFor="let item of filteredItems;">
           <div
             class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4 border-top-1 surface-border"
           >
-            <!-- imageClass="w-full border-round-xl" -->
             <p-image
               imageClass="w-9 sm:w-16rem xl:w-10rem  shadow-2 block xl:block mx-auto border-round"
               [preview]="true"
