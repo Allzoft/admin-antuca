@@ -134,10 +134,6 @@ export default class MenuItemsComponent implements OnDestroy {
     const filterValue = event.target.value.trim().toLowerCase();
     const filterWords = filterValue.split(' ');
 
-    // Convierte la señal en un array
-    const itemsArray = this.itemsService.items();
-
-
     const itemsFiltered = this.filteredItems.filter((rowData: Items) => {
       const fullName = `${rowData.name}`.toLowerCase();
       if (fullName === filterValue) {

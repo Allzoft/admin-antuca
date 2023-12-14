@@ -33,11 +33,10 @@
       />
     </span>
   </div>
-  <p-dataView #dv [value]="items()">
+  <p-dataView #dv [value]="items()" [rows]="5" [paginator]="true">
     <ng-template pTemplate="list" let-products>
       <div class="grid grid-nogutter mt-2">
-        @for (item of items(); track $index;) {
-        <div class="col-12">
+        <div class="col-12" *ngFor="let item of products; let first = first">
           <div
             class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4 border-top-1 surface-border"
           >
@@ -105,7 +104,6 @@
             </div>
           </div>
         </div>
-        }
       </div>
     </ng-template>
   </p-dataView>
