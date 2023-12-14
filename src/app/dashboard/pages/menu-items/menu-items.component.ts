@@ -55,8 +55,8 @@ export default class MenuItemsComponent implements OnDestroy {
   private confirmationService = inject(ConfirmationService);
   public configRef = inject(DynamicDialogConfig);
 
-  public items = [...this.itemsService.items()];
-  public filteredItems = [...this.items];
+  public items = this.itemsService.items;
+  public filteredItems = [...this.itemsService.items()];
   public star = 4;
   public ref: DynamicDialogRef | undefined;
 
@@ -100,7 +100,7 @@ export default class MenuItemsComponent implements OnDestroy {
     this.ref.onClose.subscribe((item: Items) => {
       if (item) {
         this.messageService.add({
-          severity: 'successs',
+          severity: 'success',
           summary: 'Exito!',
           detail: `Item ${item.name} actualizado exitosamente`,
         });
@@ -118,7 +118,7 @@ export default class MenuItemsComponent implements OnDestroy {
     this.ref.onClose.subscribe((item: Items) => {
       if (item) {
         this.messageService.add({
-          severity: 'successs',
+          severity: 'success',
           summary: 'Exito!',
           detail: `Item ${item.name} creado exitosamente`,
         });
@@ -134,22 +134,24 @@ export default class MenuItemsComponent implements OnDestroy {
     const filterValue = event.target.value.trim().toLowerCase();
     const filterWords = filterValue.split(' ');
 
-    this.filteredItems = this.items.filter((rowData: Items) => {
+    // Convierte la señal en un array
+    const itemsArray = this.itemsService.items();
+
+
+    const itemsFiltered = this.filteredItems.filter((rowData: Items) => {
       const fullName = `${rowData.name}`.toLowerCase();
-
-      // Verificar si la entrada del usuario contiene solo números
-
-      // Verificar si el nombre completo coincide exactamente con el filtro
       if (fullName === filterValue) {
         return true;
       }
-
-      // Verificar si todas las palabras del filtro están presentes en el nombre completo
       const wordsPresent = filterWords.filter((word: any) => {
         return fullName.includes(word);
       });
 
       return wordsPresent.length === filterWords.length;
     });
+
+    this.itemsService.filterItems(itemsFiltered)
+
   }
+
 }

@@ -23,6 +23,7 @@ export class ItemsService {
     items: [],
   });
 
+
   public items = computed(() => this.#state().items);
   public loading = computed(() => this.#state().loading);
 
@@ -100,5 +101,12 @@ export class ItemsService {
     this.saveStorage(this.#state().items);
 
     return this.http.delete(`${this.env.url_api}/items/${id}`);
+  }
+
+  public filterItems(items: Items[]) {
+    this.#state.set({
+      loading: false,
+      items: items,
+    });
   }
 }

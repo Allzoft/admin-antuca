@@ -33,10 +33,11 @@
       />
     </span>
   </div>
-  <p-dataView #dv [value]="filteredItems">
+  <p-dataView #dv [value]="items()">
     <ng-template pTemplate="list" let-products>
       <div class="grid grid-nogutter mt-2">
-        <div class="col-12" *ngFor="let item of filteredItems;">
+        @for (item of items(); track $index;) {
+        <div class="col-12">
           <div
             class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4 border-top-1 surface-border"
           >
@@ -104,6 +105,7 @@
             </div>
           </div>
         </div>
+        }
       </div>
     </ng-template>
   </p-dataView>
