@@ -155,7 +155,7 @@ export default class MenuItemsComponent implements OnDestroy {
       return wordsPresent.length === filterWords.length;
     });
 
-    this.itemsService.filterItems(itemsFiltered);
+    this.itemsService.updateItems(itemsFiltered);
   }
 
   sortData(event: DropdownChangeEvent) {
@@ -164,12 +164,12 @@ export default class MenuItemsComponent implements OnDestroy {
       const newOrderItems = this.items().sort(
         (a: Items, b: Items) => b.available - a.available
       );
-      this.itemsService.filterItems(newOrderItems);
+      this.itemsService.updateItems(newOrderItems);
     } else {
       const newOrderItems = this.items().sort(
         (a: Items, b: Items) => a.available - b.available
       );
-      this.itemsService.filterItems(newOrderItems);
+      this.itemsService.updateItems(newOrderItems);
     }
   }
 }

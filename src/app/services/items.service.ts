@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Observable, tap } from 'rxjs';
-import { Router } from '@angular/router';
 import { environment } from '@environment/environment';
 import { Items } from '@interfaces/items';
 
@@ -103,7 +102,7 @@ export class ItemsService {
     return this.http.delete(`${this.env.url_api}/items/${id}`);
   }
 
-  public filterItems(items: Items[]) {
+  public updateItems(items: Items[]) {
     this.#state.set({
       loading: false,
       items: items,
