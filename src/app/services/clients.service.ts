@@ -22,7 +22,7 @@ export class ClientsService {
     clients: [],
   });
 
-  public client = computed(() => this.#state().clients);
+  public clients = computed(() => this.#state().clients);
   public loading = computed(() => this.#state().loading);
 
   constructor() {
@@ -98,7 +98,7 @@ export class ClientsService {
   public deleteClient(id: number) {
     this.#state.set({
       loading: false,
-      clients: this.client().filter((i) => i.id_client !== id),
+      clients: this.clients().filter((i) => i.id_client !== id),
     });
     this.saveStorage(this.#state().clients);
 

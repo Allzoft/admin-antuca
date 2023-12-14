@@ -2,6 +2,14 @@
   <app-title title="Lista de clientes" />
   <div class="flex gap-3 justify-content-center align-items-center">
     <p-button
+      severity="info"
+      [outlined]="true"
+      [rounded]="true"
+      [icon]="clientsService.loading() ? 'pi pi-spin pi-spinner font-medium text-xl' : 'pi pi-refresh font-medium text-xl'"
+      size="small"
+      (onClick)="refreshData()"
+    ></p-button>
+    <p-button
       severity="success"
       icon="pi pi-user-plus font-medium"
       label="Nuev@ cliente"
@@ -11,7 +19,7 @@
   </div>
 </div>
 <p-card class="p-0">
-  <p-table [value]="clients" styleClass="-mt-5 -mb-3 p-datatable-sm">
+  <p-table [value]="clients()" styleClass="-mt-5 -mb-3 p-datatable-sm">
     <ng-template pTemplate="header" let-yourColumnArrayVaraible>
       <tr>
         <th>ID</th>
@@ -19,20 +27,22 @@
         <th>Nombre</th>
         <th>Teléfono</th>
         <th>Correo</th>
+        <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-customer>
+    <ng-template pTemplate="body" let-client>
       <tr>
-        <td>{{ customer.id_customer }}</td>
+        <td>{{ client.id_client }}</td>
         <td>
           <img
-            [src]="customer!.photo | image"
+            [src]="client!.photo | image"
             class="border-circle w-2rem h-2rem"
             alt="Profile"
           />
         </td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
+        <td>{{ client.name }}</td>
+        <td>{{ client.phone }}</td>
+        <td>{{ client.email }}</td>
         <td class="w-8rem">
           <p-button
             icon="pi pi-pencil"
@@ -46,7 +56,6 @@
             [rounded]="true"
             [outlined]="true"
             styleClass="h-2rem w-2rem ml-2"
-
           ></p-button>
         </td>
       </tr>
@@ -57,7 +66,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>{{ 'Total: ' + clients.length }}</td>
+        <td></td>
+        <td>{{ 'Total: ' + clients().length }}</td>
       </tr>
     </ng-template>
   </p-table>
