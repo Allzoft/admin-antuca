@@ -85,9 +85,9 @@ export default class ClientsComponent implements OnDestroy {
 
   public showClient(client: Client) {
     this.ref = this.dialogService.open(ClientComponent, {
-      header: client.name + ' ' + client.lastname,
+      header: 'Cliente: ' + client.name + ' ' + client.lastname,
       draggable: true,
-      styleClass: 'w-11 md:w-5',
+      styleClass: 'w-11 md:w-7',
       data: {
         client: client,
       },

@@ -12,7 +12,6 @@ export interface Client {
   gender: string;
   info: string;
   google: number;
-  status: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }
