@@ -52,6 +52,9 @@ export class ClientComponent {
     google: 0,
   };
 
+  public inputNameDirt: boolean = false;
+  public inputPhoneDirt: boolean = false;
+
   public optionsCodeCountries: { flag: string; code: string }[] = [
     {
       flag: 'https://www.worldstatesmen.org/bo_s.gif',
@@ -76,4 +79,45 @@ export class ClientComponent {
     }
   }
 
+  public async saveClient() {
+    if (!(await this.passClientForm())) return;
+
+    const newClient: Partial<Client> = {
+      name: this.client.name,
+      lastname: this.client.lastname,
+      email: this.client.email,
+      photo: this.client.photo,
+      code_country: this.selectedCodeCountry.code,
+      phone: this.client.phone,
+      isActive: this.client.isActive,
+      id: this.client.id,
+      type_business: this.client.type_business,
+      gender: this.client.gender,
+      info: this.client.info,
+      google: this.client.google,
+    };
+    if (this.client.id_client === 0) {
+      this.clientsService.postClient(newClient).subscribe((resClient) => {
+        this.ref.close(resClient);
+      });
+    } else {
+      this.clientsService
+        .updateClient(this.client.id_client, newClient)
+        .subscribe((resClient) => {
+          this.ref.close(resClient);
+        });
+    }
+  }
+
+  public passClientForm(): Promise<boolean> {
+    if (!this.client.name) {
+      this.inputNameDirt = true;
+      return Promise.resolve(false);
+    }
+    if (!this.client.phone) {
+      this.inputPhoneDirt = true;
+      return Promise.resolve(false);
+    }
+    return Promise.resolve(true);
+  }
 }

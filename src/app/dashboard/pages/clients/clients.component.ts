@@ -108,7 +108,7 @@ export default class ClientsComponent implements OnDestroy {
     this.ref = this.dialogService.open(ClientComponent, {
       header: 'Nuevo cliente',
       draggable: true,
-      styleClass: 'w-11 md:w-5',
+      styleClass: 'w-11 md:w-7',
     });
 
     this.ref.onClose.subscribe((client: Client) => {
@@ -145,6 +145,6 @@ export default class ClientsComponent implements OnDestroy {
       }
     });
 
-    this.clientsService.updateClient(itemsFiltered);
+    this.clientsService.updateClients(itemsFiltered);
   }
 }

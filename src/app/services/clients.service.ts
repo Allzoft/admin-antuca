@@ -48,11 +48,11 @@ export class ClientsService {
     }
   }
 
-  public postItem(item: Partial<Client>): Observable<Client> {
-    return this.http.post<Client>(`${this.env.url_api}/clients`, item).pipe(
-      tap((resItem) => {
+  public postClient(client: Partial<Client>): Observable<Client> {
+    return this.http.post<Client>(`${this.env.url_api}/clients`, client).pipe(
+      tap((resClient) => {
         const oldClient = this.#state().clients;
-        oldClient.push(resItem);
+        oldClient.push(resClient);
         this.#state.set({
           loading: false,
           clients: oldClient,
@@ -84,16 +84,16 @@ export class ClientsService {
     );
   }
 
-  public updateItem(id: number, item: Partial<Client>): Observable<Client> {
+  public updateClient(id: number, client: Partial<Client>): Observable<Client> {
     return this.http
-      .patch<Client>(`${this.env.url_api}/clients/${id}`, item)
+      .patch<Client>(`${this.env.url_api}/clients/${id}`, client)
       .pipe(
-        tap((resItem) => {
+        tap((resClient) => {
           const oldClient = this.#state().clients;
           const index = oldClient.findIndex(
-            (i) => i.id_client === resItem.id_client
+            (i) => i.id_client === resClient.id_client
           );
-          oldClient[index] = resItem;
+          oldClient[index] = resClient;
           this.#state.set({
             loading: false,
             clients: oldClient,
@@ -113,7 +113,7 @@ export class ClientsService {
     return this.http.delete(`${this.env.url_api}/clients/${id}`);
   }
 
-  public updateClient(client: Client[]) {
+  public updateClients(client: Client[]) {
     this.#state.set({
       loading: false,
       clients: client,
