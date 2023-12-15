@@ -38,6 +38,7 @@ export class SidemenuComponent {
               severity: 'info',
               summary: 'En construcción',
               detail: 'Página de informes en construcción',
+              icon: 'pi pi-lock'
             });
           },
         },
@@ -50,16 +51,31 @@ export class SidemenuComponent {
           label: 'Órdenes',
           icon: 'pi pi-megaphone',
           routerLink: ['/dashboard/orders'],
+          command: () => {
+            if(this.layoutService.isMobile()){
+              this.layoutService.onMenuToggle()
+            }
+          },
         },
         {
           label: 'Menú',
           icon: 'pi pi-book',
           routerLink: ['/dashboard/menu-items'],
+          command: () => {
+            if(this.layoutService.isMobile()){
+              this.layoutService.onMenuToggle()
+            }
+          },
         },
         {
           label: 'Mis clientes',
           icon: 'pi pi-users',
           routerLink: ['/dashboard/clients'],
+          command: () => {
+            if(this.layoutService.isMobile()){
+              this.layoutService.onMenuToggle()
+            }
+          },
         },
       ],
     },
@@ -70,16 +86,33 @@ export class SidemenuComponent {
           label: 'Usuarios',
           icon: 'pi pi-users',
           routerLink: ['/dashboard/users'],
+          command: () => {
+            if(this.layoutService.isMobile()){
+              this.layoutService.onMenuToggle()
+            }
+          },
         },
         {
           label: 'Estados',
           icon: 'pi pi-tags',
           routerLink: ['/dashboard/states'],
+          command: () => {
+            if(this.layoutService.isMobile()){
+              this.layoutService.onMenuToggle()
+            }
+          },
         },
         {
           label: 'Modos de pago',
           icon: 'pi pi-money-bill',
-          routerLink: ['/dashboard/payments-type'],
+          command: () => {
+            this.messageService.add({
+              severity: 'info',
+              summary: 'En construcción',
+              detail: 'Página de Modos de pago en construcción',
+              icon: 'pi pi-lock'
+            });
+          },
         },
       ],
     },
