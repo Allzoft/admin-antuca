@@ -67,13 +67,21 @@ export class ClientsService {
       loading: true,
       clients: this.#state().clients,
     });
-    this.http.get<Client[]>(`${this.env.url_api}/clients`).subscribe((res) => {
-      this.#state.set({
-        loading: false,
-        clients: res,
-      });
-      localStorage.setItem('clients', JSON.stringify(this.#state().clients));
-    });
+    this.http.get<Client[]>(`${this.env.url_api}/clients`).subscribe(
+      (res) => {
+        this.#state.set({
+          loading: false,
+          clients: res,
+        });
+        localStorage.setItem('clients', JSON.stringify(this.#state().clients));
+      },
+      (error) => {
+        this.#state.set({
+          loading: false,
+          clients: [],
+        });
+      }
+    );
   }
 
   public updateItem(id: number, item: Partial<Client>): Observable<Client> {

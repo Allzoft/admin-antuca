@@ -33,15 +33,14 @@ import { UploadService } from '@services/upload.service';
     DropdownModule,
     FileUploadModule,
   ],
-  providers: [],
   templateUrl: './item.component.html',
 })
 export class ItemComponent {
   public dialogService = inject(DialogService);
-  public itemsService = inject(ItemsService);
-  public uploadService = inject(UploadService);
   public config = inject(DynamicDialogConfig);
   public ref = inject(DynamicDialogRef);
+  public itemsService = inject(ItemsService);
+  public uploadService = inject(UploadService);
 
   public url = environment.url_public + '/uploads/';
 

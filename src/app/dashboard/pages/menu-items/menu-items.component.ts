@@ -51,11 +51,11 @@ import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
   templateUrl: './menu-items.component.html',
 })
 export default class MenuItemsComponent implements OnDestroy {
-  public itemsService = inject(ItemsService);
+  public configRef = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
+  public itemsService = inject(ItemsService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
-  public configRef = inject(DynamicDialogConfig);
 
   public items = this.itemsService.items;
   public filteredItems = [...this.itemsService.items()];
