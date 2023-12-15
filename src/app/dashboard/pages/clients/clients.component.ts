@@ -16,6 +16,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ClientComponent } from '@shared/client/client.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-clients',
@@ -29,6 +30,7 @@ import { ClientComponent } from '@shared/client/client.component';
     PipesModule,
     ToastModule,
     ConfirmDialogModule,
+    InputTextModule,
   ],
   providers: [
     ConfirmationService,
@@ -48,7 +50,7 @@ export default class ClientsComponent implements OnDestroy {
   public ref: DynamicDialogRef | undefined;
 
   public clients = this.clientsService.clients;
-  public filteredItems = [...this.clientsService.clients()];
+  public filteredClients = [...this.clientsService.clients()];
 
   ngOnDestroy(): void {
     if (this.ref) {
@@ -118,5 +120,31 @@ export default class ClientsComponent implements OnDestroy {
         });
       }
     });
+  }
+
+  public customGlobalFilter(event: any) {
+    const filterValue = event.target.value.trim().toLowerCase();
+    const filterWords = filterValue.split(' ');
+
+    const itemsFiltered = this.filteredClients.filter((rowData: Client) => {
+      const fullName = `${rowData.name} ${rowData.lastname}`.toLowerCase();
+
+      if (/^\d+$/.test(filterValue)) {
+        // Buscar coincidencias en el número de teléfono
+        const phoneNumber = rowData.phone.toString();
+        return phoneNumber.includes(filterValue);
+      } else {
+        if (fullName === filterValue) {
+          return true;
+        }
+        const wordsPresent = filterWords.filter((word: any) => {
+          return fullName.includes(word);
+        });
+
+        return wordsPresent.length === filterWords.length;
+      }
+    });
+
+    this.clientsService.updateClient(itemsFiltered);
   }
 }
