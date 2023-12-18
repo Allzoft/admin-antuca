@@ -104,13 +104,15 @@ export class ClientsService {
   }
 
   public deleteClient(id: number) {
-    this.#state.set({
-      loading: false,
-      clients: this.clients().filter((i) => i.id_client !== id),
-    });
-    this.saveStorage(this.#state().clients);
-
-    return this.http.delete(`${this.env.url_api}/clients/${id}`);
+    return this.http.delete(`${this.env.url_api}/clients/${id}`).pipe(
+      tap((_) => {
+        this.#state.set({
+          loading: false,
+          clients: this.clients().filter((i) => i.id_client !== id),
+        });
+        this.saveStorage(this.#state().clients);
+      })
+    );
   }
 
   public updateClients(client: Client[]) {
