@@ -11,7 +11,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'orders',
-        title: 'Órdemes',
+        title: 'Órdenes',
         loadComponent: () =>
           import(
             './dashboard/pages/orders/orders.component'
