@@ -21,7 +21,6 @@
 </div>
 <p-card class="p-0">
   <p-table [value]="states()" styleClass="-mt-5 -mb-3 p-datatable-sm">
-
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="id_state" class="white-space-nowrap">
@@ -47,7 +46,21 @@
         <td>{{ state.id_state }}</td>
         <td>{{ state.name }}</td>
         <td>{{ state.type }}</td>
-        <td>{{ state.color }}</td>
+        <td>
+          <div class="flex align-items-center">
+            @switch (state.color) { @case ('danger') {
+            <div class="h-1rem w-1rem border-circle bg-red-500 mr-1"></div>
+            } @case ('success') {
+            <div class="h-1rem w-1rem border-circle bg-green-500 mr-1"></div>
+            } @case ('warning') {
+            <div class="h-1rem w-1rem border-circle bg-orange-600 mr-1"></div>
+            } @case ('info') {
+            <div class="h-1rem w-1rem border-circle bg-blue-400 mr-1"></div>
+            } @case ('primary') {
+            <div class="h-1rem w-1rem border-circle bg-primary-300 mr-1"></div>
+            } } {{ state.color }}
+          </div>
+        </td>
         <td>{{ state.priority }}</td>
         <td class="white-space-nowrap">
           <p-button
@@ -126,16 +139,63 @@
         <label for="color">Color</label>
         <span class="p-input-icon-left">
           <i class="pi pi-palette"></i>
-          <input
-            id="color"
-            type="text"
-            placeholder="Escriba el color en ingles Ej: red"
-            pInputText
+          <p-dropdown
+            [options]="colorOptions"
             [(ngModel)]="selectedState.color"
-            class="w-full p-inputtext-sm"
-            [ngClass]="{'ng-invalid ng-dirty': selectedState.color.length === 0}"
+            placeholder="Seleccione un color para su estado"
+            styleClass="p-inputtext-sm w-full"
             [ngClass]="{'ng-invalid ng-dirty': inputsDirt.color}"
-          />
+          >
+            <ng-template pTemplate="selectedItem">
+              <div
+                class="flex align-items-center gap-2"
+                *ngIf="selectedState.color"
+              >
+                @switch (selectedState.color) { @case ('danger') {
+                <div class="h-1rem w-1rem border-circle bg-red-500 mr-1"></div>
+                } @case ('success') {
+                <div
+                  class="h-1rem w-1rem border-circle bg-green-500 mr-1"
+                ></div>
+                } @case ('warning') {
+                <div
+                  class="h-1rem w-1rem border-circle bg-orange-600 mr-1"
+                ></div>
+
+                } @case ('info') {
+                <div class="h-1rem w-1rem border-circle bg-blue-400 mr-1"></div>
+                } @case ('primary') {
+                <div
+                  class="h-1rem w-1rem border-circle bg-primary-300 mr-1"
+                ></div>
+                } }
+                <div>{{ selectedState.color }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-state pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                @switch (state) { @case ('danger') {
+                <div class="h-1rem w-1rem border-circle bg-red-500 mr-1"></div>
+                } @case ('success') {
+                <div
+                  class="h-1rem w-1rem border-circle bg-green-500 mr-1"
+                ></div>
+                } @case ('warning') {
+                <div
+                  class="h-1rem w-1rem border-circle bg-orange-600 mr-1"
+                ></div>
+
+                } @case ('info') {
+                <div class="h-1rem w-1rem border-circle bg-blue-400 mr-1"></div>
+                } @case ('primary') {
+                <div
+                  class="h-1rem w-1rem border-circle bg-primary-300 mr-1"
+                ></div>
+                } }
+                <div>{{ state }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
         </span>
       </div>
       <div class="flex flex-column gap-2">

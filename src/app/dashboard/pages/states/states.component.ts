@@ -55,6 +55,13 @@ export default class StatesComponent {
   };
 
   public stateOptions: string[] = ['Órdenes'];
+  public colorOptions: string[] = [
+    'primary',
+    'success',
+    'warning',
+    'info',
+    'danger',
+  ];
 
   public showState: boolean = false;
 
