@@ -1,1 +1,168 @@
-<p>states works!</p>,
+<div class="flex justify-content-between">
+  <app-title title="Estados de las órdenes" />
+  <div class="flex gap-3 justify-content-center align-items-center">
+    <p-button
+      severity="info"
+      [outlined]="true"
+      [rounded]="true"
+      [icon]="statesService.loading() ? 'pi pi-spin pi-spinner font-medium text-xl' : 'pi pi-refresh font-medium text-xl'"
+      size="small"
+      (onClick)="refreshData()"
+    ></p-button>
+    <p-button
+      severity="success"
+      icon="pi pi-plus font-medium"
+      label="Nuevo Estado"
+      [rounded]="true"
+      styleClass="text-sm"
+      (onClick)="createState()"
+    ></p-button>
+  </div>
+</div>
+<p-card class="p-0">
+  <p-table [value]="states()" styleClass="-mt-5 -mb-3 p-datatable-sm">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id_state" class="white-space-nowrap">
+          ID <p-sortIcon field="id_state" />
+        </th>
+        <th pSortableColumn="name" class="white-space-nowrap">
+          Nombre <p-sortIcon field="name" />
+        </th>
+        <th pSortableColumn="type" class="white-space-nowrap">
+          Tipo <p-sortIcon field="type" />
+        </th>
+        <th pSortableColumn="color" class="white-space-nowrap">
+          Color <p-sortIcon field="color" />
+        </th>
+        <th pSortableColumn="priority" class="white-space-nowrap">
+          Prioridad <p-sortIcon field="priority" />
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-state>
+      <tr>
+        <td>{{ state.id_state }}</td>
+        <td>{{ state.name }}</td>
+        <td>{{ state.type }}</td>
+        <td>{{ state.color }}</td>
+        <td>{{ state.priority }}</td>
+        <td class="white-space-nowrap">
+          <p-button
+            icon="pi pi-pencil"
+            [rounded]="true"
+            [outlined]="true"
+            styleClass="h-2rem w-2rem"
+            (onClick)="editState(state)"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            [outlined]="true"
+            styleClass="h-2rem w-2rem ml-2"
+            (onClick)="deleteState(state)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{ 'Total: ' + states().length }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">No hay Estados registrados</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+<p-sidebar [(visible)]="showState" position="right">
+  <ng-template pTemplate="header"
+    ><span class="font-semibold text-xl"
+      >Información de estado</span
+    ></ng-template
+  >
+  <ng-template pTemplate="content">
+    <div class="w-full flex flex-column gap-7">
+      <div class="flex flex-column gap-2">
+        <label for="name">Nombre</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-tag"></i>
+          <input
+            id="name"
+            type="text"
+            pInputText
+            placeholder="Coloque un nombre de estado"
+            [(ngModel)]="selectedState.name"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{'ng-invalid ng-dirty': selectedState.name.length === 0}"
+            [ngClass]="{'ng-invalid ng-dirty': inputsDirt.name}"
+          />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="type">Tipo</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-home"></i>
+          <p-dropdown
+            [options]="stateOptions"
+            [(ngModel)]="selectedState.type"
+            placeholder="Seleccione un tipo de estado"
+            styleClass="p-inputtext-sm w-full"
+            [ngClass]="{'ng-invalid ng-dirty': inputsDirt.type}"
+          ></p-dropdown>
+        </span>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="color">Color</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-palette"></i>
+          <input
+            id="color"
+            type="text"
+            placeholder="Escriba el color en ingles Ej: red"
+            pInputText
+            [(ngModel)]="selectedState.color"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{'ng-invalid ng-dirty': selectedState.color.length === 0}"
+            [ngClass]="{'ng-invalid ng-dirty': inputsDirt.color}"
+          />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="priority">Prioridad</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-angle-double-up"></i>
+          <input
+            id="priority"
+            type="number"
+            pInputText
+            [(ngModel)]="selectedState.priority"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{'ng-invalid ng-dirty': inputsDirt.priority}"
+          />
+        </span>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer"
+    ><p-button
+      icon="pi pi-check"
+      severity="success"
+      styleClass="w-full"
+      [label]="selectedState.id_state === 0 ? 'Crear estado' : 'Actualizar estado'"
+      (onClick)="saveState()"
+    ></p-button
+  ></ng-template>
+</p-sidebar>
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>
