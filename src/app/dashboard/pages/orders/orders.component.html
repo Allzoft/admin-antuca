@@ -1,4 +1,20 @@
-<app-title title="Órdenes o comandas" />
-<p-card>
-
-</p-card>
+<div class="flex justify-content-between">
+  <app-title title="Menú" />
+  <div class="flex gap-3 justify-content-center align-items-center">
+    <p-button
+      severity="info"
+      [outlined]="true"
+      [rounded]="true"
+      [icon]="'pi pi-spin pi-spinner font-medium text-xl'"
+      size="small"
+    ></p-button>
+    <p-button
+      severity="success"
+      icon="pi pi-plus font-medium"
+      label="Nuevo plato"
+      [rounded]="true"
+      styleClass="text-lg"
+    ></p-button>
+  </div>
+</div>
+<p-card> </p-card>
