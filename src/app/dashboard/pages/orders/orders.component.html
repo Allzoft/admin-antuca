@@ -26,17 +26,17 @@
 
     <ng-template let-order pTemplate="grid">
       <div class="grid grid-nogutter">
-        <div
-          class="col-12 md:col-3 p-2"
-          *ngFor="let order of orders()"
-        >
+        <div class="col-12 md:col-3 p-2" *ngFor="let order of orders()">
           <div
             class="p-4 border-1 surface-border bg-white-alpha-10 border-round"
           >
             <div
               class="flex flex-wrap align-items-center justify-content-center gap-2"
             >
-              <span class="flex align-items-center gap-2">
+              <span
+                class="flex align-items-center gap-2 cursor-pointer hover:text-orange-100"
+                (click)="showClient(order.client)"
+              >
                 <i class="pi pi-user"></i>
                 <span class="font-semibold">
                   {{ order.client.name }} {{ order.client.lastname }}</span

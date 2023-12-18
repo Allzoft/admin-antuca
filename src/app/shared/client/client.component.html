@@ -187,7 +187,9 @@
         >
       </div>
     </div>
-    <div class="w-12 md:w-6 flex justify-content-center align-items-center gap-3">
+    <div
+      class="w-12 md:w-6 flex justify-content-center align-items-center gap-3"
+    >
       <p-button
         icon="pi pi-google"
         [rounded]="true"
@@ -222,8 +224,9 @@
   <div class="w-ful justify-content-end">
     <p-button
       styleClass="w-full"
-      [label]="this.config.data ? 'Actualizar cliente' : 'Crear cliente'"
+      [label]="config.data ? 'Actualizar cliente' : 'Crear cliente'"
       severity="success"
+      [disabled]="config.data?.disabled ? true : false"
       size="small"
       (onClick)="saveClient()"
     ></p-button>
