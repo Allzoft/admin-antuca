@@ -7,7 +7,7 @@ import { CustomersService } from '@services/customers.service';
 import { OrdersService } from '@services/orders.service';
 import { StatesService } from '@services/states.service';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { DropdownFilterEvent, DropdownModule } from 'primeng/dropdown';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -43,6 +43,7 @@ export class OrderComponent {
   public statesService = inject(StatesService);
 
   public clients = this.clientsService.clients;
+  public filteredClients = [...this.clientsService.clients()]
   public customers = this.customerService.customer;
   public states = this.statesService
     .states()
@@ -94,4 +95,5 @@ export class OrderComponent {
     this.serviceModes.forEach((s) => (s.isSelect = false));
     this.serviceModes[i].isSelect = true;
   }
+
 }
