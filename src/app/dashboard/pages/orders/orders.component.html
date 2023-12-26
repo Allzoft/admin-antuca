@@ -26,7 +26,10 @@
 
     <ng-template let-order pTemplate="grid">
       <div class="grid grid-nogutter">
-        <div class="col-12 md:col-3 p-2" *ngFor="let order of orders()">
+        <div
+          class="relative col-12 md:col-3 p-2"
+          *ngFor="let order of orders()"
+        >
           <div
             class="p-4 border-1 surface-border bg-white-alpha-10 border-round"
           >
@@ -34,7 +37,7 @@
               class="flex flex-wrap align-items-center justify-content-center gap-2"
             >
               <span
-                class="flex align-items-center gap-2 cursor-pointer hover:text-orange-100"
+                class="flex align-items-center gap-2 cursor-pointer hover:text-bluegray-400 text-center"
                 (click)="showClient(order.client)"
               >
                 <i class="pi pi-user"></i>
@@ -47,20 +50,53 @@
                 [severity]="order.state.color"
               ></p-tag>
             </div>
-            <div class="flex flex-column align-items-center gap-3 py-5">
-              <div class="text-2xl font-bold">{{ order.date | date }}</div>
+            <div class="flex flex-column align-items-center gap-3 p-3">
+              @for (item of order.orderItems; track $index) {
+              <div class="flex w-full gap-2">
+                <span class="font-semibold">{{ item.quantity }}</span>
+                <span
+                  class="hover:text-bluegray-300 cursor-pointer"
+                  (click)="showItem(item.item)"
+                  >{{ item.item.name }}</span
+                >
+              </div>
+              } @empty {
+              <p>Sin items del menú</p>
+              }
             </div>
-            <div class="flex align-items-center justify-content-between">
-              <span class="text-2xl font-semibold">{{ '$' + '5684' }}</span>
-              <button
-                pButton
-                icon="pi pi-shopping-cart"
-                class="p-button-rounded"
-              ></button>
+            <div class="flex flex-column align-items-center gap-3 py-1">
+              <div class="text-xl text-orange-300 font-bold">
+                {{ order.service_mode }}
+              </div>
             </div>
+            <div class="flex align-items-center justify-content-center mt-2">
+              <span class="text-2xl font-semibold"
+                >{{ 'Bs. ' + order.total_amount }}</span
+              >
+            </div>
+          </div>
+          <div class="absolute flex right-0 top-0 mt-3 mr-3">
+            <p-button
+              #btn
+              icon="pi pi-ellipsis-v text-white"
+              severity="warning"
+              [rounded]="true"
+              [text]="true"
+              styleClass="h-2rem w-2rem"
+              (onClick)="menu.toggle($event)"
+              (onClick)="selectOptionOrder(order)"
+            ></p-button>
+            <p-tieredMenu
+              #menu
+              [model]="items"
+              [popup]="true"
+              styleClass="absolute flex left-0 top-0 mt-3 mr-8 w-7rem"
+            ></p-tieredMenu>
           </div>
         </div>
       </div>
     </ng-template>
   </p-dataView>
 </p-card>
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>

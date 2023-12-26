@@ -95,6 +95,7 @@
         accept="image/*"
         styleClass="p-button-help p-button-sm"
         chooseLabel="Subir imagen"
+        [disabled]="config.data?.disabled ? true : false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event)"
       ></p-fileUpload>
@@ -103,6 +104,7 @@
       <p-button
         styleClass="w-full"
         [label]="this.config.data ? 'Actualizar' : 'Crear'"
+        [disabled]="config.data?.disabled ? true : false"
         severity="success"
         size="small"
         (onClick)="saveItem()"

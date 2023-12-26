@@ -12,6 +12,7 @@ export interface Order {
   stateIdState: number;
   total_amount: number;
   paymentTypeIdPaymentType: number;
+  service_mode: 'Para llevar' | 'En sala';
   notes: string;
   items?: createItems[];
   created_at?: Date;
