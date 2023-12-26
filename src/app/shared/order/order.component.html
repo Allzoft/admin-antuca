@@ -1,0 +1,99 @@
+<div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
+  <div class="flex w-full gap-3 md:gap-5">
+    <div class="flex flex-column gap-2 w-full">
+      <label for="client">Cliente <i class="pi pi-user mx-1"></i> </label>
+      <p-dropdown
+        id="client"
+        type="text"
+        [(ngModel)]="order.client"
+        placeholder="Seleccione al cliente"
+        [options]="clients()"
+        styleClass="p-inputtext-sm w-full "
+        [ngClass]="{'ng-invalid ng-dirty': !order.client}"
+        [ngClass]="{'ng-invalid ng-dirty': inputDirt.client}"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="order.client">
+            <div>{{ order.client!.name }} {{ order.client!.lastname }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-client pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <div>{{ client.name }} {{ client.lastname }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="flex flex-column gap-2 w-full">
+      <label for="customer"
+        >Vendedor <i class="pi pi-user-plus mx-1"></i></label
+      >
+      <p-dropdown
+        id="customer"
+        type="text"
+        [(ngModel)]="order.customer"
+        placeholder="Seleccione al Vendedor"
+        [disabled]="customerService.customer()!.name !== 'Administrador'"
+        styleClass="p-inputtext-sm w-full "
+        [ngClass]="{'ng-invalid ng-dirty': !order.customer}"
+        [ngClass]="{'ng-invalid ng-dirty': inputDirt.customer}"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2" *ngIf="order.customer">
+            <div>{{ order.customer!.name }} {{ order.customer!.lastname }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-customer pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <div>{{ customer.name }} {{ customer.lastname }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="flex flex-column gap-2 w-full">
+    <label for="username"
+      >Notas importantes sobre la orden: <i class="pi pi-pencil mx-1"></i></label
+    >
+    <textarea
+      rows="2"
+      cols="30"
+      placeholder="Escriba acá cada las indicaciones importantes porfavor"
+      pInputTextarea
+      [(ngModel)]="order.notes"
+      [autoResize]="true"
+      class="w-full"
+    ></textarea>
+  </div>
+  <div class="flex flex-column md:flex-row w-full gap-5">
+    <div class="flex flex-column w-full gap-2">
+      <label for="state">Estado <i class="pi pi-tag mx-1"></i></label>
+      <p-dropdown
+        inputId="state"
+        [(ngModel)]="order.state"
+        placeholder="Seleccione el estado de la orden"
+        [options]="states"
+        optionLabel="name"
+        styleClass="p-inputtext-sm w-full"
+      />
+    </div>
+    <div class="flex flex-column w-full gap-2">
+      <label for="service_mode"> Tipo de servicio <i class="pi pi-sign-out mx-1"></i></label>
+
+      <div
+        class="flex gap-2 w-full justify-content-around md:justify-content-between"
+      >
+        @for (serviceMode of serviceModes; track $index) {
+        <p-button
+          [label]="serviceMode.label"
+          [severity]="serviceMode.label !== 'Para llevar' ? 'warning':''"
+          [outlined]="!serviceMode.isSelect"
+          size="small"
+          (onClick)="selectServiceMode($index)"
+        ></p-button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

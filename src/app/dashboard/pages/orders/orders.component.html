@@ -14,6 +14,7 @@
       icon="pi pi-plus font-medium"
       label="Nueva órden"
       [rounded]="true"
+      (onClick)="createOrder()"
       styleClass="text-lg"
     ></p-button>
   </div>
@@ -38,16 +39,16 @@
             >
               <span
                 class="flex align-items-center gap-2 cursor-pointer hover:text-bluegray-400 text-center"
-                (click)="showClient(order.client)"
+                (click)="showClient(order.client!)"
               >
                 <i class="pi pi-user"></i>
                 <span class="font-semibold">
-                  {{ order.client.name }} {{ order.client.lastname }}</span
+                  {{ order.client!.name }} {{ order.client!.lastname }}</span
                 >
               </span>
               <p-tag
-                [value]="order.state.name"
-                [severity]="order.state.color"
+                [value]="order.state!.name"
+                [severity]="order.state!.color"
               ></p-tag>
             </div>
             <div class="flex flex-column align-items-center gap-3 p-3">
@@ -65,8 +66,8 @@
               }
             </div>
             <div class="flex flex-column align-items-center gap-3 py-1">
-              <div class="text-xl text-orange-300 font-bold">
-                {{ order.service_mode }}
+              <div class="text-xl text-orange-400 font-bold">
+                {{ order.service_mode.toUpperCase() }}
               </div>
             </div>
             <div class="flex align-items-center justify-content-center mt-2">

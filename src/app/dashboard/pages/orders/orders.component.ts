@@ -6,6 +6,7 @@ import { Order } from '@interfaces/order';
 import { OrdersService } from '@services/orders.service';
 import { ClientComponent } from '@shared/client/client.component';
 import { ItemComponent } from '@shared/item/item.component';
+import { OrderComponent } from '@shared/order/order.component';
 import { TitleComponent } from '@shared/title/title.component';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -61,7 +62,6 @@ export default class OrdersComponent {
     {
       label: 'Borrar',
       icon: 'pi pi-trash',
-
       command: () => {
         this.confirmationService.confirm({
           message: '¿Está seguro de eliminar esta orden?',
@@ -85,7 +85,13 @@ export default class OrdersComponent {
         });
       },
     },
-    { label: 'Editar', icon: 'pi pi-pencil' },
+    {
+      label: 'Editar',
+      icon: 'pi pi-pencil',
+      command: () => {
+        this.showOrder(this.selectOrder!);
+      },
+    },
   ];
 
   public refreshData(): void {
@@ -100,7 +106,7 @@ export default class OrdersComponent {
     this.ref = this.dialogService.open(ClientComponent, {
       header: 'Client: ' + client.name + ' ' + client.lastname,
       draggable: true,
-      styleClass: 'w-11 md:w-5',
+      styleClass: 'w-11 md:w-7',
       data: {
         client: client,
         disabled: true,
@@ -117,6 +123,25 @@ export default class OrdersComponent {
         item: item,
         disabled: true,
       },
+    });
+  }
+
+  public showOrder(order: Order): void {
+    this.ref = this.dialogService.open(OrderComponent, {
+      header: `Orden ${order.id_order}: ${order.client!.name} ${order.client!.lastname}`,
+      draggable: true,
+      styleClass: 'w-11 md:w-6',
+      data: {
+        order: order,
+      },
+    });
+  }
+
+  public createOrder(): void {
+    this.ref = this.dialogService.open(OrderComponent, {
+      header: `Nueva Orden`,
+      draggable: true,
+      styleClass: 'w-11 md:w-6',
     });
   }
 }

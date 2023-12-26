@@ -18,10 +18,10 @@ export interface Order {
   created_at?: Date;
   updated_at?: Date;
   orderItems?: OrderItems[];
-  client: Client;
-  customer: Customer;
-  state: State;
-  paymentType: PaymentType;
+  client?: Client;
+  customer?: Customer;
+  state?: State;
+  paymentType?: PaymentType;
 }
 
 export interface OrderItems {
