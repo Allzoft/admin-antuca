@@ -135,6 +135,16 @@ export default class OrdersComponent {
         order: order,
       },
     });
+
+    this.ref.onClose.subscribe((order: Order) => {
+      if (order) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exito!',
+          detail: `Orden para el cliente ${order.client!.name} actualizado exitosamente`,
+        });
+      }
+    });
   }
 
   public createOrder(): void {
@@ -142,6 +152,16 @@ export default class OrdersComponent {
       header: `Nueva Orden`,
       draggable: true,
       styleClass: 'w-11 md:w-6',
+    });
+
+    this.ref.onClose.subscribe((order: Order) => {
+      if (order) {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exito!',
+          detail: `Orden para el cliente ${order.client!.name} creado exitosamente`,
+        });
+      }
     });
   }
 }

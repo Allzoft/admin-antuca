@@ -23,11 +23,12 @@ import { ButtonModule } from 'primeng/button';
 })
 export default class UsersComponent {
   private customersService = inject(CustomersService);
-  public customers: Customer[] = [];
+  public customers = this.customersService.customers
+  ;
 
   constructor() {
-    this.customersService.getUsers().subscribe((res) => {
-      this.customers = res;
-    });
+    if(this.customers().length === 0){
+      this.customersService.getUsers()
+    }
   }
 }

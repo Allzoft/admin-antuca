@@ -42,7 +42,7 @@ export default class StatesComponent {
   public selectedState: State = {
     id_state: 0,
     name: '',
-    color: '',
+    color: undefined,
     priority: 0,
     type: '',
   };
@@ -73,7 +73,7 @@ export default class StatesComponent {
     this.selectedState = {
       id_state: 0,
       name: '',
-      color: '',
+      color: undefined,
       priority: 0,
       type: '',
     };

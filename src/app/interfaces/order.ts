@@ -29,12 +29,10 @@ export interface OrderItems {
   orderIdOrder: number;
   itemIdItem: number;
   quantity: number;
-  subtotal: number;
   item: Items;
 }
 
 export interface createItems {
   itemIdItem: number;
   quantity: number;
-  subtotal: number;
 }

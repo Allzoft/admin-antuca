@@ -15,6 +15,11 @@ interface State {
   loading: boolean;
 }
 
+interface StateCustomers {
+  customers: Customer[];
+  loadingCustomers: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -30,13 +35,24 @@ export class CustomersService {
     token: undefined,
   });
 
+  #stateCustomers = signal<StateCustomers>({
+    loadingCustomers: true,
+    customers: [],
+  });
+
   public customer = computed(() => this.#state().customer);
   public loading = computed(() => this.#state().loading);
   public token = computed(() => this.#state().token);
 
+  public customers = computed(() => this.#stateCustomers().customers);
+  public loadingCustomers = computed(
+    () => this.#stateCustomers().loadingCustomers
+  );
+
   constructor() {
     this.loadStorage();
   }
+
   public authLogin(
     credentials: CustomerLogin,
     remember: boolean
@@ -67,6 +83,17 @@ export class CustomersService {
     localStorage.setItem('token', resCustomer.access_token.toString());
   }
 
+  private saveStorageCustomers(customers: Customer[]) {
+    if (customers.length > 0) {
+      localStorage.setItem(
+        'customers',
+        JSON.stringify(this.#stateCustomers().customers)
+      );
+    } else {
+      localStorage.removeItem('customers');
+    }
+  }
+
   private loadStorage() {
     if (localStorage.getItem('token')) {
       this.#state.set({
@@ -85,6 +112,15 @@ export class CustomersService {
       });
       this.router.navigateByUrl('/auth');
     }
+
+    if (localStorage.getItem('customers')) {
+      this.#stateCustomers.set({
+        loadingCustomers: false,
+        customers: JSON.parse(localStorage.getItem('customers')!),
+      });
+    } else {
+      this.getUsers();
+    }
   }
 
   public closeSession() {
@@ -98,12 +134,57 @@ export class CustomersService {
     this.router.navigateByUrl('/auth');
   }
 
-  public getUsers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(`${this.env.url_api}/customers`);
+  public postClient(customer: Partial<Customer>): Observable<Customer> {
+    return this.http
+      .post<Customer>(`${this.env.url_api}/customers`, customer)
+      .pipe(
+        tap((resCustomer) => {
+          const oldCustomer = this.#stateCustomers().customers;
+          oldCustomer.push(resCustomer);
+          this.#stateCustomers.set({
+            loadingCustomers: false,
+            customers: oldCustomer,
+          });
+          this.saveStorageCustomers(this.#stateCustomers().customers);
+        })
+      );
+  }
+
+  public getUsers(): void {
+    this.#stateCustomers.set({
+      loadingCustomers: true,
+      customers: this.#stateCustomers().customers,
+    });
+    this.http.get<Customer[]>(`${this.env.url_api}/customers`).subscribe(
+      (res) => {
+        this.#stateCustomers.set({
+          loadingCustomers: false,
+          customers: res,
+        });
+        localStorage.setItem(
+          'customers',
+          JSON.stringify(this.#stateCustomers().customers)
+        );
+      },
+      (error) => {
+        this.#stateCustomers.set({
+          loadingCustomers: false,
+          customers: [],
+        });
+      }
+    );
   }
 
   public deleteUser(id: number) {
-    return this.http.delete(`${this.env.url_api}/customers/${id}`);
+    return this.http.delete(`${this.env.url_api}/customers/${id}`).pipe(
+      tap((_) => {
+        this.#stateCustomers.set({
+          loadingCustomers: false,
+          customers: this.customers().filter((i) => i.id_customer !== id),
+        });
+        this.saveStorageCustomers(this.#stateCustomers().customers);
+      })
+    );
   }
 
   public updateUser(id: number, user: Partial<Customer>) {
@@ -116,6 +197,19 @@ export class CustomersService {
         token: localStorage.getItem('token')!,
       });
     }
-    return this.http.patch(`${this.env.url_api}/customers/${id}`, user);
+    return this.http.patch<Customer>(`${this.env.url_api}/customers/${id}`, user).pipe(
+      tap((resCustomer) => {
+        const oldCustomer = this.#stateCustomers().customers;
+        const index = oldCustomer.findIndex(
+          (i) => i.id_customer === resCustomer.id_customer
+        );
+        oldCustomer[index] = resCustomer;
+        this.#stateCustomers.set({
+          loadingCustomers: false,
+          customers: oldCustomer,
+        });
+        this.saveStorageCustomers(this.#stateCustomers().customers);
+      })
+    );
   }
 }
