@@ -10,6 +10,14 @@ export const routes: Routes = [
     loadComponent: () => import('./dashboard/dashboard.component'),
     children: [
       {
+        path: 'daily-summary',
+        title: 'Resúmen diario',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/daily-summary/daily-summary.component'
+          ),
+      },
+      {
         path: 'orders',
         title: 'Órdenes',
         loadComponent: () =>
@@ -57,7 +65,11 @@ export const routes: Routes = [
             './dashboard/pages/states/states.component'
           ),
       },
-
+      {
+        path: '',
+        redirectTo: 'daily-summary',
+        pathMatch: 'full',
+      },
     ]
   },
   {

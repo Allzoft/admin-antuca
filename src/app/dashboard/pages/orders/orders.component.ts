@@ -128,7 +128,9 @@ export default class OrdersComponent {
 
   public showOrder(order: Order): void {
     this.ref = this.dialogService.open(OrderComponent, {
-      header: `Orden ${order.id_order}: ${order.client!.name} ${order.client!.lastname}`,
+      header: `Orden ${order.id_order}: ${order.client!.name} ${
+        order.client!.lastname
+      }`,
       draggable: true,
       styleClass: 'w-11 md:w-6',
       data: {
@@ -141,7 +143,9 @@ export default class OrdersComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Exito!',
-          detail: `Orden para el cliente ${order.client!.name} actualizado exitosamente`,
+          detail: `Orden para el cliente ${
+            order.client!.name
+          } actualizado exitosamente`,
         });
       }
     });
@@ -159,9 +163,18 @@ export default class OrdersComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Exito!',
-          detail: `Orden para el cliente ${order.client!.name} creado exitosamente`,
+          detail: `Orden para el cliente ${
+            order.client!.name
+          } creado exitosamente`,
         });
       }
     });
+  }
+
+  public get totalAmount(): number {
+    return this.orders().reduce(
+      (total, order) => total + +order.total_amount,
+      0
+    );
   }
 }

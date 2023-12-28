@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
 import { ItemsService } from '@services/items.service';
 import { TitleComponent } from '@shared/title/title.component';
 import { ButtonModule } from 'primeng/button';
@@ -22,6 +22,12 @@ import {
 } from 'primeng/dynamicdialog';
 import { ItemComponent } from '@shared/item/item.component';
 import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
+import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import { CalendarModule } from 'primeng/calendar';
+import moment from 'moment';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DailyAvailabilityServices } from '../../../services/dailyAvailability.service';
+import { DailyAvailability } from '@interfaces/dailyAvailability';
 
 @Component({
   selector: 'app-menu-items',
@@ -41,6 +47,9 @@ import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
     ConfirmDialogModule,
     ToastModule,
     DropdownModule,
+    OverlayPanelModule,
+    CalendarModule,
+    InputNumberModule,
   ],
   providers: [
     ConfirmationService,
@@ -56,6 +65,9 @@ export default class MenuItemsComponent implements OnDestroy {
   public itemsService = inject(ItemsService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
+  private dailyAvailabilityServices = inject(DailyAvailabilityServices);
+
+  @ViewChild('op') op!: OverlayPanel;
 
   public items = this.itemsService.items;
   public filteredItems = [...this.itemsService.items()];
@@ -67,7 +79,14 @@ export default class MenuItemsComponent implements OnDestroy {
     { value: 'Agotado', severity: 'danger' },
   ];
 
-  selectSort: { value: string; severity: string } | undefined;
+  public selectSort: { value: string; severity: string } | undefined;
+
+  public selectedItem: Items | undefined;
+
+  public date = moment().format('YYYY-MM-DD');
+  public quantity: number | undefined;
+  public quantityDirty: boolean = false;
+  public loadingAvailable: boolean = false;
 
   ngOnDestroy(): void {
     if (this.ref) {
@@ -171,5 +190,43 @@ export default class MenuItemsComponent implements OnDestroy {
       );
       this.itemsService.updateItems(newOrderItems);
     }
+  }
+
+  public createAvailability() {
+    if (!this.quantity) {
+      this.quantityDirty = true;
+      return;
+    }
+
+    const updateItem: Partial<Items> = {
+      available: 1,
+    };
+
+    const newAvailability: Partial<DailyAvailability> = {
+      date: moment(this.date).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
+      quantity: this.quantity,
+      itemIdItem: this.selectedItem!.id_item,
+    };
+
+    this.itemsService
+      .updateItem(this.selectedItem!.id_item, updateItem)
+      .subscribe((res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exito!',
+          detail:
+            'Disponibilidad de item ' + res.name + ' actualizada exitosamente',
+        });
+        this.dailyAvailabilityServices
+          .postDailyAvailability(newAvailability)
+          .subscribe((resA) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Exito!',
+              detail: `Disponibilidad de ${resA.quantity} items de ${res.name} creada exitosamente`,
+            });
+            this.op.hide()
+          });
+      });
   }
 }

@@ -20,9 +20,22 @@
   </div>
 </div>
 <p-card>
-  <p-dataView #dv [value]="orders()" layout="grid">
+  <p-dataView
+    #dv
+    [value]="orders()"
+    layout="grid"
+    [rows]="5"
+    [paginator]="true"
+  >
     <ng-template pTemplate="header">
-      <div class="flex justify-content-end"></div>
+      <div class="flex gap-2 justify-content-between text-white">
+        <span>
+          Cantidad: {{orders().length}}
+        </span>
+        <span>
+          Total: {{totalAmount}}
+        </span>
+      </div>
     </ng-template>
 
     <ng-template let-order pTemplate="grid">
@@ -73,6 +86,11 @@
             <div class="flex align-items-center justify-content-center mt-2">
               <span class="text-2xl font-semibold"
                 >{{ 'Bs. ' + order.total_amount }}</span
+              >
+            </div>
+            <div class="flex align-items-center justify-content-center mt-2">
+              <span class="text-lg font-semibold"
+                > <i class="pi pi-calendar mr-2"></i>{{ order.date | date: 'yyyy-MM-dd' }}</span
               >
             </div>
           </div>

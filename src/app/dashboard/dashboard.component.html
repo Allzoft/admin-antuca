@@ -1,6 +1,6 @@
 <div class="flex transition-ease-in-out transition-duration-500">
   <div
-    class=" fixed flex z-1  transition-ease-in-out transition-duration-500"
+    class="fixed flex z-1 transition-ease-in-out transition-duration-500"
     [ngClass]="{
     '-translate-x-100 fixed w-2': layoutService.state.staticMenuDesktopInactive,
     'w-2  flex': !layoutService.state.staticMenuDesktopInactive && !layoutService.isMobile(),
@@ -12,15 +12,16 @@
   </div>
 
   <div
-    class="flex flex-column transition-ease-in-out  transition-duration-500 transition-all  w-12"
+    class="flex flex-column transition-ease-in-out transition-duration-500 transition-all w-12"
     [ngClass]="!layoutService.state.staticMenuDesktopInactive  && !layoutService.isMobile() ? 'ml-5' : ''"
   >
     <app-topbar />
     @if (layoutService.isMobile()) {
-      <div class="w-full h-4rem"></div>
+    <div class="w-full h-4rem"></div>
     }
     <div class="p-3">
       <router-outlet />
+
     </div>
   </div>
 </div>

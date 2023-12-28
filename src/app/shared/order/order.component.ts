@@ -23,6 +23,8 @@ import { TableModule } from 'primeng/table';
 import { Items } from '@interfaces/items';
 import { CarouselModule } from 'primeng/carousel';
 import { LayoutService } from '@services/layout.service';
+import moment from 'moment';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-order',
@@ -39,6 +41,7 @@ import { LayoutService } from '@services/layout.service';
     BadgeModule,
     TableModule,
     CarouselModule,
+    CalendarModule,
   ],
   templateUrl: './order.component.html',
 })
@@ -71,7 +74,7 @@ export class OrderComponent {
     customerIdCustomer: this.customerService.customer()!.id_customer,
     customer: this.customerService.customer(),
     clientIdClient: 0,
-    date: new Date(),
+    date: moment(new Date()).format('YYYY-MM-DD'),
     stateIdState: this.initialState ? this.initialState.id_state : 0,
     state: this.initialState ? this.initialState : undefined,
     total_amount: 0,
@@ -109,7 +112,10 @@ export class OrderComponent {
 
   constructor() {
     if (this.config.data) {
-      this.order = this.config.data.order;
+      this.order = {
+        ...this.config.data.order,
+        date: moment(this.config.data.order.date).format('YYYY-MM-DD'),
+      };
       this.serviceModes.forEach((s) => {
         s.label === this.order.service_mode
           ? (s.isSelect = true)
@@ -265,7 +271,7 @@ export class OrderComponent {
     const newOrder: Partial<Order> = {
       customerIdCustomer: this.order.customer!.id_customer,
       clientIdClient: this.order.client!.id_client,
-      date: new Date(),
+      date: moment(this.order.date).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
       stateIdState: this.order.state!.id_state,
       total_amount: this.order.total_amount,
       paymentTypeIdPaymentType: 1,
@@ -291,7 +297,7 @@ export class OrderComponent {
     const newOrder: Partial<Order> = {
       customerIdCustomer: this.order.customer!.id_customer,
       clientIdClient: this.order.client!.id_client,
-      date: new Date(),
+      date: moment(this.order.date).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
       stateIdState: this.order.state!.id_state,
       total_amount: this.order.total_amount,
       paymentTypeIdPaymentType: 1,

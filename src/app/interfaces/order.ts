@@ -8,7 +8,7 @@ export interface Order {
   id_order: number;
   customerIdCustomer: number;
   clientIdClient: number;
-  date: Date;
+  date: string;
   stateIdState: number;
   total_amount: number;
   paymentTypeIdPaymentType: number;

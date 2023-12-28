@@ -8,7 +8,7 @@ export default class ItemImagePipe implements PipeTransform {
     let url = environment.url_public + '/uploads/';
 
     if (img === '') {
-      return 'assets/default-item.png';
+      return 'assets/dish.svg';
     }
 
     return url + img;
