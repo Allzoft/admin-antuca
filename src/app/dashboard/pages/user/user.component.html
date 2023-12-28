@@ -1,1 +1,116 @@
-<p>user works!</p>,
+<p-card styleClass="flex">
+  @if(idUser){
+  <span class="text-900 text-xl font-bold mb-4">Editar Usuario</span>
+  } @else {
+  <span class="text-900 text-xl font-bold mb-4">Crear Usuario</span>
+  }
+
+  <div class="flex flex-column md:flex-row mt-4">
+    <div class="col-12 md:col-3">
+      <div class="text-900 font-medium text-xl mb-3">Requisitos</div>
+      <p class="m-0 p-0 text-600 line-height-3 mr-3">
+        Ingrese todos los datos del nuevo usuario.
+      </p>
+      <div class="flex justify-content-center mt-4">
+        <img
+          [src]="customer.photo | image"
+          alt="customer-photo"
+          class="w-10rem h-10rem border-circle"
+        />
+      </div>
+    </div>
+
+    <div class="grid formgrid p-fluid mt-3 md:mt-0">
+      <div class="field mb-4 col-12 md:col-6">
+        <label for="name" class="font-medium text-900">Nombre</label>
+        <input
+          [(ngModel)]="customer.name"
+          id="name"
+          type="text"
+          pInputText
+          [ngClass]="{'ng-dirty ng-invalid': inputDirt.name}"
+          [ngClass]="{'ng-invalid ng-dirty': customer.name.length === 0}"
+        />
+      </div>
+
+      <div class="field mb-4 col-12">
+        <label for="id" class="font-medium text-900">C.I.</label>
+        <input
+          [(ngModel)]="customer.id"
+          id="id"
+          type="text"
+          pInputText
+          [ngClass]="{'ng-dirty ng-invalid': inputDirt.id}"
+          [ngClass]="{'ng-invalid ng-dirty': customer.id.length === 0}"
+        />
+      </div>
+      <div class="field mb-4 col-12 md:col-6">
+        <label for="email" class="font-medium text-900">Email</label>
+        <input
+          [(ngModel)]="customer.email"
+          id="email"
+          type="text"
+          pInputText
+          [ngClass]="{'ng-dirty ng-invalid': inputDirt.email}"
+          [ngClass]="{'ng-invalid ng-dirty': customer.email.length === 0}"
+        />
+      </div>
+      <div class="field mb-4 col-12 md:col-6">
+        <label for="phone" class="font-medium text-900">Teléfono</label>
+        <input
+          [(ngModel)]="customer.phone"
+          id="phone"
+          type="text"
+          pInputText
+          [ngClass]="{'ng-dirty ng-invalid': inputDirt.phone}"
+          [ngClass]="{'ng-invalid ng-dirty': customer.phone.length === 0}"
+        />
+      </div>
+
+      <div class="field mb-4 col-12 md:col-6">
+        <label for="avatar" class="font-medium text-900">Avatar</label>
+        <p-fileUpload
+          mode="basic"
+          name="file[]"
+          [auto]="true"
+          accept="image/*"
+          styleClass="p-button-info p-button-sm w-full"
+          chooseLabel="Subir imagen"
+          [customUpload]="true"
+          (uploadHandler)="onUpload($event)"
+        />
+      </div>
+      <div class="field mb-4 col-12 md:col-6">
+        <label for="password" class="font-medium text-900">Contraseña</label>
+        <input
+          [(ngModel)]="password"
+          id="password"
+          placeholder="******"
+          class="p-inputtext-sm"
+          type="password"
+          pInputText
+          [ngClass]="{'ng-dirty ng-invalid': inputDirt.password}"
+          [ngClass]="{'ng-invalid ng-dirty': password.length > 3}"
+        />
+      </div>
+      <div class="col-12 flex justify-content-end gap-3 mr-4 -mb-3">
+        <p-button
+          icon="pi pi-fw pi-arrow-left"
+          label="Regresar"
+          severity="help"
+          (onClick)="router.navigateByUrl('/dashboard/users')"
+        />
+        <p-button
+          [label]="idUser ? 'Actualizar Usuario' : 'Crear Usuario'"
+          severity="success"
+          (onClick)="saveUser()"
+        ></p-button>
+      </div>
+      <div class="col-12 flex justify-content-center gap-3 mr-4 -mb-3">
+        <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+      </div>
+    </div>
+  </div>
+</p-card>
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>

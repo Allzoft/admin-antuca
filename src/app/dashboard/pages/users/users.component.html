@@ -7,12 +7,13 @@
       label="Nuev@ usuario"
       [rounded]="true"
       styleClass="text-sm"
+      (onClick)="createUser()"
     ></p-button>
   </div>
 </div>
 <p-card class="p-0">
   <p-table [value]="customers()" styleClass="-mt-5 -mb-3">
-    <ng-template pTemplate="header" >
+    <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
         <th>Foto</th>
@@ -33,12 +34,13 @@
         </td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
-        <td class="w-8rem">
+        <td class="white-space-nowrap">
           <p-button
             icon="pi pi-pencil"
             [rounded]="true"
             [outlined]="true"
             styleClass="h-2rem w-2rem"
+            (onClick)="editUser(customer)"
           ></p-button>
           <p-button
             icon="pi pi-trash"
@@ -46,12 +48,12 @@
             [rounded]="true"
             [outlined]="true"
             styleClass="h-2rem w-2rem ml-2"
-
+            (onClick)="removeUser(customer)"
           ></p-button>
         </td>
       </tr>
     </ng-template>
-    <ng-template pTemplate="footer" >
+    <ng-template pTemplate="footer">
       <tr>
         <td></td>
         <td></td>
@@ -67,3 +69,5 @@
     </ng-template>
   </p-table>
 </p-card>
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>

@@ -58,6 +58,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'user/:id',
+        title: 'Usuario',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/user/user.component'
+          ),
+      },
+      {
+        path: 'user/create',
+        title: 'Usuario',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/user/user.component'
+          ),
+      },
+      {
         path: 'states',
         title: 'Estados',
         loadComponent: () =>

@@ -9,6 +9,7 @@ import { CustomersService } from '@services/customers.service';
 import { Customer } from '@interfaces/customer';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
@@ -19,6 +20,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     BreadcrumbModule,
     InputTextModule,
     PipesModule,
+    RouterModule,
     ConfirmDialogModule,
   ],
   providers: [ConfirmationService],
@@ -28,6 +30,7 @@ export class TopbarComponent {
   public layoutService = inject(LayoutService);
   private customerService = inject(CustomersService);
   private confirmationService = inject(ConfirmationService);
+  private router = inject(Router)
 
   items: MenuItem[] = [{ label: 'Cliente' }, { label: 'Pedidos' }];
 
@@ -40,8 +43,7 @@ export class TopbarComponent {
   }
 
   onProfileButtonClick() {
-    this.layoutService.showProfileSidebar();
-    console.log(this.layoutService.state);
+   this.router.navigateByUrl('/dashboard/user/' + this.customer.id_customer)
   }
 
   closeSession() {

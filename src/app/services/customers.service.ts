@@ -134,7 +134,7 @@ export class CustomersService {
     this.router.navigateByUrl('/auth');
   }
 
-  public postClient(customer: Partial<Customer>): Observable<Customer> {
+  public postCustomer(customer: Partial<Customer>): Observable<Customer> {
     return this.http
       .post<Customer>(`${this.env.url_api}/customers`, customer)
       .pipe(
@@ -175,6 +175,10 @@ export class CustomersService {
     );
   }
 
+  public getOneUser(id: number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.env.url_api}/customers/${id}`);
+  }
+
   public deleteUser(id: number) {
     return this.http.delete(`${this.env.url_api}/customers/${id}`).pipe(
       tap((_) => {
@@ -197,19 +201,21 @@ export class CustomersService {
         token: localStorage.getItem('token')!,
       });
     }
-    return this.http.patch<Customer>(`${this.env.url_api}/customers/${id}`, user).pipe(
-      tap((resCustomer) => {
-        const oldCustomer = this.#stateCustomers().customers;
-        const index = oldCustomer.findIndex(
-          (i) => i.id_customer === resCustomer.id_customer
-        );
-        oldCustomer[index] = resCustomer;
-        this.#stateCustomers.set({
-          loadingCustomers: false,
-          customers: oldCustomer,
-        });
-        this.saveStorageCustomers(this.#stateCustomers().customers);
-      })
-    );
+    return this.http
+      .patch<Customer>(`${this.env.url_api}/customers/${id}`, user)
+      .pipe(
+        tap((resCustomer) => {
+          const oldCustomer = this.#stateCustomers().customers;
+          const index = oldCustomer.findIndex(
+            (i) => i.id_customer === resCustomer.id_customer
+          );
+          oldCustomer[index] = resCustomer;
+          this.#stateCustomers.set({
+            loadingCustomers: false,
+            customers: oldCustomer,
+          });
+          this.saveStorageCustomers(this.#stateCustomers().customers);
+        })
+      );
   }
 }
