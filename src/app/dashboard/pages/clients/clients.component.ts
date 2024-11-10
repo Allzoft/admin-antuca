@@ -49,6 +49,9 @@ export default class ClientsComponent implements OnDestroy {
 
   public ref: DynamicDialogRef | undefined;
 
+
+  public showFilters: boolean = false;
+
   public clients = this.clientsService.clients;
   public filteredClients = [...this.clientsService.clients()];
 

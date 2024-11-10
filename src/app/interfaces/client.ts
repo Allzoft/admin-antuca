@@ -6,7 +6,6 @@ export interface Client {
   photo: string;
   code_country: string;
   phone: string;
-  isActive: number;
   id: string;
   type_business: number;
   gender: string;

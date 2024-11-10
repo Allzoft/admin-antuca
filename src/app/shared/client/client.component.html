@@ -10,8 +10,8 @@
           pInputText
           [(ngModel)]="client.name"
           class="w-full p-inputtext-sm"
-          [ngClass]="{'ng-invalid ng-dirty': client.name.length === 0}"
-          [ngClass]="{'ng-invalid ng-dirty': inputNameDirt}"
+          [ngClass]="{ 'ng-invalid ng-dirty': client.name.length === 0 }"
+          [ngClass]="{ 'ng-invalid ng-dirty': inputNameDirt }"
         />
       </span>
     </div>
@@ -26,7 +26,7 @@
           pInputText
           [(ngModel)]="client.lastname"
           class="w-full p-inputtext-sm"
-          [ngClass]="{'ng-invalid ng-dirty': client.lastname.length === 0}"
+          [ngClass]="{ 'ng-invalid ng-dirty': client.lastname.length === 0 }"
         />
       </span>
     </div>
@@ -53,7 +53,7 @@
           pInputText
           [(ngModel)]="client.id"
           class="w-full p-inputtext-sm"
-          [ngClass]="{'ng-invalid ng-dirty': client.id.length === 0}"
+          [ngClass]="{ 'ng-invalid ng-dirty': client.id.length === 0 }"
         />
       </span>
     </div>
@@ -68,43 +68,20 @@
           pInputText
           [(ngModel)]="client.email"
           class="w-full p-inputtext-sm"
-          [ngClass]="{'ng-invalid ng-dirty': client.email.length === 0}"
+          [ngClass]="{ 'ng-invalid ng-dirty': client.email.length === 0 }"
         />
       </span>
     </div>
   </div>
   <div class="flex flex-column md:flex-row w-full">
-    <div class="w-12 md:w-6 flex mt-0 md:mt-2">
-      <div class="flex flex-column gap-2 w-full ml-0 md:ml-2">
-        <label for="isActive">Cliente Activo</label>
-        <div class="flex align-items-center gap-2">
-          <label
-            htmlFor="type_business"
-            class="block text-900"
-            style="white-space: nowrap; width: max-content;"
-            >No</label
-          >
-          <p-inputSwitch
-            inputId="isActive"
-            [(ngModel)]="client.isActive"
-            [trueValue]="1"
-            [falseValue]="0"
-          ></p-inputSwitch>
-          <label
-            htmlFor="type_business"
-            class="block text-900"
-            style="white-space: nowrap; width: max-content;"
-            >Si</label
-          >
-        </div>
-      </div>
+    <div class="w-12 md:w-6 flex mt-0 md:ml-2 md:mt-2">
       <div class="flex flex-column gap-2 w-full">
         <label for="isActive">Tipo</label>
         <div class="flex align-items-center gap-2">
           <label
             htmlFor="type_business"
             class="block text-900"
-            style="white-space: nowrap; width: max-content;"
+            style="white-space: nowrap; width: max-content"
             >B2C</label
           >
           <p-inputSwitch
@@ -116,7 +93,7 @@
           <label
             htmlFor="type_business"
             class="block text-900"
-            style="white-space: nowrap; width: max-content;"
+            style="white-space: nowrap; width: max-content"
             >B2B</label
           >
         </div>
@@ -135,14 +112,14 @@
           <ng-template pTemplate="selectedItem">
             @if (selectedCodeCountry) {
             <div class="flex align-items-center gap-2">
-              <img [src]="selectedCodeCountry.flag" style="width: 18px;" />
+              <img [src]="selectedCodeCountry.flag" style="width: 18px" />
               <div>{{ selectedCodeCountry.code }}</div>
             </div>
             }
           </ng-template>
           <ng-template let-item pTemplate="item">
             <div class="flex align-items-center gap-2">
-              <img [src]="item.flag" style="width: 18px;" />
+              <img [src]="item.flag" style="width: 18px" />
               <div>{{ item.code }}</div>
             </div>
           </ng-template>
@@ -153,7 +130,8 @@
           [(ngModel)]="client.phone"
           inputStyleClass="w-full p-inputtext-sm"
           styleClass="w-full"
-          [ngClass]="{'ng-dirty ng-invalid': inputPhoneDirt}"
+          class="w-full"
+          [ngClass]="{ 'ng-dirty ng-invalid': inputPhoneDirt }"
         />
       </div>
     </div>
@@ -163,14 +141,14 @@
       <label
         htmlFor="gender"
         class="block text-900"
-        style="white-space: nowrap; width: max-content;"
+        style="white-space: nowrap; width: max-content"
         >Género
       </label>
       <div class="flex align-items-center gap-2">
         <label
           htmlFor="gender"
           class="block text-900"
-          style="white-space: nowrap; width: max-content;"
+          style="white-space: nowrap; width: max-content"
           >Femenino</label
         >
         <p-inputSwitch
@@ -182,7 +160,7 @@
         <label
           htmlFor="gender"
           class="block text-900"
-          style="white-space: nowrap; width: max-content;"
+          style="white-space: nowrap; width: max-content"
           >Masculino</label
         >
       </div>
@@ -201,7 +179,7 @@
           <label
             htmlFor="google"
             class="block text-900"
-            style="white-space: nowrap; width: max-content;"
+            style="white-space: nowrap; width: max-content"
             >No</label
           >
           <p-inputSwitch
@@ -214,7 +192,7 @@
           <label
             htmlFor="google"
             class="block text-900"
-            style="white-space: nowrap; width: max-content;"
+            style="white-space: nowrap; width: max-content"
             >Si</label
           >
         </div>
