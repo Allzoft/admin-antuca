@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { LayoutService } from '../../services/layout.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { CustomersService } from '@services/customers.service';
@@ -10,6 +10,10 @@ import { Customer } from '@interfaces/customer';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Router, RouterModule } from '@angular/router';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-topbar',
@@ -22,8 +26,12 @@ import { Router, RouterModule } from '@angular/router';
     PipesModule,
     RouterModule,
     ConfirmDialogModule,
+    InputIconModule,
+    SplitButtonModule,
+    ToastModule,
+    IconFieldModule,
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './topbar.component.html',
 })
 export class TopbarComponent {
@@ -38,7 +46,11 @@ export class TopbarComponent {
 
   customer: Customer = this.customerService.customer()!;
 
+  public user = this.customerService.customer
+
   onMenuButtonClick() {
+    console.log(this.layoutService.state.staticMenuDesktopInactive);
+    
     this.layoutService.onMenuToggle();
   }
 

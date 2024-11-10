@@ -1,14 +1,7 @@
 <div
-  class="w-full h-screen bg-gray-700 shadow-4 flex flex-column transition-ease-in-out transition-duration-500 align-items-center"
+  class="w-full h-screen flex flex-column transition-ease-in-out transition-duration-500 align-items-center"
 >
-  <div class="w-9 md:w-full px-4 py-4 md:py-2">
-    <img
-      src="../../../assets/logo-antuca.svg"
-      alt="logo-antuca"
-      class="w-full cursor-pointer"
-      (click)="router.navigateByUrl('/dashboard')"
-      (click)="layoutService.isMobile() ? toogleMenu() :''"
-    />
+  <div class="w-full px-4 py-4 md:py-2">
     @if (layoutService.isMobile()) {
     <p-button
       icon="pi pi-times"
@@ -21,7 +14,118 @@
     }
   </div>
   <div class="w-full">
-    <p-menu [model]="items" styleClass="w-full"></p-menu>
+    <div
+      class="w-screen md:w-full h-screen overflow-hidden flex flex-column transition-ease-in-out transition-duration-500 align-items-center z-2 overflow-auto"
+    >
+      <div class="w-9 md:w-full px-4 py-4 md:py-2">
+        @if (layoutService.isMobile()) {
+        <p-button
+          icon="pi pi-times"
+          severity="secondary"
+          [rounded]="true"
+          [outlined]="true"
+          styleClass="h-2rem w-2rem absolute top-0 right-0 mt-4 mr-4"
+          (onClick)="toogleMenu()"
+        ></p-button>
+        }
+      </div>
+      <div class="w-full flex flex-column gap-2">
+        <div
+          class="text-700 font-semibold text-xl"
+          style="padding-left: 1.35rem"
+        >
+          Menú Principal
+        </div>
+
+        <div class="w-full flex flex-column mt-3">
+          @for (item of items; track $index) {
+          <a
+            [href]="'#/' + item.father + item.link"
+            (click)="
+              navigateTo(item.father + item.link); $event.preventDefault()
+            "
+            class="cursor-pointer relative no-underline w-full flex gap-3 py-3 hover:surface-200"
+            style="padding-left: 1.35rem"
+          >
+            @if (isOnModule(item.father + item.link)) {
+            <i [class]="' text-900 pi pi-' + item.icon"></i>
+            <div class="text-md text-900">{{ item.name }}</div>
+            <div
+              style="margin-left: -1.7rem"
+              class="absolute left-0 bg-primary-600 w-2rem h-full top-0 border-round-right"
+            ></div>
+            <div
+              class="absolute right-0 w-12 h-full top-0"
+              style="
+                background: linear-gradient(to left, #e6c56d, #ffae00);
+                opacity: 0.2;
+              "
+            ></div>
+            } @else {
+            <i [class]="' text-400 pi pi-' + item.icon"></i>
+            <div class="text-400 text-sm">{{ item.name }}</div>
+            }
+          </a>
+          }
+        </div>
+      </div>
+      <div
+        style="
+          background: linear-gradient(to left, #d4a625, #e4a213);
+          opacity: 0.8;
+        "
+        class="relative w-8 md:w-11 mt-6 md:mt-4 border-round overflow-hidden h-8rem flex flex-column gap-2 pl-4 pt-3"
+      >
+        <div class="w-full text-white font-semibold">
+          Organiza tus menús
+          <br />
+          a través de este boton
+        </div>
+        <p-button
+          icon="pi pi-arrow-right"
+          severity="contrast"
+          [text]="true"
+          styleClass="bg-white-alpha-40 mt-2"
+        />
+        <div
+          class="absolute bottom-0 right-0 w-7rem h-7rem -mb-5 -mr-5 bg-white opacity-30 border-circle"
+        ></div>
+        <div class="absolute top-0 right-0 mt-3 mr-3 flex flex-column gap-1">
+          <div class="flex gap-1">
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+          </div>
+          <div class="flex gap-1">
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+          </div>
+          <div class="flex gap-1">
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+          </div>
+          <div class="flex gap-1">
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card border-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-xs text-center px-2 mt-6 md:mt-4 mb-2">
+        &copy; 2024 Antuca Restaurante. Todos los derechos reservados.
+      </div>
+    </div>
+    <p-toast position="top-center"></p-toast>
+    <p-confirmDialog
+      styleClass="w-auto md:w-5"
+      position="bottom"
+    ></p-confirmDialog>
   </div>
 </div>
 <p-toast position="top-center"></p-toast>

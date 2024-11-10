@@ -6,11 +6,11 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/auth.component'),
   },
   {
-    path: 'dashboard',
+    path: '',
     loadComponent: () => import('./dashboard/layout.component'),
     children: [
       {
-        path: 'daily-summary',
+        path: 'control-panel/daily-summary',
         title: 'Resúmen diario',
         loadComponent: () =>
           import(
@@ -18,7 +18,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'orders',
+        path: 'orders/orders-list',
         title: 'Órdenes',
         loadComponent: () =>
           import(
@@ -26,7 +26,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'clients',
+        path: 'orders/clients-list',
         title: 'Clientes',
         loadComponent: () =>
           import(
@@ -34,7 +34,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'menu-items',
+        path: 'admin/menu-items',
         title: 'Menu Items',
         loadComponent: () =>
           import(
@@ -42,7 +42,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'payments-type',
+        path: 'admin/payments-type',
         title: 'Tipos de pago',
         loadComponent: () =>
           import(
@@ -50,7 +50,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'users',
+        path: 'admin/users-list',
         title: 'Lista de usuarios',
         loadComponent: () =>
           import(
@@ -74,7 +74,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'states',
+        path: 'admin/states',
         title: 'Estados',
         loadComponent: () =>
           import(
@@ -83,14 +83,14 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'daily-summary',
+        redirectTo: 'control-panel/daily-summary',
         pathMatch: 'full',
       },
     ]
   },
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '',
     pathMatch: 'full',
   },
 ];

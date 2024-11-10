@@ -5,16 +5,27 @@ import { LayoutService } from '@services/layout.service';
 
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @Component({
   selector: 'app-sidemenu',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule, MenuModule, ToastModule],
-  providers: [MessageService],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ButtonModule,
+    MenuModule,
+    ToastModule,
+    ConfirmDialogModule,
+  ],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './sidemenu.component.html',
   styles: `
-
+  .dot-card {
+    width: 3px;
+    height: 3px;
+  }
   `,
 })
 export class SidemenuComponent {
@@ -23,98 +34,93 @@ export class SidemenuComponent {
   public router = inject(Router);
 
   public toogleMenu() {
-    this.layoutService.onMenuToggle();
+    this.layoutService.state.staticMenuDesktopInactive = false
   }
 
-  public items: MenuItem[] = [
+  public items: {
+    name: string;
+    icon: string;
+    father: string;
+    link: string;
+    section: string;
+    position: number;
+  }[] = [
     {
-      label: 'Panel de control',
-      items: [
-        {
-          label: 'Informes',
-          icon: 'pi pi-chart-bar',
-          command: () => {
-            this.messageService.add({
-              severity: 'info',
-              summary: 'En construcción',
-              detail: 'Página de informes en construcción',
-              icon: 'pi pi-lock'
-            });
-          },
-        },
-      ],
+      name: 'Resúmen diario',
+      father: '/control-panel',
+      link: '/daily-summary',
+      icon: 'sun',
+      section: 'root',
+      position: 0,
     },
     {
-      label: 'Clientes',
-      items: [
-        {
-          label: 'Órdenes',
-          icon: 'pi pi-megaphone',
-          routerLink: ['/dashboard/orders'],
-          command: () => {
-            if(this.layoutService.isMobile()){
-              this.layoutService.onMenuToggle()
-            }
-          },
-        },
-        {
-          label: 'Menú',
-          icon: 'pi pi-book',
-          routerLink: ['/dashboard/menu-items'],
-          command: () => {
-            if(this.layoutService.isMobile()){
-              this.layoutService.onMenuToggle()
-            }
-          },
-        },
-        {
-          label: 'Mis clientes',
-          icon: 'pi pi-users',
-          routerLink: ['/dashboard/clients'],
-          command: () => {
-            if(this.layoutService.isMobile()){
-              this.layoutService.onMenuToggle()
-            }
-          },
-        },
-      ],
+      name: 'Órdenes',
+      father: '/orders',
+      link: '/orders-list',
+      icon: 'list',
+      section: 'root',
+      position: 0,
     },
     {
-      label: 'Administración',
-      items: [
-        {
-          label: 'Usuarios',
-          icon: 'pi pi-users',
-          routerLink: ['/dashboard/users'],
-          command: () => {
-            if(this.layoutService.isMobile()){
-              this.layoutService.onMenuToggle()
-            }
-          },
-        },
-        {
-          label: 'Estados',
-          icon: 'pi pi-tags',
-          routerLink: ['/dashboard/states'],
-          command: () => {
-            if(this.layoutService.isMobile()){
-              this.layoutService.onMenuToggle()
-            }
-          },
-        },
-        {
-          label: 'Modos de pago',
-          icon: 'pi pi-money-bill',
-          command: () => {
-            this.messageService.add({
-              severity: 'info',
-              summary: 'En construcción',
-              detail: 'Página de Modos de pago en construcción',
-              icon: 'pi pi-lock'
-            });
-          },
-        },
-      ],
+      name: 'Clientes',
+      father: '/orders',
+      link: '/clients-list',
+      icon: 'users',
+      section: 'root',
+      position: 0,
+    },
+    {
+      name: 'Menú',
+      father: '/admin',
+      link: '/menu-items',
+      icon: 'clipboard',
+      section: 'root',
+      position: 0,
+    },
+    {
+      name: 'Tipos de pago',
+      father: '/admin',
+      link: '/payments-type',
+      icon: 'sun',
+      section: 'root',
+      position: 0,
+    },
+    {
+      name: 'Usuarios',
+      father: '/admin',
+      link: '/users-list',
+      icon: 'users',
+      section: 'root',
+      position: 0,
+    },
+    {
+      name: 'Estados de Orden',
+      father: '/admin',
+      link: '/states',
+      icon: 'tags',
+      section: 'root',
+      position: 0,
     },
   ];
+
+  public isOnModule(value: string): boolean {
+    const url = this.router.url;
+
+    if (url.includes(value)) return true;
+
+    return false;
+  }
+
+  public navigateTo(link: string) {
+    if (link === 'devices/recovery-data' || link === 'control-panel/reports') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Módulo en construcción',
+        icon: 'pi pi-wrench',
+        detail: 'Este módulo se habilitará proximamente',
+      });
+      return;
+    }
+    this.router.navigateByUrl(link);
+  }
 }

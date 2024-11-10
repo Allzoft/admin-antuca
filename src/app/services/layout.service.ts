@@ -47,11 +47,6 @@ export class LayoutService {
       debounceTime(300),
       tap((isMobile) => {
         this.isMobileValue = isMobile;
-        if (this.isMobile()) {
-          this.state.staticMenuDesktopInactive = false;
-        } else {
-          this.state.staticMenuDesktopInactive = true;
-        }
       })
     );
 
@@ -63,15 +58,17 @@ export class LayoutService {
   }
 
   onMenuToggle() {
-    if (!this.isMobile()) {
-      this.state.staticMenuDesktopInactive =
-        !this.state.staticMenuDesktopInactive;
-    } else {
-      this.state.staticMenuMobileActive = !this.state.staticMenuMobileActive;
-      if (this.state.staticMenuMobileActive) {
-        this.overlayOpen.next(null);
-      }
-    }
+    this.state.staticMenuDesktopInactive =
+      !this.state.staticMenuDesktopInactive;
+    // if (!this.isMobile()) {
+    //   this.state.staticMenuDesktopInactive =
+    //     !this.state.staticMenuDesktopInactive;
+    // } else {
+    //   this.state.staticMenuMobileActive = !this.state.staticMenuMobileActive;
+    //   if (this.state.staticMenuMobileActive) {
+    //     this.overlayOpen.next(null);
+    //   }
+    // }
   }
 
   onOverlaySubmenuOpen() {
