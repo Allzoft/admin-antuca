@@ -116,9 +116,9 @@
         class="flex gap-2 w-full justify-content-around md:justify-content-between"
       >
         @for (serviceMode of serviceModes; track $index) {
+          <!-- [severity]="serviceMode.label !== 'Para llevar' ? 'warning':''" -->
         <p-button
           [label]="serviceMode.label"
-          [severity]="serviceMode.label !== 'Para llevar' ? 'warning':''"
           [outlined]="!serviceMode.isSelect"
           size="small"
           (onClick)="selectServiceMode($index)"

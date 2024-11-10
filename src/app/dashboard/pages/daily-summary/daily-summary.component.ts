@@ -345,10 +345,12 @@ export default class DailySummaryComponent {
   public get totalAcount(): number {
     let count = 0;
     this.orders().forEach((o) => {
-      if (o.state!.name !== 'Orden perdida') {
-        o.orderItems!.forEach((order) => {
-          count += order.quantity;
-        });
+      if (o.state) {
+        if (o.state!.name !== 'Orden perdida') {
+          o.orderItems!.forEach((order) => {
+            count += order.quantity;
+          });
+        }
       }
     });
     return count;

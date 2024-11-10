@@ -7,7 +7,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./dashboard/dashboard.component'),
+    loadComponent: () => import('./dashboard/layout.component'),
     children: [
       {
         path: 'daily-summary',

@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-
-export interface AppConfig {
-  inputStyle: string;
-  colorScheme: string;
-  theme: string;
-  ripple: boolean;
-  menuMode: string;
-  scale: number;
-  menuTheme: string;
-}
+import { Observable, fromEvent, Subject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  tap,
+} from 'rxjs/operators';
 
 interface LayoutState {
   staticMenuDesktopInactive: boolean;
@@ -24,18 +21,8 @@ interface LayoutState {
   providedIn: 'root',
 })
 export class LayoutService {
-  config: AppConfig = {
-    ripple: false,
-    inputStyle: 'outlined',
-    menuMode: 'static',
-    colorScheme: 'light',
-    theme: 'indigo',
-    scale: 14,
-    menuTheme: 'colorScheme',
-  };
-
   state: LayoutState = {
-    staticMenuDesktopInactive: false,
+    staticMenuDesktopInactive: true,
     overlayMenuActive: false,
     profileSidebarVisible: false,
     configSidebarVisible: false,
@@ -43,33 +30,44 @@ export class LayoutService {
     menuHoverActive: false,
   };
 
-  private configUpdate = new Subject<AppConfig>();
-
   private overlayOpen = new Subject<any>();
 
-  configUpdate$ = this.configUpdate.asObservable();
-
-  overlayOpen$ = this.overlayOpen.asObservable();
+  overlayOpen$: Observable<any> = this.overlayOpen.asObservable();
+  private isMobileValue: boolean = false;
 
   constructor() {
-    console.log(this.state);
+    this.setupResponsiveChecks();
+  }
+
+  private setupResponsiveChecks(): void {
+    const isMobile$ = fromEvent(window, 'resize').pipe(
+      map(() => window.innerWidth <= 991),
+      startWith(window.innerWidth <= 991),
+      distinctUntilChanged(),
+      debounceTime(300),
+      tap((isMobile) => {
+        this.isMobileValue = isMobile;
+        if (this.isMobile()) {
+          this.state.staticMenuDesktopInactive = false;
+        } else {
+          this.state.staticMenuDesktopInactive = true;
+        }
+      })
+    );
+
+    isMobile$.subscribe();
+  }
+
+  isMobile(): boolean {
+    return this.isMobileValue;
   }
 
   onMenuToggle() {
-    if (this.isOverlay()) {
-      this.state.overlayMenuActive = !this.state.overlayMenuActive;
-
-      if (this.state.overlayMenuActive) {
-        this.overlayOpen.next(null);
-      }
-    }
-
-    if (this.isDesktop()) {
+    if (!this.isMobile()) {
       this.state.staticMenuDesktopInactive =
         !this.state.staticMenuDesktopInactive;
     } else {
       this.state.staticMenuMobileActive = !this.state.staticMenuMobileActive;
-
       if (this.state.staticMenuMobileActive) {
         this.overlayOpen.next(null);
       }
@@ -78,37 +76,5 @@ export class LayoutService {
 
   onOverlaySubmenuOpen() {
     this.overlayOpen.next(null);
-  }
-
-  showProfileSidebar() {
-    this.state.profileSidebarVisible = true;
-  }
-
-  showConfigSidebar() {
-    this.state.configSidebarVisible = true;
-  }
-
-  isOverlay() {
-    return this.config.menuMode === 'overlay';
-  }
-
-  isDesktop() {
-    return window.innerWidth > 991;
-  }
-
-  isSlim() {
-    return this.config.menuMode === 'slim';
-  }
-
-  isHorizontal() {
-    return this.config.menuMode === 'horizontal';
-  }
-
-  isMobile() {
-    return !this.isDesktop();
-  }
-
-  onConfigUpdate() {
-    this.configUpdate.next(this.config);
   }
 }
