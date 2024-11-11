@@ -5,6 +5,7 @@ import {
   distinctUntilChanged,
   map,
   startWith,
+  take,
   tap,
 } from 'rxjs/operators';
 
@@ -22,7 +23,7 @@ interface LayoutState {
 })
 export class LayoutService {
   state: LayoutState = {
-    staticMenuDesktopInactive: true,
+    staticMenuDesktopInactive: false,
     overlayMenuActive: false,
     profileSidebarVisible: false,
     configSidebarVisible: false,
@@ -49,7 +50,15 @@ export class LayoutService {
         this.isMobileValue = isMobile;
       })
     );
-
+  
+    // Ejecuta la lógica una vez, después de que se haya evaluado `isMobile`
+    isMobile$.pipe(take(1)).subscribe(() => {
+      if (!this.isMobileValue) {
+        this.state.staticMenuDesktopInactive = true;
+      }
+    });
+    
+    // Luego continúa la suscripción normalmente para cambios futuros
     isMobile$.subscribe();
   }
 

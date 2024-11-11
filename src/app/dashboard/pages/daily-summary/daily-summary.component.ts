@@ -30,6 +30,7 @@ import { State } from '@interfaces/state';
 import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-daily-summary',
@@ -38,10 +39,12 @@ import { PipesModule } from '../../../pipes/pipes.module';
     CommonModule,
     FormsModule,
     CarouselModule,
+    SkeletonModule,
     ButtonModule,
     TieredMenuModule,
     TagModule,
     CardModule,
+    CalendarModule,
     CalendarModule,
     ConfirmDialogModule,
     ToastModule,
@@ -66,6 +69,8 @@ export default class DailySummaryComponent {
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
 
+  public  filterDate: Date = new Date();
+
   public date = moment().format('YYYY-MM-DD');
   public signalDate = signal(moment().format('YYYY-MM-DD'));
 
@@ -81,13 +86,14 @@ export default class DailySummaryComponent {
         return priorityB - priorityA;
       })
   );
+
   public filteredOrders = [...this.ordersService.orders()];
 
   public selectOrder: Order | undefined;
 
   public ref: DynamicDialogRef | undefined;
 
-  public loadingOrder: boolean = false;
+  public loadingOrders = this.ordersService.loading;
 
   public menuItems: DailyAvailability[] = [];
 

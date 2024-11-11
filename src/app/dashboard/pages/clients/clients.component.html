@@ -44,7 +44,7 @@
     }
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id_client" class="pl-5 white-space-nowrap">
+        <th pSortableColumn="id_client" class="pl-5n white-space-nowrap">
           ID <p-sortIcon field="id_client" />
         </th>
         <th>Foto</th>
@@ -60,7 +60,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-client>
       <tr>
-        <td class="pl-5 ">{{ client.id_client }}</td>
+        <td class="pl-5n ">{{ client.id_client }}</td>
         <td>
           <img
             [src]="client!.photo | image"
