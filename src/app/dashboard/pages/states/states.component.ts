@@ -13,6 +13,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { LayoutService } from '@services/layout.service';
 
 @Component({
   selector: 'app-states',
@@ -22,7 +23,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FormsModule,
     TableModule,
     CardModule,
-    TitleComponent,
     ButtonModule,
     InputTextModule,
     SidebarModule,
@@ -35,6 +35,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 })
 export default class StatesComponent {
   private confirmationService = inject(ConfirmationService);
+  public layoutService = inject(LayoutService)
   public statesService = inject(StatesService);
   public messageService = inject(MessageService);
   public states = this.statesService.states;
@@ -42,7 +43,6 @@ export default class StatesComponent {
   public selectedState: State = {
     id_state: 0,
     name: '',
-    color: undefined,
     priority: 0,
     type: '',
   };
@@ -54,14 +54,7 @@ export default class StatesComponent {
     type: false,
   };
 
-  public stateOptions: string[] = ['Órdenes'];
-  public colorOptions: string[] = [
-    'primary',
-    'success',
-    'warning',
-    'info',
-    'danger',
-  ];
+  public stateOptions: string[] = ['order'];
 
   public showState: boolean = false;
 
@@ -73,7 +66,6 @@ export default class StatesComponent {
     this.selectedState = {
       id_state: 0,
       name: '',
-      color: undefined,
       priority: 0,
       type: '',
     };
@@ -111,7 +103,6 @@ export default class StatesComponent {
 
     const newState: Partial<State> = {
       name: this.selectedState.name,
-      color: this.selectedState.color,
       priority: this.selectedState.priority,
       type: this.selectedState.type,
     };
@@ -147,10 +138,7 @@ export default class StatesComponent {
       this.inputsDirt.type = true;
       return Promise.resolve(false);
     }
-    if (!this.selectedState.color) {
-      this.inputsDirt.color = true;
-      return Promise.resolve(false);
-    }
     return Promise.resolve(true);
   }
 }
+

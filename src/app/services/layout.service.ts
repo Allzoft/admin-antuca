@@ -45,7 +45,7 @@ export class LayoutService {
       map(() => window.innerWidth <= 991),
       startWith(window.innerWidth <= 991),
       distinctUntilChanged(),
-      debounceTime(300),
+      // debounceTime(300),
       tap((isMobile) => {
         this.isMobileValue = isMobile;
       })

@@ -16,7 +16,6 @@ import { CustomersService } from '@services/customers.service';
     SidemenuComponent,
     TopbarComponent,
     RouterOutlet,
-    UserComponent,
     SidebarModule,
   ],
   templateUrl: './layout.component.html',

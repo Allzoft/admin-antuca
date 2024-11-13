@@ -58,13 +58,12 @@ export class OrderComponent {
 
   public clients = this.clientsService.clients;
   public customers = this.customerService.customers;
-  public states = this.statesService
-    .states()
-    .filter((s) => s.type === 'Órdenes');
+  public states = this.statesService.states;
+  public loadingStates = this.statesService.loading;
 
   public selectItems: any[] = [];
 
-  public initialState = this.states.find((s) => s.name === 'Orden agendada');
+  public initialState = this.states().find((s) => s.priority === 2);
 
   public editTotal: boolean = false;
   public showAllItems: boolean = false;
@@ -78,7 +77,7 @@ export class OrderComponent {
     stateIdState: this.initialState ? this.initialState.id_state : 0,
     state: this.initialState ? this.initialState : undefined,
     total_amount: 0,
-    paymentTypeIdPaymentType: 0,
+    paymentTypeIdPaymentType: 1,
     service_mode: 'En sala',
     notes: '',
   };
@@ -123,6 +122,7 @@ export class OrderComponent {
       });
       console.log(this.config.data.order);
     }
+    this.statesService.getAllStates();
   }
 
   public selectServiceMode(i: number) {
@@ -198,6 +198,8 @@ export class OrderComponent {
   }
 
   public calculateAmount(): void {
+    const serviceModeSelected = this.serviceModes.find((s) => s.isSelect);
+
     this.order.total_amount = 0.0;
     if (this.selectItems.length === 0) {
       this.order.total_amount = 0.0;
@@ -215,15 +217,23 @@ export class OrderComponent {
     otherItemsItems.forEach(
       (i) => (this.order.total_amount += i.price * i.quantity)
     );
-
-    if (startersCount - secondsCount === 0) {
-      this.order.total_amount += startersCount * 15;
-    } else if (startersCount - secondsCount > 0) {
-      this.order.total_amount += secondsCount * 15;
-      this.order.total_amount += (startersCount - secondsCount) * 5;
-    } else if (startersCount - secondsCount < 0) {
-      this.order.total_amount += startersCount * 15;
-      this.order.total_amount += (startersCount - secondsCount) * -1 * 12;
+    if (serviceModeSelected!.label === 'En sala') {
+      if (startersCount - secondsCount === 0) {
+        this.order.total_amount += startersCount * 15;
+      } else if (startersCount - secondsCount > 0) {
+        this.order.total_amount += secondsCount * 15;
+        this.order.total_amount += (startersCount - secondsCount) * 5;
+      } else if (startersCount - secondsCount < 0) {
+        this.order.total_amount += startersCount * 15;
+        this.order.total_amount += (startersCount - secondsCount) * -1 * 12;
+      }
+    } else {
+      startersItems.forEach(
+        (i) => (this.order.total_amount += i.quantity * i.price)
+      );
+      secondsItems.forEach(
+        (i) => (this.order.total_amount += i.quantity * i.price)
+      );
     }
   }
 

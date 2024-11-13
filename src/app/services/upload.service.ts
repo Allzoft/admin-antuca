@@ -10,6 +10,6 @@ export class UploadService {
   constructor(private http: HttpClient) {}
 
   uploadfile(data: any) {
-    return this.http.post<any>(`${environment.url_api}/upload/`, data);
+    return this.http.post<any>(`${environment.url_public}/upload/`, data);
   }
 }

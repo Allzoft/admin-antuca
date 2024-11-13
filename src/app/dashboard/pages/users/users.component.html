@@ -1,73 +1,278 @@
-<div class="flex justify-content-between">
-  <app-title title="Lista de usuarios" />
-  <div class="flex gap-3 justify-content-center align-items-center">
-    <p-button
-      severity="success"
-      icon="pi pi-user-plus font-medium"
-      label="Nuev@ usuario"
-      [rounded]="true"
-      styleClass="text-sm"
-      (onClick)="createUser()"
-    ></p-button>
+<section
+  class="w-full px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between"
+>
+  <div class="flex flex-column gap-1 md:gap-2">
+    <span class="text-4xl">Lista de usuario</span>
+    <span class="text-lg text-400">Histórico de usuarios</span>
+  </div>
+  <div
+    class="flex flex-column md:flex-row align-items-center gap-3 md:gap-4 w-full md:w-auto"
+  >
+    <div
+      class="hover:surface-50 cursor-pointer flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+    >
+      <i class="text-primary pi pi- pi-sliders-h text-3xl md:text-6xl"></i>
+      <div class="flex flex-column gap-2">
+        <div class="md:px-3">Filtros</div>
+      </div>
+    </div>
+
+    @if(!layoutService.isMobile()){
+    <div
+      (click)="createUser()"
+      class="transition-colors transition-duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 hover:shadow-3 shadow-2 px-3 w-full md:w-auto py-3 border-round align-items-center gap-2"
+    >
+      <i class="text-primary pi pi-plus text-6xl"></i>
+    </div>
+    } @else {
+    <div
+      class="flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      (click)="createUser()"
+    >
+      <i class="text-primary pi pi-plus text-3xl md:text-6xl"></i>
+      <div class="flex flex-column gap-2">
+        <span class="">Añadir usuario</span>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<div class="px-3 mt-3 md:mt-4">
+  <div class="p-0 border-round">
+    <p-table
+      [value]="customers()"
+      styleClass=""
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id_user" class="py-3 pl-8 white-space-nowrap">
+            Id de usuario <p-sortIcon field="id_user" />
+          </th>
+          <th pSortableColumn="name" class="py-3 white-space-nowrap">
+            Nombre de usuario <p-sortIcon field="name" />
+          </th>
+          <th pSortableColumn="email" class="py-3 white-space-nowrap">
+            Correo <p-sortIcon field="email" />
+          </th>
+          <th pSortableColumn="phone" class="py-3 white-space-nowrap">
+            Teléfono <p-sortIcon field="phone" />
+          </th>
+          <th class="py-3"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td class="pl-8">{{ "UAR-" + user.id_customer }}</td>
+          <td>
+            <div class="flex align-items-center gap-2">
+              <img
+                [src]="user.photo | image"
+                class="border-round w-2rem h-2rem"
+                alt="Profile"
+              />
+              <span>{{ user.name + " " + user.lastname }} </span>
+            </div>
+          </td>
+          <td>
+            {{ user.email }}
+          </td>
+          <td>
+            {{ user.code_country + " " + user.phone }}
+          </td>
+
+          <td class="white-space-nowrap">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [outlined]="true"
+              styleClass="h-2rem w-2rem"
+            ></p-button>
+            <!-- (onClick)="showUser(user)" -->
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [outlined]="true"
+              styleClass="h-2rem w-2rem ml-2"
+              (onClick)="removeUser(user)"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{ "Total: " + customers().length }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5">No hay ordenes registradas</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>
-<p-card class="p-0">
-  <p-table [value]="customers()" styleClass="-mt-5 -mb-3">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Foto</th>
-        <th>Nombre</th>
-        <th>Correo</th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-customer>
-      <tr>
-        <td>{{ customer.id_customer }}</td>
-        <td>
-          <img
-            [src]="customer!.photo | image"
-            class="border-circle w-2rem h-2rem"
-            alt="Profile"
+<p-sidebar [(visible)]="showUserForm" position="right" styleClass="w-12 md:w-5">
+  <ng-template pTemplate="header"
+    ><span class="font-semibold text-xl"
+      >Formulario de nuevo usuario</span
+    ></ng-template
+  >
+  <div class="w-full flex flex-column gap-5 mt-2 md:mt-0">
+    <div class="flex w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="username">Nombre</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <input
+            id="username"
+            type="text"
+            pInputText
+            placeholder="Nombre del usuario"
+            [(ngModel)]="user.name"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{ 'ng-invalid ng-dirty': user.name.length === 0 }"
           />
-        </td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
-        <td class="white-space-nowrap">
-          <p-button
-            icon="pi pi-pencil"
-            [rounded]="true"
-            [outlined]="true"
-            styleClass="h-2rem w-2rem"
-            (onClick)="editUser(customer)"
-          ></p-button>
-          <p-button
-            icon="pi pi-trash"
-            severity="danger"
-            [rounded]="true"
-            [outlined]="true"
-            styleClass="h-2rem w-2rem ml-2"
-            (onClick)="removeUser(customer)"
-          ></p-button>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{ 'Total: ' + customers.length }}</td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="5">No hay Usuarios registrados</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</p-card>
+          <!-- [ngClass]="{ 'ng-invalid ng-dirty': inputNameDirt }" -->
+        </span>
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="lastname">Apellido</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <input
+            id="lastname"
+            type="text"
+            pInputText
+            placeholder="Apellido del usuario"
+            [(ngModel)]="user.lastname"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{ 'ng-invalid ng-dirty': user.lastname.length === 0 }"
+          />
+        </span>
+      </div>
+    </div>
+
+    <div class="flex w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="email">C. I.</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-id-card"></i>
+          <input
+            id="email"
+            placeholder="Carnet del usuario"
+            type="text"
+            pInputText
+            [(ngModel)]="user.id"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{ 'ng-invalid ng-dirty': user.id.length === 0 }"
+          />
+        </span>
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="email">Correo</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-envelope"></i>
+          <input
+            id="email"
+            type="text"
+            placeholder="correo de ingreso al sistema"
+            pInputText
+            [(ngModel)]="user.email"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{ 'ng-invalid ng-dirty': user.email.length === 0 }"
+          />
+        </span>
+      </div>
+    </div>
+    <div class="flex flex-column md:flex-row w-full">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="email">Contraseña</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-lock"></i>
+          <input
+            id="email"
+            type="text"
+            placeholder="correo de ingreso al sistema"
+            pInputText
+            [(ngModel)]="user.password"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{ 'ng-invalid ng-dirty': user.email.length === 0 }"
+          />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2 w-12 ml-0 md:ml-5 mt-2 md:mt-0">
+        <label for="email">Teléfono</label>
+        <div class="flex gap-2 w-full">
+          <p-dropdown
+            [options]="optionsCodeCountries"
+            [(ngModel)]="selectedCodeCountry"
+            placeholder="+0"
+            optionLabel="name"
+            styleClass="p-inputtext-sm"
+          >
+            <ng-template pTemplate="selectedItem">
+              @if (selectedCodeCountry) {
+              <div class="flex align-items-center gap-2">
+                <img [src]="selectedCodeCountry.flag" style="width: 18px" />
+                <div>{{ selectedCodeCountry.code }}</div>
+              </div>
+              }
+            </ng-template>
+            <ng-template let-item pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <img [src]="item.flag" style="width: 18px" />
+                <div>{{ item.code }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <p-inputNumber
+            inputId="integeronly"
+            [useGrouping]="false"
+            [(ngModel)]="user.phone"
+            inputStyleClass="w-full p-inputtext-sm"
+            styleClass="w-full"
+            class="w-full"
+          />
+          <!-- [ngClass]="{ 'ng-dirty ng-invalid': inputPhoneDirt }" -->
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full flex-column gap-3 justify-content-center align-items-center">
+      <div
+        class="w-10rem h-10rem border-circle surface-200 flex justify-content-center align-items-center"
+      >
+        @if (user.photo) {
+        <img [src]="user.photo" alt="user_image" class="w-full" />
+        } @else {
+        <i class="pi pi-user text-7xl"></i>
+        }
+      </div>
+      <p-fileUpload
+        mode="basic"
+        name="file[]"
+        [auto]="true"
+        accept="image/*"
+        styleClass="p-button-help surface-100 text-800 p-button-outlined border-none p-button-sm"
+        chooseLabel="Subir imagen"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event)"
+      ></p-fileUpload>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button severity="success" label="Crear Usuario" styleClass="w-full"></p-button>
+  </ng-template>
+</p-sidebar>
 <p-toast position="top-center"></p-toast>
 <p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>

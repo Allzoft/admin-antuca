@@ -18,6 +18,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'control-panel/daily-monitor',
+        title: 'Resúmen diario',
+        loadComponent: () =>
+          import(
+            './dashboard/pages/daily-monitor/daily-monitor.component'
+          ),
+      },
+      {
         path: 'orders/orders-list',
         title: 'Órdenes',
         loadComponent: () =>

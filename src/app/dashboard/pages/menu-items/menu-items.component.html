@@ -1,25 +1,5 @@
-<div class="flex justify-content-between">
-  <app-title title="Menú" />
-  <div class="flex gap-3 justify-content-center align-items-center">
-    <p-button
-      severity="info"
-      [outlined]="true"
-      [rounded]="true"
-      [icon]="itemsService.loading() ? 'pi pi-spin pi-spinner font-medium text-xl' : 'pi pi-refresh font-medium text-xl'"
-      size="small"
-      (onClick)="refreshData()"
-    ></p-button>
-    <p-button
-      severity="success"
-      icon="pi pi-plus font-medium"
-      label="Nuevo plato"
-      [rounded]="true"
-      styleClass="text-lg"
-      (onClick)="createItem()"
-    ></p-button>
-  </div>
-</div>
-<p-card>
+
+<!-- <p-card>
   <p-dataView
     #dv
     [value]="items()"
@@ -72,7 +52,8 @@
             [ngClass]="{ 'border-top-1 surface-border': !first }"
           >
             <p-image
-              imageClass="w-9 sm:w-16rem xl:w-10rem  shadow-2 block xl:block mx-auto border-round"
+              imageClass="w-9  sm:w-16rem xl:w-10rem  px-2 block xl:block mx-auto border-round"
+              styleClass="px-2 surface-200"
               [preview]="true"
               [src]="item.photo | item"
               [alt]="item.name"
@@ -150,7 +131,7 @@
       <p colspan="6">No hay clientes registrados</p>
     </ng-template>
   </p-dataView>
-</p-card>
+</p-card> -->
 <p-toast position="top-center"></p-toast>
 <p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>
 <p-overlayPanel #op>

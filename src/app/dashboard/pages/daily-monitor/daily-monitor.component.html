@@ -1,0 +1,40 @@
+<div class="flex-column flex w-full p-0">
+  <section
+    class="flex justify-content-between w-full border-y-1 border-300 py-1 align-items-center px-3"
+  >
+    <div class="text-2xl font-medium">{{ currentTime }}</div>
+    <div
+      class="align-items-center flex flex-column gap-0 md:gap-1 surface-50 border-1 border-200 px-2 py-1 border-round"
+    >
+      <div class="text-xl text-primary-600 md:text-base">{{ "23" }}</div>
+      <div class="text-xs text-700">Activos</div>
+    </div>
+    <p-dropdown
+      [(ngModel)]="filterRoleSelect"
+      styleClass="border-1 surface-50 shadow-none  h-3rem py-2 border-200"
+      [options]="filterOptionsRole"
+    ></p-dropdown>
+    <p-button
+      styleClass="h-3rem  flex cursor-pointer hover:bg-primary-100 bg-primary-50 h-3rem w-3rem pl-2  align-items-center gap-2"
+      icon="text-primary pi pi-sliders-h text-xl"
+    ></p-button>
+  </section>
+  <div class="py-2 overflow-x-scroll white-space-nowrap w-full">
+    @for (item of [0,2,1,2,3,4]; track $index) {
+    <div class="bg-white h-20rem w-5 md:w-2 mx-2 inline-block"></div>
+    }
+    <!-- Agrega más tarjetas según sea necesario -->
+  </div>
+  <div class="flex border-y-1 border-200 my-1 flex-column gap-1 p-3 md:gap-2">
+    <span class="text-3xl">Notificaciones</span>
+  </div>
+  <div class="px-2">
+    <p-messages
+      #mssg
+      [(value)]="messages"
+      [enableService]="true"
+      [closable]="false"
+      styleClass="w-12 md:w-8"
+    />
+  </div>
+</div>

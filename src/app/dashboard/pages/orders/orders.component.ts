@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Signal, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Client } from '@interfaces/client';
 import { Items } from '@interfaces/items';
-import { Order } from '@interfaces/order';
+import { Order, OrderItems } from '@interfaces/order';
+import { LayoutService } from '@services/layout.service';
 import { OrdersService } from '@services/orders.service';
+import { StatesService } from '@services/states.service';
 import { ClientComponent } from '@shared/client/client.component';
 import { ItemComponent } from '@shared/item/item.component';
 import { OrderComponent } from '@shared/order/order.component';
@@ -13,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
+import { DropdownModule } from 'primeng/dropdown';
 import {
   DialogService,
   DynamicDialogConfig,
@@ -22,16 +26,18 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ToastModule } from 'primeng/toast';
+import { PipesModule } from '../../../pipes/pipes.module';
 
 @Component({
   selector: 'app-orders',
   standalone: true,
   imports: [
+    FormsModule,
     CommonModule,
+    PipesModule,
     DataViewModule,
-    CardModule,
-    TitleComponent,
     TableModule,
+    DropdownModule,
     ButtonModule,
     TagModule,
     TieredMenuModule,
@@ -50,13 +56,23 @@ export default class OrdersComponent {
   public configRef = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   public ordersService = inject(OrdersService);
+  public statesService = inject(StatesService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
+  public layoutService = inject(LayoutService)
 
   public orders: Signal<Order[]> = this.ordersService.orders;
   public selectOrder: Order | undefined;
 
   public ref: DynamicDialogRef | undefined;
+
+  public options: string[] = ['Última semana', 'Último mes', 'Personalizado'];
+  public filterDateSelect: string = 'Última semana';
+
+  public optionsFilterState: string[] = this.statesService.states().map((s) => {
+    return s.name;
+  });
+  public filterStateSelect: string = 'Todos los estados';
 
   public items: MenuItem[] = [
     {
@@ -94,12 +110,38 @@ export default class OrdersComponent {
     },
   ];
 
+  constructor() {
+    this.statesService.getAllStates();
+    this.optionsFilterState.push('Todos los estados');
+  }
+
   public refreshData(): void {
     this.ordersService.getOrders();
   }
 
   selectOptionOrder(order: Order): void {
     this.selectOrder = order;
+  }
+
+  public deleteOrder(order: Order) {
+    this.confirmationService.confirm({
+      message: 'Esta seguro de eliminar la Orden',
+      acceptLabel: 'Si',
+      acceptButtonStyleClass: 'p-button-rounded p-button-success w-7rem',
+      rejectLabel: 'No',
+      rejectButtonStyleClass: 'p-button-rounded p-button-warning w-7rem',
+      header: 'Confirmación',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.ordersService.deleteOrders(order.id_order).subscribe((_) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Eliminación exitosa',
+            detail: `Orden eliminada exitosamente`,
+          });
+        });
+      },
+    });
   }
 
   public showClient(client: Client): void {
@@ -169,6 +211,10 @@ export default class OrdersComponent {
         });
       }
     });
+  }
+
+  public getOrders = ( orderItems: OrderItems[] ):string => {
+    return orderItems.map((i)=>{return i.quantity + ' ' + i.item.name}).join(', ')
   }
 
   public get totalAmount(): number {

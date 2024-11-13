@@ -77,7 +77,8 @@
         inputId="state"
         [(ngModel)]="order.state"
         placeholder="Seleccione el estado de la orden"
-        [options]="states"
+        [options]="states()"
+        [loading]="loadingStates()"
         optionLabel="name"
         [styleClass]="!order.state || inputDirt.state ? 'p-inputtext-sm w-full border-red-200' : 'p-inputtext-sm w-full'"
       >
@@ -86,7 +87,6 @@
             <div class="flex align-items-center gap-2">
               <p-badge
                 value="."
-                [severity]="order.state.color"
                 styleClass="text-black-alpha-10"
               />
               {{ order.state.name }}
@@ -160,7 +160,7 @@
         >
           <ng-template let-item pTemplate="item">
             <div
-              class="transition-colors transition-duration-500 hover:bg-bluegray-800 h-5rem w-full border-300 border-1 border-round-md flex p-2 gap-3 cursor-pointer"
+              class="surface-100 border-none transition-colors transition-duration-500 hover:bg-bluegray-300 h-5rem w-full border-300 border-1 border-round-md flex p-2 gap-3 cursor-pointer"
               (click)="order.orderItems ? addUpdateItem(item) : addItem(item)"
             >
               <div
@@ -175,13 +175,13 @@
                 <span class="flex align-items-center gap-2">
                   <i class="pi pi-tag text-400"></i>
                   @if (item.type_item === 0) {
-                  <span class="font-semibold text-sm text-400"
+                  <span class="font-semibold text-sm text-500"
                     >Sopa o entrante</span
                   >
                   } @if (item.type_item === 1) {
-                  <span class="font-semibold text-sm text-400">Segundo</span>
+                  <span class="font-semibold text-sm text-500">Segundo</span>
                   } @if (item.type_item === 2) {
-                  <span class="font-semibold text-sm text-400">Otro</span>
+                  <span class="font-semibold text-sm text-500">Otro</span>
                   }
                 </span>
               </div>
@@ -312,6 +312,7 @@
         [inputStyleClass]=" "
         styleClass="w-full"
         [showIcon]="true"
+        [touchUI]="true"
         [readonlyInput]="true"
       ></p-calendar>
     </div>

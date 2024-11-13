@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { TitleComponent } from '@shared/title/title.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -17,20 +17,24 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ClientComponent } from '@shared/client/client.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { LayoutService } from '@services/layout.service';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-clients',
   standalone: true,
   imports: [
     CommonModule,
-    TitleComponent,
     ButtonModule,
     CardModule,
     TableModule,
     PipesModule,
     ToastModule,
     ConfirmDialogModule,
+    DropdownModule,
     InputTextModule,
+    TagModule,
   ],
   providers: [
     ConfirmationService,
@@ -40,8 +44,9 @@ import { InputTextModule } from 'primeng/inputtext';
   ],
   templateUrl: './clients.component.html',
 })
-export default class ClientsComponent implements OnDestroy {
+export default class ClientsComponent implements OnDestroy, OnInit {
   public clientsService = inject(ClientsService);
+  public layoutService = inject(LayoutService)
   public configRef = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   private messageService = inject(MessageService);
@@ -55,7 +60,13 @@ export default class ClientsComponent implements OnDestroy {
   public clients = this.clientsService.clients;
   public filteredClients = [...this.clientsService.clients()];
 
+  ngOnInit(): void {
+    console.log(this.clients())
+    this.refreshData()
+  }
+
   ngOnDestroy(): void {
+ 
     if (this.ref) {
       this.ref.close();
     }
@@ -63,6 +74,7 @@ export default class ClientsComponent implements OnDestroy {
 
   public refreshData() {
     this.clientsService.getClient();
+
   }
 
   public deleteClient(client: Client) {

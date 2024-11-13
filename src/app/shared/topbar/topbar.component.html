@@ -1,5 +1,5 @@
 <section
-  class="z-1 flex md:justify-content-between w-12 px-2 md:px-4 surface-100 md:surface-50"
+  class="flex md:justify-content-between w-12 px-2 md:px-4 surface-100 md:surface-50"
   [ngClass]="{ fixed: layoutService.isMobile() }"
 >
   <div class="flex align-items-center gap-2">
@@ -15,7 +15,7 @@
       (click)="onMenuButtonClick()"
     />
     @if (!layoutService.isMobile()) {
-    <p-iconField iconPosition="right">
+    <p-iconField iconPosition="right" class="z-0">
       <p-inputIcon styleClass="pi pi-search text-xl  mr-2" />
       <input
         type="text"
@@ -93,7 +93,7 @@
         styleClass="pr-4"
       ></p-button>
       <div
-        class="border-circle cursor-pointer hover:surface-300 h-3rem w-3rem surface-200 flex align-items-center justify-content-center -ml-3 z-1"
+        class="border-circle border-3 border-100 cursor-pointer hover:surface-300 h-3rem w-3rem surface-200 flex align-items-center justify-content-center -ml-3 z-1"
       >
         <i class="pi pi-user text-600 text-xl"></i>
       </div>

@@ -34,7 +34,7 @@ export class SidemenuComponent {
   public router = inject(Router);
 
   public toogleMenu() {
-    this.layoutService.state.staticMenuDesktopInactive = false
+    this.layoutService.state.staticMenuDesktopInactive = false;
   }
 
   public items: {
@@ -54,7 +54,15 @@ export class SidemenuComponent {
       position: 0,
     },
     {
-      name: 'Órdenes',
+      name: 'Monitor diario',
+      father: '/control-panel',
+      link: '/daily-monitor',
+      icon: 'desktop',
+      section: 'root',
+      position: 0,
+    },
+    {
+      name: 'Ordenes',
       father: '/orders',
       link: '/orders-list',
       icon: 'list',
@@ -81,7 +89,7 @@ export class SidemenuComponent {
       name: 'Tipos de pago',
       father: '/admin',
       link: '/payments-type',
-      icon: 'sun',
+      icon: 'money-bill',
       section: 'root',
       position: 0,
     },
@@ -112,7 +120,7 @@ export class SidemenuComponent {
   }
 
   public navigateTo(link: string) {
-    if (link === 'devices/recovery-data' || link === 'control-panel/reports') {
+    if (link === '/admin/payments-type' || link === 'control-panel/reports') {
       this.messageService.add({
         severity: 'warn',
         summary: 'Módulo en construcción',
@@ -122,5 +130,8 @@ export class SidemenuComponent {
       return;
     }
     this.router.navigateByUrl(link);
+    if (this.layoutService.isMobile()) {
+      this.layoutService.onMenuToggle();
+    }
   }
 }

@@ -2,6 +2,7 @@
   <p-sidebar
     [(visible)]="layoutService.state.staticMenuDesktopInactive"
     [modal]="false"
+    [closeOnEscape]="false"
     transitionOptions="750ms cubic-bezier(0, 0, 0.2, 1)"
     [styleClass]="!layoutService.state.staticMenuDesktopInactive ? 'w-0' : 'z-2 md:z-0 w-12 md:w-2 overflow-auto'"
     [class]="!layoutService.state.staticMenuDesktopInactive ? 'w-0 overflow-auto' : 'w-12 md:w-2 overflow-auto'"
@@ -25,7 +26,7 @@
   </p-sidebar>
 
   <div
-    class="flex flex-column surface-100 min-h-screen mt-0"
+    class="flex flex-column  mt-0"
     [ngClass]="{
       'w-12':
         (!layoutService.state.staticMenuDesktopInactive &&
@@ -40,11 +41,11 @@
         layoutService.isMobile()
     }"
   >
-    <app-topbar />
+    <app-topbar class="z-1" />
     @if (layoutService.isMobile()) {
-    <div class="w-full h-4rem"></div>
+    <div class="w-full  h-5rem"></div>
     }
-    <div class="p-3 ">
+    <div class="md:p-3  min-h-screen surface-100">
       <router-outlet />
     </div>
   </div>
