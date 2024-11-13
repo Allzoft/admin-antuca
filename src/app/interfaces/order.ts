@@ -4,6 +4,13 @@ import { Items } from './items';
 import { PaymentType } from './paymentType';
 import { State } from './state';
 
+export enum ServiceMode {
+  EN_SALA =  "En Sala",
+  PARA_LLEVAR = "Para llevar",
+  DELIVERY = "Delivery",
+  MIXTO = "Mixto"
+}
+
 export interface Order {
   id_order: number;
   customerIdCustomer: number;
@@ -12,7 +19,7 @@ export interface Order {
   stateIdState: number;
   total_amount: number;
   paymentTypeIdPaymentType: number;
-  service_mode: 'Para llevar' | 'En sala';
+  service_mode: ServiceMode;
   notes: string;
   items?: createItems[];
   created_at?: Date;

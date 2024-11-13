@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Order, OrderItems, createItems } from '@interfaces/order';
+import { Order, OrderItems, ServiceMode, createItems } from '@interfaces/order';
 import { ClientsService } from '@services/clients.service';
 import { CustomersService } from '@services/customers.service';
 import { OrdersService } from '@services/orders.service';
@@ -25,6 +25,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { LayoutService } from '@services/layout.service';
 import moment from 'moment';
 import { CalendarModule } from 'primeng/calendar';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-order',
@@ -35,6 +36,7 @@ import { CalendarModule } from 'primeng/calendar';
     DropdownModule,
     InputTextareaModule,
     InputTextModule,
+    RadioButtonModule,
     InputNumberModule,
     InputSwitchModule,
     ButtonModule,
@@ -68,6 +70,8 @@ export class OrderComponent {
   public editTotal: boolean = false;
   public showAllItems: boolean = false;
 
+
+
   public order: Order = {
     id_order: 0,
     customerIdCustomer: this.customerService.customer()!.id_customer,
@@ -78,7 +82,7 @@ export class OrderComponent {
     state: this.initialState ? this.initialState : undefined,
     total_amount: 0,
     paymentTypeIdPaymentType: 1,
-    service_mode: 'En sala',
+    service_mode: ServiceMode.EN_SALA,
     notes: '',
   };
 
@@ -96,10 +100,12 @@ export class OrderComponent {
 
   public serviceModes: {
     isSelect: boolean;
-    label: 'Para llevar' | 'En sala';
+    label: ServiceMode;
   }[] = [
-    { isSelect: true, label: 'En sala' },
-    { isSelect: false, label: 'Para llevar' },
+    { isSelect: true, label: ServiceMode.EN_SALA },
+    { isSelect: false, label: ServiceMode.PARA_LLEVAR },
+    { isSelect: false, label: ServiceMode.DELIVERY },
+    { isSelect: false, label: ServiceMode.MIXTO },
   ];
 
   public itemsAvailable = this.itemsService
@@ -217,7 +223,7 @@ export class OrderComponent {
     otherItemsItems.forEach(
       (i) => (this.order.total_amount += i.price * i.quantity)
     );
-    if (serviceModeSelected!.label === 'En sala') {
+    if (serviceModeSelected!.label === ServiceMode.EN_SALA) {
       if (startersCount - secondsCount === 0) {
         this.order.total_amount += startersCount * 15;
       } else if (startersCount - secondsCount > 0) {
