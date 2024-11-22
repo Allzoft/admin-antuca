@@ -3,6 +3,7 @@ import { Order } from '@interfaces/order';
 import { environment } from '@environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import moment from 'moment';
 
 interface State {
   orders: Order[];
@@ -78,6 +79,14 @@ export class OrdersService {
           orders: [],
         });
       }
+    );
+  }
+
+  public getOrdersByDates(dateStart: Date, dateEnd: Date): Observable<Order[]> {
+    const filterStart = moment(dateStart).format('YYYY-MM-DD');
+    const filterEnd = moment(dateEnd).format('YYYY-MM-DD');
+    return this.http.get<Order[]>(
+      `${environment.url_api}/orders/bydates/${filterStart}/${filterEnd}`
     );
   }
 

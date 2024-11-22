@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, type OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Order, ServiceMode } from '@interfaces/order';
 import { LayoutService } from '@services/layout.service';
@@ -14,13 +14,18 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { StatesService } from '@services/states.service';
 import { State } from '@interfaces/state';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { OrderComponent } from '@shared/order/order.component';
 import { Client } from '@interfaces/client';
 import { ClientComponent } from '@shared/client/client.component';
 import { CustomersService } from '@services/customers.service';
+import { OrdersService } from '@services/orders.service';
 
 @Component({
   selector: 'app-daily-monitor',
@@ -55,11 +60,15 @@ import { CustomersService } from '@services/customers.service';
 export default class DailyMonitorComponent implements OnInit {
   private messageService = inject(MessageService);
   public configRef = inject(DynamicDialogConfig);
-  public usersService = inject(CustomersService)
+  public usersService = inject(CustomersService);
   public dialogService = inject(DialogService);
   public layoutService = inject(LayoutService);
   public statesService = inject(StatesService);
+  public ordersService = inject(OrdersService);
   public currentTime: string = '';
+
+  public loading: boolean = false;
+  public orders: Order[] = [];
 
   public showFilters = false;
 
@@ -80,14 +89,29 @@ export default class DailyMonitorComponent implements OnInit {
       detail: 'Hola! ' + this.usersService.customer()!.name + ', a trabajar.',
       icon: 'pi pi-check',
     },
-    
   ];
 
-  public messagesToSend: Message[] = []
+  public messagesToSend: Message[] = [];
 
   ngOnInit(): void {
     this.updateTime(); // Llamamos a la función inicialmente
     setInterval(() => this.updateTime(), 1000); // Actualizamos cada segundo
+    this.loading = true;
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+
+    this.ordersService.getOrdersByDates(today, today).subscribe(
+      (res) => {
+        this.orders = res.map((order) => {
+          order.created_at = new Date(order.created_at!);
+          return order;
+        });
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   public updateTime(): void {
@@ -182,4 +206,26 @@ export default class DailyMonitorComponent implements OnInit {
     });
   }
 
+  public getOrderTime(order: Order): string {
+    const now = new Date();
+    if (order.created_at!.getHours() < 12) {
+      order.created_at!.setHours(12, 0, 0, 0);
+    }
+    const diff = now.getTime() - order.created_at!.getTime();
+    if (diff < 0) {
+      return '00:00';
+    }
+
+    const minutes = Math.floor(diff / 1000 / 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    const baseHour = minutes < 720 ? 12 : 24; 
+
+    const adjustedMinutes = baseHour === 12 ? minutes % 720 : minutes;
+    return `${this.pad(adjustedMinutes)}:${this.pad(seconds)}`;
+  }
+
+  private pad(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
 }

@@ -29,7 +29,7 @@
   </div>
 
   @if (!layoutService.isMobile()) {
-  <div class="flex align-items-center gap-3">
+  <div class="flex align-items-center gap-3 poppins-regular">
     <span>About</span>
     <span class="underline text-primary">Tools</span>
     <span>Help</span>
@@ -92,7 +92,7 @@
         [label]="
           layoutService.isMobile() ? user()!.name : 'Hola,   ' + user()!.name
         "
-        styleClass="pr-4"
+        styleClass="pr-4 poppins-regular"
       ></p-button>
       <div
         class="border-circle border-3 border-100 cursor-pointer hover:surface-300 h-3rem w-3rem surface-200 flex align-items-center justify-content-center -ml-3 z-1"

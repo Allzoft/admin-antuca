@@ -81,32 +81,40 @@
       ></p-button>
     </section>
     <div class="py-2 overflow-x-scroll white-space-nowrap w-full">
-      @for (item of []; track $index) {
+      @for (order of orders; track $index) {
       <div class="bg-white w-14rem mx-2 inline-block p-2">
         <div class="flex w-full flex-column gap-2">
           <div class="flex w-full justify-content-between">
             <p-tag
               severity="info"
-              value="En curso"
+              [value]="order.state!.name"
               styleClass="poppins-medium"
             ></p-tag>
             <p-badge
               severity="secondary"
-              value="131"
+              [value]="order.id_order"
               styleClass="poppins-medium"
             ></p-badge>
           </div>
           <div
             class="font-semibold text-center white-space-normal text-800 mt-1 poppins-medium"
           >
-            Rodrigo Zelaya - M8
+            {{ order.client!.name + " " + order.client!.lastname + "" }}
           </div>
           <div
             class="flex poppins-regular w-full align-items-center justify-content-between"
           >
             <div class="flex text-500 text-sm">
-              12:20 -
-              <div class="ml-1 text-primary-600">5:00</div>
+              {{ order.created_at | date : "HH:mm" }}
+
+              @if (order.state!.name !== 'Completado') {
+              <div class="ml-1 text-800">
+                {{ "-" }}
+              </div>
+              <div class="ml-1 text-primary-600">
+                {{ getOrderTime(order) }}
+              </div>
+              }
             </div>
             <div class="surface-100 p-1" style="border-radius: 30px">
               <div
@@ -114,30 +122,34 @@
                 class="surface-0 price-style poppins-medium flex align-items-center gap-2 justify-content-center py-1 px-2"
               >
                 <span class="text-primary">Bs.</span>
-                <span class="text-900 font-medium text-md">{{ " 30" }}</span>
+                <span class="text-900 font-medium text-md">{{
+                  order.total_amount
+                }}</span>
               </div>
             </div>
           </div>
           <div class="flex flex-column gap-2 px-2 poppins-light text-sm">
+            @for (item of order.orderItems; track $index) {
             <div>
-              2 <span class="text-primary-600">-</span> Entradas de atún
+              {{ item.quantity }} <span class="text-primary-600">-</span>
+              {{ item.item.name }}
             </div>
-            <div>4 <span class="text-primary-600">-</span> Sopa(s) de maní</div>
-            <div>
-              4 <span class="text-primary-600">-</span> Picante(s) de pollo
-            </div>
+            }
           </div>
+          @if(order.notes){
+
           <div
             class="flex gap-2 px-2 py-2 align-items-center border-1 border-100 border-round w-full surface-100"
           >
             <i class="pi pi-info-circle text-xl text-700"></i>
             <div class="text-800 text-xs white-space-normal poppins-light">
-              Esta es información relevante de ejemplo: 2 picantes sin cebolla
+              {{ order.notes }}
             </div>
           </div>
+          } 
           <p-button
-            label="Next "
-            styleClass="w-full poppins-medium"
+            label="Confirmar: En cocina"
+            styleClass="w-full poppins-regular"
             size="small"
           ></p-button>
         </div>

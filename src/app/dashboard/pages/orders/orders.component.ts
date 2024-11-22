@@ -112,6 +112,7 @@ export default class OrdersComponent {
 
   constructor() {
     this.statesService.getAllStates();
+    this.refreshData()
     this.optionsFilterState.push('Todos los estados');
   }
 
