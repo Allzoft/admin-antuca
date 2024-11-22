@@ -26,6 +26,8 @@ import { Client } from '@interfaces/client';
 import { ClientComponent } from '@shared/client/client.component';
 import { CustomersService } from '@services/customers.service';
 import { OrdersService } from '@services/orders.service';
+import { DailyMonitorSocket } from '@services/sockets/dailyMonitor.socket';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-daily-monitor',
@@ -49,6 +51,7 @@ import { OrdersService } from '@services/orders.service';
     MessageService,
     DialogService,
     DynamicDialogConfig,
+    DailyMonitorSocket,
   ],
   styles: `
     .w-0 {
@@ -65,10 +68,12 @@ export default class DailyMonitorComponent implements OnInit {
   public layoutService = inject(LayoutService);
   public statesService = inject(StatesService);
   public ordersService = inject(OrdersService);
+
+  public dailyMonitorSocket = inject(DailyMonitorSocket);
+
   public currentTime: string = '';
 
   public loading: boolean = false;
-  public orders: Order[] = [];
 
   public showFilters = false;
 
@@ -91,7 +96,13 @@ export default class DailyMonitorComponent implements OnInit {
     },
   ];
 
+  public orders: Order[] = [];
+
   public messagesToSend: Message[] = [];
+
+  private newOrderSubscription: Subscription;
+  private updateOrderSubscription: Subscription;
+  private deleteOrderSubscription: Subscription;
 
   ngOnInit(): void {
     this.updateTime(); // Llamamos a la función inicialmente
@@ -100,18 +111,64 @@ export default class DailyMonitorComponent implements OnInit {
     const today = new Date();
     today.setDate(today.getDate() + 1);
 
-    this.ordersService.getOrdersByDates(today, today).subscribe(
-      (res) => {
-        this.orders = res.map((order) => {
-          order.created_at = new Date(order.created_at!);
-          return order;
-        });
-        this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+    this.dailyMonitorSocket.on('ordersList', (data: Order[]) => {
+      console.log(data);
+      this.orders = data.map((order) => {
+        order.created_at = new Date(order.created_at!);
+        return order;
+      });
+      this.loading = false;
+    });
+
+    this.dailyMonitorSocket.on('message', (msg: string) => {
+      const newMessage: Message = {
+        severity: 'info',
+        detail: msg,
+        icon: 'pi pi-info-circle',
+      };
+      this.messageService.add(newMessage);
+      // this.messages.push(newMessage);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.dailyMonitorSocket.closeConnection();
+  }
+
+  constructor() {
+    this.newOrderSubscription = this.dailyMonitorSocket
+      .getNewOrder()
+      .subscribe((msg: any) => {
+        const newMessage: Message = {
+          severity: 'warn',
+          detail: 'Creacion',
+          icon: 'pi pi-info-circle',
+        };
+        this.messageService.add(newMessage);
+        this.messages.push(newMessage);
+      });
+    this.updateOrderSubscription = this.dailyMonitorSocket
+      .getUpdateOrder()
+      .subscribe((msg: any) => {
+        const newMessage: Message = {
+          severity: 'warn',
+          detail: 'Actualizacion',
+          icon: 'pi pi-info-circle',
+        };
+        this.messageService.add(newMessage);
+        this.messages.push(newMessage);
+      });
+    this.deleteOrderSubscription = this.dailyMonitorSocket
+      .getDeleteOrder()
+      .subscribe((order: Order) => {
+        const newMessage: Message = {
+          severity: 'warn',
+          detail: 'Eliminacion',
+          icon: 'pi pi-info-circle',
+        };
+        this.messageService.add(newMessage);
+        this.messages.push(newMessage);
+      });
   }
 
   public updateTime(): void {
@@ -219,7 +276,7 @@ export default class DailyMonitorComponent implements OnInit {
     const minutes = Math.floor(diff / 1000 / 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
-    const baseHour = minutes < 720 ? 12 : 24; 
+    const baseHour = minutes < 720 ? 12 : 24;
 
     const adjustedMinutes = baseHour === 12 ? minutes % 720 : minutes;
     return `${this.pad(adjustedMinutes)}:${this.pad(seconds)}`;
