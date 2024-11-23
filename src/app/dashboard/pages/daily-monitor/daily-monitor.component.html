@@ -200,7 +200,7 @@
           >
             {{ order.service_mode }}
           </div>
-          @if(order.state!.priority !== 0) {
+          @if(order.state?.priority !== 0 && order.state?.priority !== 6) {
           <p-button
             icon="pi pi-check"
             [label]="getLabelNextState(order.state?.priority!)"

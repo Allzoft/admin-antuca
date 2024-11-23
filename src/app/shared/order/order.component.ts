@@ -26,6 +26,9 @@ import { LayoutService } from '@services/layout.service';
 import moment from 'moment';
 import { CalendarModule } from 'primeng/calendar';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { DailyAvailability } from '@interfaces/dailyAvailability';
+import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-order',
@@ -43,6 +46,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     BadgeModule,
     TableModule,
     CarouselModule,
+    TagModule,
     CalendarModule,
   ],
   templateUrl: './order.component.html',
@@ -57,6 +61,7 @@ export class OrderComponent {
   public statesService = inject(StatesService);
   public itemsService = inject(ItemsService);
   public layoutService = inject(LayoutService);
+  private dailyAvailabilityServices = inject(DailyAvailabilityServices);
 
   public clients = this.clientsService.clients;
   public customers = this.customerService.customers;
@@ -106,11 +111,8 @@ export class OrderComponent {
     { isSelect: false, label: ServiceMode.MIXTO },
   ];
 
-  public itemsAvailable = this.itemsService
-    .items()
-    .sort((a, b) =>
-      a.type_item > b.type_item ? 1 : a.type_item < b.type_item ? -1 : 0
-    );
+  public itemsAvailables: DailyAvailability[] = [];
+  public loadingItems: boolean = false;
 
   constructor() {
     if (this.config.data) {
@@ -126,6 +128,19 @@ export class OrderComponent {
       console.log(this.config.data.order);
     }
     this.statesService.getAllStates();
+    this.getItems();
+  }
+
+  public getItems() {
+    this.loadingItems = true
+    const today = new Date();
+    today.setDate(today.getDate() + 1); // quitar para prod
+    this.dailyAvailabilityServices
+    .getAllByDatesDailyAvailability(today, today)
+    .subscribe((res) => {
+        this.loadingItems = false
+        this.itemsAvailables = res;
+      });
   }
 
   public selectServiceMode(i: number) {

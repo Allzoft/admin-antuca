@@ -1,7 +1,9 @@
 <div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
   <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
     <div class="flex flex-column gap-2 w-full">
-      <label for="client">Cliente <i class="pi pi-user mx-1"></i> </label>
+      <label for="client" class="poppins-regular"
+        >Cliente <i class="pi pi-user mx-1"></i>
+      </label>
       <p-dropdown
         id="client"
         type="text"
@@ -11,18 +13,25 @@
         filterPlaceholder="Busca al cliente"
         emptyFilterMessage="No se encontró al cliente"
         filterBy="name,lastname"
-        [filterFields]="['name','lastname']"
+        [filterFields]="['name', 'lastname']"
         [resetFilterOnHide]="true"
         [options]="clients()"
-        [styleClass]="!order.client || inputDirt.client ? 'p-inputtext-sm w-full border-red-200' : 'p-inputtext-sm w-full'"
+        [styleClass]="
+          !order.client || inputDirt.client
+            ? 'p-inputtext-sm w-full border-red-200'
+            : 'p-inputtext-sm w-full'
+        "
       >
         <ng-template pTemplate="selectedItem">
-          <div class="flex align-items-center gap-2" *ngIf="order.client">
+          <div
+            class="flex align-items-center poppins-regular text-sm gap-2"
+            *ngIf="order.client"
+          >
             <div>{{ order.client!.name }} {{ order.client!.lastname }}</div>
           </div>
         </ng-template>
         <ng-template let-client pTemplate="item">
-          <div class="flex align-items-center gap-2">
+          <div class="flex align-items-center poppins-regular text-sm gap-2">
             <div>{{ client.name }} {{ client.lastname }}</div>
           </div>
         </ng-template>
@@ -30,7 +39,7 @@
     </div>
 
     <div class="flex flex-column gap-2 w-full">
-      <label for="customer"
+      <label for="customer" class="poppins-regular"
         >Vendedor <i class="pi pi-user-plus mx-1"></i
       ></label>
       <p-dropdown
@@ -40,15 +49,22 @@
         [options]="customers()"
         placeholder="Seleccione al Vendedor"
         [disabled]="customerService.customer()!.name !== 'Administrador'"
-        [styleClass]="!order.customer || inputDirt.customer ? 'p-inputtext-sm w-full border-red-200' : 'p-inputtext-sm w-full'"
+        [styleClass]="
+          !order.customer || inputDirt.customer
+            ? 'p-inputtext-sm w-full border-red-200'
+            : 'p-inputtext-sm w-full'
+        "
       >
         <ng-template pTemplate="selectedItem">
-          <div class="flex align-items-center gap-2" *ngIf="order.customer">
+          <div
+            class="flex align-items-center poppins-regular text-sm gap-2"
+            *ngIf="order.customer"
+          >
             <div>{{ order.customer!.name }} {{ order.customer!.lastname }}</div>
           </div>
         </ng-template>
         <ng-template let-customer pTemplate="item">
-          <div class="flex align-items-center gap-2">
+          <div class="flex align-items-center poppins-regular text-sm gap-2">
             <div>{{ customer.name }} {{ customer.lastname }}</div>
           </div>
         </ng-template>
@@ -56,7 +72,7 @@
     </div>
   </div>
   <div class="flex flex-column gap-2 w-full">
-    <label for="username"
+    <label for="username" class="poppins-regular"
       >Notas importantes sobre la orden: <i class="pi pi-pencil mx-1"></i
     ></label>
     <textarea
@@ -67,12 +83,14 @@
       [(ngModel)]="order.notes"
       [autoResize]="true"
       class="w-full text-sm"
-      [ngClass]="{'ng-invalid ng-dirty': order.notes.length === 0}"
+      [ngClass]="{ 'ng-invalid ng-dirty': order.notes.length === 0 }"
     ></textarea>
   </div>
   <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
     <div class="flex flex-column w-full gap-2">
-      <label for="state">Estado <i class="pi pi-tag mx-1"></i></label>
+      <label for="state" class="poppins-regular"
+        >Estado <i class="pi pi-tag mx-1"></i
+      ></label>
       <p-dropdown
         inputId="state"
         [(ngModel)]="order.state"
@@ -80,28 +98,121 @@
         [options]="states()"
         [loading]="loadingStates()"
         optionLabel="name"
-        [styleClass]="!order.state || inputDirt.state ? 'p-inputtext-sm w-full border-red-200' : 'p-inputtext-sm w-full'"
+        [styleClass]="
+          !order.state || inputDirt.state
+            ? 'p-inputtext-sm w-full border-red-200'
+            : 'p-inputtext-sm w-full'
+        "
       >
         <ng-template pTemplate="selectedItem">
           <div class="flex align-items-center gap-2" *ngIf="order.state">
-            <div class="flex align-items-center gap-2">
-              <p-badge
-                value="."
-                styleClass="text-black-alpha-10"
+            <div class="flex align-items-center gap-2 poppins-regular text-sm">
+              @switch (order.state!.priority) { @case (1) {
+              <p-tag
+                icon="pi pi-circle"
+                severity="secondary"
+                [value]="order.state!.name"
+                styleClass="poppins-medium"
               />
-              {{ order.state.name }}
+              } @case (2) {
+              <p-tag
+                icon="pi pi-circle-fill"
+                severity="warning"
+                [value]="order.state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (3) {
+              <p-tag
+                severity="contrast"
+                icon="pi pi-spin pi-spinner"
+                [value]="order.state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (4) {
+              <p-tag
+                icon="pi pi-spin pi-spinner"
+                severity="info"
+                [value]="order.state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (5) {
+              <p-tag
+                icon="pi pi-spin pi-spinner"
+                severity="success"
+                [value]="order.state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (6) {
+              <p-tag
+                icon="pi pi-check"
+                severity="success"
+                [value]="order.state!.name"
+                styleClass="poppins-medium  bg-green-200"
+              />
+              } @case (0) {
+              <p-tag
+                icon="pi pi-times"
+                severity="danger"
+                [value]="order.state!.name"
+                styleClass="poppins-medium"
+              />
+              } }
             </div>
           </div>
         </ng-template>
         <ng-template let-state pTemplate="item">
           <div class="flex align-items-center gap-2">
-            <div class="flex align-items-center gap-2">
-              <p-badge
-                styleClass="text-black-alpha-10"
-                value="."
-                [severity]="state.color"
+            <div class="flex align-items-center gap-2 poppins-regular text-sm">
+              @switch (state!.priority) { @case (1) {
+              <p-tag
+                icon="pi pi-circle"
+                severity="secondary"
+                [value]="state!.name"
+                styleClass="poppins-medium"
               />
-              {{ state.name }}
+              } @case (2) {
+              <p-tag
+                icon="pi pi-circle-fill"
+                severity="warning"
+                [value]="state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (3) {
+              <p-tag
+                severity="contrast"
+                icon="pi pi-spin pi-spinner"
+                [value]="state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (4) {
+              <p-tag
+                icon="pi pi-spin pi-spinner"
+                severity="info"
+                [value]="state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (5) {
+              <p-tag
+                icon="pi pi-spin pi-spinner"
+                severity="success"
+                [value]="state!.name"
+                styleClass="poppins-medium"
+              />
+              } @case (6) {
+              <p-tag
+                icon="pi pi-check"
+                severity="success"
+                [value]="state!.name"
+                styleClass="poppins-medium  bg-green-200"
+              />
+              } @case (0) {
+              <p-tag
+                icon="pi pi-times"
+                severity="danger"
+                [value]="state!.name"
+                styleClass="poppins-medium"
+              />
+              } }
             </div>
           </div>
         </ng-template>
@@ -116,9 +227,15 @@
         class="flex gap-2 w-full justify-content-around md:justify-content-between"
       >
         @for (serviceMode of serviceModes; track $index) {
-          <!-- [severity]="serviceMode.label !== 'Para llevar' ? 'warning':''" -->
+        <!-- [severity]="serviceMode.label !== 'Para llevar' ? 'warning':''" -->
         <p-button
+          severity="secondary"
           [label]="serviceMode.label"
+          [styleClass]="
+            serviceMode.isSelect
+              ? 'poppins-medium text-xs border-400 surface-200'
+              : 'poppins-medium text-xs border-400'
+          "
           [outlined]="!serviceMode.isSelect"
           size="small"
           (onClick)="selectServiceMode($index)"
@@ -134,70 +251,129 @@
       <label for="state"
         >Platos disponibles <i class="pi pi-verified mx-1"></i>
         <p-button
-          [icon]="showAllItems ? 'pi pi-eye text-xs':'pi pi-plus text-xs'"
+          [icon]="showAllItems ? 'pi pi-eye text-xs' : 'pi pi-plus text-xs'"
           styleClass="ml-1"
           severity="help"
-          [style]="{ 'width.px': 18, 'height.px': 18, 'padding.px': 0, 'margin-bottom.px': 2 }"
+          [style]="{
+            'width.px': 18,
+            'height.px': 18,
+            'padding.px': 0,
+            'margin-bottom.px': 2
+          }"
           [outlined]="!showAllItems"
           (onClick)="showAllItems = !showAllItems"
           [rounded]="true"
         ></p-button>
       </label>
       }@else {
-      <label for="state"
-        >Platos disponibles <i class="pi pi-verified mx-1"></i
-      ></label>
-      }
-      <div class="flex flex-column gap-2">
-        <p-carousel
-          [value]="!showAllItems ? itemsAvailable : itemsService.items() "
-          [numVisible]="2"
-          [showIndicators]="false"
-          [showNavigators]="!layoutService.isMobile()"
-          orientation="vertical"
-          verticalViewPortHeight="175px"
-          [numScroll]="1"
+      <label for="state" class="poppins-regular"
+        >Platos disponibles <i class="pi pi-verified mx-1"> </i>
+        @if(loadingItems){
+        <i class="pi pi-spin pi-spinner mx-1"> </i>
+        } @else {
+        <i
+          class="pi pi-history cursor-pointer hover:text-400 mx-1"
+          (click)="getItems()"
         >
-          <ng-template let-item pTemplate="item">
-            <div
-              class="surface-100 border-none transition-colors transition-duration-500 hover:bg-bluegray-300 h-5rem w-full border-300 border-1 border-round-md flex p-2 gap-3 cursor-pointer"
-              (click)="order.orderItems ? addUpdateItem(item) : addItem(item)"
-            >
-              <div
-                class="ml-2 w-4rem h-4rem border-circle flex justify-content-center align-items-center"
-              >
-                <img src="../../../assets/dish.svg" alt="dish" class="w-full h-full">
-              </div>
-              <div
-                class="flex flex-column align-items-start justify-content-center w-full gap-2"
-              >
-                <div class="text-md font-semibold">{{ item.name }}</div>
-                <span class="flex align-items-center gap-2">
-                  <i class="pi pi-tag text-400"></i>
-                  @if (item.type_item === 0) {
-                  <span class="font-semibold text-sm text-500"
-                    >Sopa o entrante</span
-                  >
-                  } @if (item.type_item === 1) {
-                  <span class="font-semibold text-sm text-500">Segundo</span>
-                  } @if (item.type_item === 2) {
-                  <span class="font-semibold text-sm text-500">Otro</span>
-                  }
-                </span>
-              </div>
+        </i>
+        }
+      </label>
+      }
+      <div class="flex flex-column gap-2 max-h-17rem overflow-auto">
+        @for (item of itemsAvailables; track $index) {
+        <div
+          class="border-none transition-colors transition-duration-500 hover:surface-100 hover:shadow-1 h-5rem w-full border-300 border-1 border-round-md flex p-2 gap-3 cursor-pointer"
+          (click)="
+            order.orderItems ? addUpdateItem(item.item!) : addItem(item.item!)
+          "
+        >
+          <div
+            class="ml-2 w-4rem h-4rem border-circle flex justify-content-center align-items-center"
+          >
+            <img
+              src="../../../assets/dish.svg"
+              alt="dish"
+              class="w-full h-full"
+            />
+          </div>
+          <div
+            class="flex flex-column align-items-start justify-content-center w-full gap-2"
+          >
+            <div class="text-md font-semibold poppins-regular">
+              {{ item.item!.name }}
             </div>
-          </ng-template>
-        </p-carousel>
+            <span class="flex align-items-center gap-2">
+              <i class="pi pi-tag text-400"></i>
+              @if (item.item!.type_item === 0) {
+              <span class="font-semibold text-sm text-500 poppins-regular"
+                >Sopa o entrante</span
+              >
+              } @if (item.item!.type_item === 1) {
+              <span class="font-semibold text-sm text-500 poppins-regular"
+                >Segundo</span
+              >
+              } @if (item.item!.type_item === 2) {
+              <span class="font-semibold text-sm text-500 poppins-regular"
+                >Otro</span
+              >
+              }
+            </span>
+          </div>
+          <div
+            class="flex flex-column align-items-start justify-content-center align-items-center px-2 gap-1"
+          >
+            <div class="text-md font-semibold poppins-regular text-primary">
+              {{ item.quantity - item.sold }}
+            </div>
+            <span class="text-sm flex align-items-center  text-600 poppins-regular">
+              Disponibles
+            </span>
+          </div>
+        </div>
+        } @empty {
+        <div
+          (click)="getItems()"
+          class="border-none transition-colors transition-duration-500 hover:surface-100 hover:shadow-1 h-5rem w-full border-300 border-1 border-round-md flex p-2 gap-3 cursor-pointer"
+        >
+          <div
+            class="ml-2 w-4rem h-4rem border-circle flex justify-content-center align-items-center"
+          >
+            <img
+              src="../../../assets/dish.svg"
+              alt="dish"
+              class="w-full h-full"
+            />
+          </div>
+          <div
+            class="flex flex-column align-items-start justify-content-center w-full gap-2"
+          >
+            <div class="text-md font-semibold">
+              {{ "Sin items disponibles" }}
+            </div>
+            <span class="flex align-items-center gap-2">
+              <i class="pi pi-info-circle text-400"></i>
+
+              <span class="font-semibold text-sm text-500"
+                >Agrega un pedido</span
+              >
+            </span>
+          </div>
+        </div>
+        }
       </div>
     </div>
     <div class="flex flex-column w-full gap-2">
-      <label for="service_mode">
+      <label for="service_mode" class="poppins-regular">
         Platos seleccionados <i class="pi pi-shopping-cart mx-1"></i
       ></label>
       @if (order.orderItems) {
       <p-table
         [value]="order.orderItems"
-        [styleClass]="order.orderItems.length === 0 ?  'p-datatable-sm md:p-datatable-md border-red-200 border-1 border-round-lg p-1':'p-datatable-sm md:p-datatable-md p-1'"
+        [styleClass]="
+          order.orderItems.length === 0
+            ? 'p-datatable-sm md:p-datatable-md border-red-200 border-1 border-round-lg p-1'
+            : 'p-datatable-sm md:p-datatable-md p-1'
+        "
         [rowHover]="true"
       >
         <ng-template pTemplate="header">
@@ -224,7 +400,7 @@
               />
               <p-button
                 icon="pi pi-check font-semibold"
-                (click)="editTotal=!editTotal"
+                (click)="editTotal = !editTotal"
                 [rounded]="true"
                 severity="success"
                 styleClass="h-2rem w-2rem ml-2 mb-1"
@@ -235,7 +411,7 @@
                 severity="info"
                 styleClass="cursor-pointer"
                 size="large"
-                (click)="editTotal=!editTotal"
+                (click)="editTotal = !editTotal"
               />}</span
             >
           </div>
@@ -251,47 +427,61 @@
       } @else {
       <p-table
         [value]="selectItems"
-        [styleClass]="selectItems.length === 0 ?  'p-datatable-sm md:p-datatable-md border-red-200 border-1 border-round-lg p-1':'p-datatable-sm md:p-datatable-md p-1'"
+        [styleClass]="
+          selectItems.length === 0
+            ? 'p-datatable-sm md:p-datatable-md border-red-200 border-1 border-round-lg p-1'
+            : 'p-datatable-sm md:p-datatable-md p-1'
+        "
         [rowHover]="true"
       >
         <ng-template pTemplate="header">
           <tr>
-            <th class="text-sm font-normal">Nombre</th>
-            <th class="text-sm font-normal">Cantidad</th>
+            <th class="text-sm font-normal poppins-regular">Nombre</th>
+            <th class="text-sm font-normal poppins-regular">Cantidad</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item>
           <tr class="cursor-pointer" (click)="removeItem(item)">
-            <td>{{ item.name }}</td>
-            <td class="text-center">{{ item.quantity }}</td>
+            <td class="poppins-regular text-sm">{{ item.name }}</td>
+            <td class="text-center poppins-regular text-sm">
+              {{ item.quantity }}
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
-          <div class="flex align-items-center justify-content-end">
-            <span
-              >Precio total: @if (editTotal) {
-              <input
-                pInputText
-                type="number"
-                [(ngModel)]="order.total_amount"
-                class="p-inputtext-sm w-6 text-right"
-              />
-              <p-button
-                icon="pi pi-check"
-                (click)="editTotal=!editTotal"
-                [rounded]="true"
-                severity="success"
-                styleClass="h-2rem w-2rem ml-2 mb-1"
-              ></p-button>
-              } @else {
-              <p-badge
-                [value]="'Bs. ' + order.total_amount.toString()"
-                severity="info"
-                styleClass="cursor-pointer"
-                size="large"
-                (click)="editTotal=!editTotal"
-              />}</span
+          <div class="flex align-items-center gap-2 justify-content-end">
+            <span>Precio total:</span>
+            @if (editTotal) {
+            <input
+              pInputText
+              type="number"
+              [(ngModel)]="order.total_amount"
+              class="p-inputtext-sm w-6 text-right"
+            />
+            <p-button
+              icon="pi pi-check"
+              (click)="editTotal = !editTotal"
+              [rounded]="true"
+              severity="success"
+              styleClass="h-2rem w-2rem ml-2 mb-1"
+            ></p-button>
+            } @else {
+            <div
+              (click)="editTotal = !editTotal"
+              class="cursor-pointer surface-100 p-1"
+              style="border-radius: 30px"
             >
+              <div
+                style="border-radius: 30px"
+                class="surface-0 price-style poppins-medium flex align-items-center gap-2 justify-content-center py-1 px-2"
+              >
+                <span class="text-primary">Bs.</span>
+                <span class="text-900 font-medium text-md">{{
+                  order.total_amount
+                }}</span>
+              </div>
+            </div>
+            }
           </div>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -309,7 +499,7 @@
         [monthNavigator]="true"
         [yearNavigator]="true"
         yearRange="2010:2030"
-        [inputStyleClass]=" "
+        [inputStyleClass]=""
         styleClass="w-full"
         [showIcon]="true"
         [touchUI]="true"
@@ -319,7 +509,7 @@
   </div>
   <div class="w-full justify-content-end">
     <p-button
-      styleClass="w-full"
+      styleClass="w-full poppins-medium"
       [label]="config.data ? 'Actualizar orden' : 'Crear orden'"
       severity="success"
       (onClick)="config.data ? updateOrder() : createOrder()"

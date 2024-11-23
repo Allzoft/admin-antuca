@@ -81,7 +81,7 @@ export default class DailyMonitorComponent implements OnInit {
   public filterStatesSelect: State[] = [];
 
   public filterRoleSelect: string = 'Cocina';
-  public filterOptionsRole: string[] = ['Cocina'];
+  public filterOptionsRole: string[] = ['Cocina', 'Barra', 'Limpieza'];
 
   public ref: DynamicDialogRef | undefined;
 
@@ -97,6 +97,7 @@ export default class DailyMonitorComponent implements OnInit {
   ];
 
   public orders: Order[] = [];
+  public filteredOrders: Order[] = [];
 
   public messagesToSend: Message[] = [];
 
@@ -113,10 +114,8 @@ export default class DailyMonitorComponent implements OnInit {
 
     this.dailyMonitorSocket.on('ordersList', (data: Order[]) => {
       console.log(data);
-      this.orders = data.map((order) => {
-        order.created_at = new Date(order.created_at!);
-        return order;
-      });
+      this.filteredOrders = this.sortOrdersByPriority(data);
+      this.orders = [...this.filteredOrders];
       this.loading = false;
     });
 
@@ -170,29 +169,42 @@ export default class DailyMonitorComponent implements OnInit {
       .getDeleteOrder()
       .subscribe((order: Order) => {
         const newMessage: Message = {
-          severity: 'warn',
+          severity: 'error',
           detail: 'Eliminacion',
           icon: 'pi pi-info-circle',
         };
+        this.onDeleteOrder(order);
         this.messageService.add(newMessage);
-        this.messages.push(newMessage);
       });
   }
 
   private onNewOrder(order: Order) {
-    order.created_at = new Date(order.created_at!);
-    this.orders.unshift(order);
+    this.filteredOrders.unshift(order);
+    this.orders = this.sortOrdersByPriority(this.filteredOrders);
   }
 
   private onUpdateNewOrder(order: Order) {
-    order.created_at = new Date(order.created_at!);
-
-    const index = this.orders.findIndex((o) => order.id_order === o.id_order);
+    const index = this.filteredOrders.findIndex(
+      (o) => order.id_order === o.id_order
+    );
 
     if (index !== -1) {
-      this.orders[index] = order;
+      this.filteredOrders[index] = order;
+      this.orders = this.sortOrdersByPriority(this.filteredOrders);
     } else {
       // this.orders.push(order);
+    }
+  }
+
+  private onDeleteOrder(order: Order) {
+    const index = this.orders.findIndex((o) => order.id_order === o.id_order);
+    const indexF = this.filteredOrders.findIndex(
+      (o) => order.id_order === o.id_order
+    );
+
+    if (index !== -1) {
+      this.orders.splice(index, 1);
+      this.filteredOrders.splice(indexF, 1);
     }
   }
 
@@ -357,5 +369,23 @@ export default class DailyMonitorComponent implements OnInit {
         detail: 'Hubo un error al actualizar el estado',
       });
     }
+  }
+  sortOrdersByPriority(data: Order[]): Order[] {
+    return data
+      .map((order) => {
+        // Asegúrate de que created_at sea un objeto Date
+        order.created_at = new Date(order.created_at!);
+        return order;
+      })
+      .sort((a, b) => {
+        // Obtén las prioridades, asignando Infinity si no están definidas
+        const priorityA = a.state?.priority ?? Infinity;
+        const priorityB = b.state?.priority ?? Infinity;
+
+        // Coloca las prioridades 0 y 6 al final
+        if (priorityA === 0 || priorityA === 6) return 1; // Mueve a al final
+        if (priorityB === 0 || priorityB === 6) return -1; // Mueve b al final
+        return 0; // Mantén el orden relativo de los demás
+      });
   }
 }

@@ -102,7 +102,6 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.itemsService.getItems().subscribe((res) => {
       this.filteredItems = [...res];
-      this.items = res;
       console.log(res);
 
       const today = new Date();
@@ -113,7 +112,7 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
         .subscribe((res) => {
           // Asociar las dailyAvailabilities con sus items correspondientes
           res.forEach((dailyAvailability) => {
-            this.items.forEach((item) => {
+            this.filteredItems.forEach((item) => {
               if (item.id_item === dailyAvailability.itemIdItem) {
                 item.dailyAvailabilities = item.dailyAvailabilities || []; // Inicializar si no existe
                 item.dailyAvailabilities.push(dailyAvailability);
@@ -122,7 +121,7 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
           });
 
           // Ordenar los items: los que tienen dailyAvailabilities primero
-          this.items.sort((a, b) => {
+          this.filteredItems.sort((a, b) => {
             const aHasAvailability =
               a.dailyAvailabilities && a.dailyAvailabilities.length > 0;
             const bHasAvailability =
@@ -134,6 +133,8 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
               ? -1
               : 1;
           });
+
+          this.items = this.filteredItems;
 
           console.log(this.items); // Verificar el orden
         });
