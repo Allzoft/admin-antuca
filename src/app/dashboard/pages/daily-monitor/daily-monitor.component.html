@@ -54,7 +54,9 @@
       <div
         class="align-items-center flex flex-column gap-0 md:gap-1 surface-50 border-1 border-200 px-2 py-1 border-round"
       >
-        <div class="text-xl text-primary-600 md:text-base">{{ orders.length }}</div>
+        <div class="text-xl text-primary-600 md:text-base">
+          {{ orders.length }}
+        </div>
         <div class="text-xs text-700 poppins-regular">Activos</div>
       </div>
       @if (!layoutService.isMobile()) {
@@ -85,15 +87,61 @@
       <div class="bg-white w-14rem mx-2 inline-block p-2">
         <div class="flex w-full flex-column gap-2">
           <div class="flex w-full justify-content-between">
+            @switch (order.state!.priority) { @case (1) {
             <p-tag
+              icon="pi pi-circle"
+              severity="secondary"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (2) {
+            <p-tag
+              icon="pi pi-circle-fill"
+              severity="warning"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (3) {
+            <p-tag
+              severity="contrast"
+              icon="pi pi-spin pi-spinner"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (4) {
+            <p-tag
+              icon="pi pi-spin pi-spinner"
               severity="info"
               [value]="order.state!.name"
               styleClass="poppins-medium"
-            ></p-tag>
+            />
+            } @case (5) {
+            <p-tag
+              icon="pi pi-spin pi-spinner"
+              severity="success"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (6) {
+            <p-tag
+              icon="pi pi-check"
+              severity="success"
+              [value]="order.state!.name"
+              styleClass="poppins-medium  bg-green-200"
+            />
+            } @case (0) {
+            <p-tag
+              icon="pi pi-times"
+              severity="danger"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } }
             <p-badge
               severity="secondary"
               [value]="order.id_order"
-              styleClass="poppins-medium"
+              styleClass="poppins-medium cursor-pointer hover:surface-200 hover:shadow-2"
+              (click)="showOrder(order)"
             ></p-badge>
           </div>
           <div
@@ -146,12 +194,21 @@
               {{ order.notes }}
             </div>
           </div>
-          } 
+          }
+          <div
+            class="w-full text-sm md:text-md poppins-regular border-1 text-center surface-100 text-600 border-round border-200 px-2 py-1"
+          >
+            {{ order.service_mode }}
+          </div>
+          @if(order.state!.priority !== 0) {
           <p-button
-            label="Confirmar: En cocina"
-            styleClass="w-full poppins-regular"
+            icon="pi pi-check"
+            [label]="getLabelNextState(order.state?.priority!)"
+            (onClick)="updateNextOrderState(order)"
+            styleClass="w-full h-2rem poppins-regular"
             size="small"
           ></p-button>
+          }
         </div>
       </div>
       } @empty {
@@ -181,7 +238,7 @@
         [(value)]="messages"
         [enableService]="true"
         [closable]="false"
-        styleClass="w-12 md:w-8 mb-8"
+        styleClass="w-12 md:w-8 mb-8 flex flex-column-reverse my-0"
       />
     </div>
   </div>

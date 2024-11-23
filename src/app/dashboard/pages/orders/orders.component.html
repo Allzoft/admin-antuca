@@ -99,11 +99,56 @@
           <td>{{ getOrders(order.orderItems) }}</td>
           <td>{{ "Bs. " + (+order.total_amount).toFixed(2) }}</td>
           <td>
-            @if (order.state.name === 'Completado') {
-            <p-tag severity="success" [value]="order.state.name"></p-tag>
-            } @else {
-            <p-tag [value]="order.state.name"></p-tag>
-            }
+            @switch (order.state!.priority) { @case (1) {
+            <p-tag
+              icon="pi pi-circle"
+              severity="secondary"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (2) {
+            <p-tag
+              icon="pi pi-circle-fill"
+              severity="warning"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (3) {
+            <p-tag
+              severity="contrast"
+              icon="pi pi-spin pi-spinner"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (4) {
+            <p-tag
+              icon="pi pi-spin pi-spinner"
+              severity="info"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (5) {
+            <p-tag
+              icon="pi pi-spin pi-spinner"
+              severity="success"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } @case (6) {
+            <p-tag
+              icon="pi pi-check"
+              severity="success"
+              [value]="order.state!.name"
+              styleClass="poppins-medium  bg-green-200"
+            />
+            } @case (0) {
+            <p-tag
+              icon="pi pi-times"
+              severity="danger"
+              [value]="order.state!.name"
+              styleClass="poppins-medium"
+            />
+            } }
           </td>
           <td class="white-space-nowrap">
             <p-button

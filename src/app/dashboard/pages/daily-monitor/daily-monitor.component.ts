@@ -127,7 +127,6 @@ export default class DailyMonitorComponent implements OnInit {
         icon: 'pi pi-info-circle',
       };
       this.messageService.add(newMessage);
-      // this.messages.push(newMessage);
     });
   }
 
@@ -138,25 +137,34 @@ export default class DailyMonitorComponent implements OnInit {
   constructor() {
     this.newOrderSubscription = this.dailyMonitorSocket
       .getNewOrder()
-      .subscribe((msg: any) => {
+      .subscribe((order: Order) => {
         const newMessage: Message = {
           severity: 'warn',
-          detail: 'Creacion',
-          icon: 'pi pi-info-circle',
+          detail:
+            'Creacion de orden con ID ' +
+            order.id_order +
+            ' al cliente: ' +
+            order.client?.name,
+          icon: 'pi pi-plus-circle',
+          styleClass: 'my-0',
         };
+
+        this.onNewOrder(order);
         this.messageService.add(newMessage);
-        this.messages.push(newMessage);
       });
     this.updateOrderSubscription = this.dailyMonitorSocket
       .getUpdateOrder()
-      .subscribe((msg: any) => {
+      .subscribe((order: Order) => {
         const newMessage: Message = {
-          severity: 'warn',
-          detail: 'Actualizacion',
-          icon: 'pi pi-info-circle',
+          severity: 'info',
+          detail:
+            'Actualizacion de la orden ' +
+            order.id_order +
+            ' al cliente: ' +
+            order.client?.name,
         };
+        this.onUpdateNewOrder(order);
         this.messageService.add(newMessage);
-        this.messages.push(newMessage);
       });
     this.deleteOrderSubscription = this.dailyMonitorSocket
       .getDeleteOrder()
@@ -169,6 +177,23 @@ export default class DailyMonitorComponent implements OnInit {
         this.messageService.add(newMessage);
         this.messages.push(newMessage);
       });
+  }
+
+  private onNewOrder(order: Order) {
+    order.created_at = new Date(order.created_at!);
+    this.orders.unshift(order);
+  }
+
+  private onUpdateNewOrder(order: Order) {
+    order.created_at = new Date(order.created_at!);
+
+    const index = this.orders.findIndex((o) => order.id_order === o.id_order);
+
+    if (index !== -1) {
+      this.orders[index] = order;
+    } else {
+      // this.orders.push(order);
+    }
   }
 
   public updateTime(): void {
@@ -192,15 +217,15 @@ export default class DailyMonitorComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((order: Order) => {
-      if (order) {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Exito!',
-          detail: `Orden para el cliente ${
-            order.client!.name
-          } actualizado exitosamente`,
-        });
-      }
+      // if (order) {
+      //   this.messageService.add({
+      //     severity: 'success',
+      //     summary: 'Exito!',
+      //     detail: `Orden para el cliente ${
+      //       order.client!.name
+      //     } actualizado exitosamente`,
+      //   });
+      // }
     });
   }
 
@@ -212,15 +237,15 @@ export default class DailyMonitorComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((order: Order) => {
-      if (order) {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Exito!',
-          detail: `Orden para el cliente ${
-            order.client!.name
-          } creado exitosamente`,
-        });
-      }
+      // if (order) {
+      //   this.messageService.add({
+      //     severity: 'success',
+      //     summary: 'Exito!',
+      //     detail: `Orden para el cliente ${
+      //       order.client!.name
+      //     } creado exitosamente`,
+      //   });
+      // }
     });
   }
 
@@ -273,6 +298,14 @@ export default class DailyMonitorComponent implements OnInit {
       return '00:00';
     }
 
+    if (now.getHours() >= 15) {
+      return 'F/H';
+    }
+
+    if (diff > 9000000) {
+      return 'F/H';
+    }
+
     const minutes = Math.floor(diff / 1000 / 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
@@ -284,5 +317,45 @@ export default class DailyMonitorComponent implements OnInit {
 
   private pad(value: number): string {
     return value < 10 ? `0${value}` : `${value}`;
+  }
+
+  public getLabelNextState(priority: number): string {
+    const state = this.states().find((s) => s.priority === priority + 1);
+    if (state) {
+      return state.name;
+    }
+    return '';
+  }
+
+  public updateNextOrderState(order: Order) {
+    const priority = order.state!.priority;
+    const state = this.states().find((s) => s.priority === priority + 1);
+    console.log(state);
+
+    if (state) {
+      const orderUpdate: Partial<Order> = {
+        stateIdState: state.id_state,
+        clientIdClient: order.clientIdClient,
+        customerIdCustomer: order.customerIdCustomer,
+        paymentTypeIdPaymentType: order.paymentTypeIdPaymentType,
+        items: order.orderItems!.map(({ itemIdItem, quantity }) => ({
+          itemIdItem,
+          quantity,
+        })),
+      };
+      console.log(orderUpdate);
+
+      this.ordersService
+        .updateOrder(order.id_order, orderUpdate)
+        .subscribe((_) => {
+          console.log(_);
+        });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Hubo un error al actualizar el estado',
+      });
+    }
   }
 }
