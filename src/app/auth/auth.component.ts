@@ -60,7 +60,7 @@ export default class AuthComponent {
           detail: `¡Hola ${res.customer.name}! Tu accesso fue exitoso`,
         });
         setTimeout(() => {
-          this.route.navigateByUrl('/dashboard');
+          this.route.navigateByUrl('/control-panel/daily-summary');
         }, 3000);
       },
       (error) => {

@@ -1,28 +1,29 @@
-<section class="m-0 bg-gray-900">
+<section class="m-0 z-2">
   <div
-    class="flex flex-column align-items-center justify-content-center px-4 py-5  h-screen m-0"
+    class="flex flex-column align-items-center justify-content-center px-4 py-5 h-screen m-0 z-2"
   >
-    <a
-      href="#"
-      class="flex align-items-center text-2xl font-semibold text-white"
-    >
+    <a href="#" class="flex align-items-center text-2xl font-semibold">
       <img
-        class="w-12rem h-12rem"
+        class="w-20rem md:w-30rem z-2"
         src="../../assets/logo-antuca.svg"
         alt="logo"
       />
     </a>
     <div
-      class="md:w-4 w-12 border-round-lg shadow border md:mt-0 xl:p-0 bg-gray-800 border-gray-700"
+      class="md:w-4 w-12 border-round-lg shadow border md:mt-0 xl:p-0 surface-100 z-2"
     >
       <div class="px-4 pt-2 pb-5 md:px-5 flex flex-column gap-3">
-        <h1 class="text-lg font-bold md:text-2xl text-white">
+        <h1 class="text-lg font-bold md:text-2xl poppins-regular">
           Ingresa con tus crendenciales
         </h1>
         <div>
-          <label for="email" class="block mb-1 text-sm font-medium text-white"
-            >Correo</label
+          <label
+            for="email"
+            class="block mb-1 text-sm font-medium poppins-regular flex align-items-center gap-2"
           >
+            <i class="pi pi-envelope"></i>
+            <span> Correo </span>
+          </label>
           <div class="relative">
             <input
               pInputText
@@ -30,7 +31,7 @@
               name="email"
               [(ngModel)]="email"
               id="email"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              class="text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
               placeholder="name@antucarestaurante.com"
               [required]="true"
             />
@@ -39,49 +40,55 @@
         <div>
           <label
             for="password"
-            class="block mb-2 text-sm font-medium text-white"
-            >Contraseña</label
+            class="block mb-1 text-sm font-medium poppins-regular flex align-items-center gap-2"
           >
+            <i class="pi pi-lock"></i>
+            <span> Contraseña </span>
+          </label>
           <div class="relative">
             <input
               pInputText
-              [type]="showPassword ? 'text':'password'"
+              [type]="showPassword ? 'text' : 'password'"
               name="password"
               [(ngModel)]="password"
               id="password"
               placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              class="text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
               required=""
             />
             <i
-              [ngClass]="showPassword ? 'pi pi-eye absolute top-0 right-0 mt-2 mr-2 pt-1 cursor-pointer':'pi pi-eye-slash absolute top-0 right-0 mt-2 mr-2 pt-1 cursor-pointer' "
+              [ngClass]="
+                showPassword
+                  ? 'pi pi-eye absolute top-0 right-0 mt-1 mr-2 pt-1 cursor-pointer'
+                  : 'pi pi-eye-slash absolute top-0 right-0 mt-1 mr-2 pt-1 cursor-pointer'
+              "
               (click)="showPassword = !showPassword"
             ></i>
           </div>
         </div>
-        <div class="flex items-center justify-between">
+        <div class="flex w-full justify-content-between align-items-center">
           <div class="flex items-start">
             <div class="flex items-center h-5">
               <p-checkbox
                 name="yourName"
                 value="YourValue"
                 [(ngModel)]="remember"
-                [ngModelOptions]="{standalone: true}"
+                [ngModelOptions]="{ standalone: true }"
                 type="checkbox"
-                styleClass=" cursor-pointer border border-gray-300 border-rounded-lg bg-gray-50 focus:ring-3 checked:bg-orange-500 checked:border-transparent focus:ring-primary-300 bg-gray-700 border-gray-600 focus:ring-primary-600 ring-offset-gray-800"
+                label="Recuerdame"
+                labelStyleClass="text-700 text-sm"
               />
             </div>
-            <div class="ml-3 text-sm">
-              <label for="remember" class="text-gray-500 text-gray-300"
-                >Recuerdame</label
-              >
-            </div>
           </div>
+          <span
+            class="text-primary-300 text-xs md:text-md text-right cursor-pointer hover:underline"
+          >
+            ¿Olvidaste tu contraseña?
+          </span>
         </div>
         <p-button
-          severity="warning"
           label="Ingresar"
-          styleClass="w-full"
+          styleClass="w-full poppins-regular"
           (click)="authCustomer()"
         ></p-button>
       </div>

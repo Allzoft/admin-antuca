@@ -19,7 +19,7 @@ export const routes: Routes = [
       },
       {
         path: 'control-panel/daily-monitor',
-        title: 'Resúmen diario',
+        title: 'Monitor diario',
         loadComponent: () =>
           import(
             './dashboard/pages/daily-monitor/daily-monitor.component'
@@ -27,7 +27,7 @@ export const routes: Routes = [
       },
       {
         path: 'orders/orders-list',
-        title: 'Órdenes',
+        title: 'Ordenes',
         loadComponent: () =>
           import(
             './dashboard/pages/orders/orders.component'

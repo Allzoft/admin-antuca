@@ -14,7 +14,11 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogRef,
+} from 'primeng/dynamicdialog';
 import { OrderComponent } from '@shared/order/order.component';
 import { Order } from '@interfaces/order';
 
@@ -95,9 +99,9 @@ export class TopbarComponent {
     this.confirmationService.confirm({
       message: '¿Está seguro que desea cerrar sesión?',
       acceptLabel: 'Si',
-      acceptButtonStyleClass: 'p-button-rounded p-button-success w-7rem',
+      acceptButtonStyleClass: ' p-button-success w-7rem',
       rejectLabel: 'No',
-      rejectButtonStyleClass: 'p-button-rounded p-button-warning w-7rem',
+      rejectButtonStyleClass: ' p-button-warning w-7rem',
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

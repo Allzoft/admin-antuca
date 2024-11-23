@@ -90,6 +90,7 @@
               [rounded]="true"
               [outlined]="true"
               styleClass="h-2rem w-2rem"
+              (onClick)="editUser(user)"
             ></p-button>
             <!-- (onClick)="showUser(user)" -->
             <p-button
@@ -129,7 +130,7 @@
   <div class="w-full flex flex-column gap-5 mt-2 md:mt-0">
     <div class="flex w-full gap-3 md:gap-5">
       <div class="flex flex-column gap-2 w-full">
-        <label for="username">Nombre</label>
+        <label class="poppins-regular" for="username">Nombre</label>
         <span class="p-input-icon-left">
           <i class="pi pi-user"></i>
           <input
@@ -146,7 +147,7 @@
       </div>
 
       <div class="flex flex-column gap-2 w-full">
-        <label for="lastname">Apellido</label>
+        <label class="poppins-regular" for="lastname">Apellido</label>
         <span class="p-input-icon-left">
           <i class="pi pi-user"></i>
           <input
@@ -164,7 +165,7 @@
 
     <div class="flex w-full gap-3 md:gap-5">
       <div class="flex flex-column gap-2 w-full">
-        <label for="email">C. I.</label>
+        <label class="poppins-regular" for="email">C. I.</label>
         <span class="p-input-icon-left">
           <i class="pi pi-id-card"></i>
           <input
@@ -180,7 +181,7 @@
       </div>
 
       <div class="flex flex-column gap-2 w-full">
-        <label for="email">Correo</label>
+        <label class="poppins-regular" for="email">Correo</label>
         <span class="p-input-icon-left">
           <i class="pi pi-envelope"></i>
           <input
@@ -248,7 +249,9 @@
         </div>
       </div>
     </div>
-    <div class="flex w-full flex-column gap-3 justify-content-center align-items-center">
+    <div
+      class="flex w-full flex-column gap-3 justify-content-center align-items-center"
+    >
       <div
         class="w-10rem h-10rem border-circle surface-200 flex justify-content-center align-items-center"
       >
@@ -271,7 +274,12 @@
     </div>
   </div>
   <ng-template pTemplate="footer">
-    <p-button severity="success" label="Crear Usuario" styleClass="w-full"></p-button>
+    <p-button
+      (onClick)="saveUser()"
+      severity="success"
+      label="Crear Usuario"
+      styleClass="w-full"
+    ></p-button>
   </ng-template>
 </p-sidebar>
 <p-toast position="top-center"></p-toast>

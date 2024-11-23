@@ -89,6 +89,7 @@
 
     <li class="flex align-items-center">
       <p-button
+        (onClick)="closeSession()"
         [label]="
           layoutService.isMobile() ? user()!.name : 'Hola,   ' + user()!.name
         "

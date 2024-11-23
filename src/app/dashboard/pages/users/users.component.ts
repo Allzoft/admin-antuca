@@ -45,15 +45,14 @@ import { UploadService } from '@services/upload.service';
   templateUrl: './users.component.html',
 })
 export default class UsersComponent {
-  public layoutService = inject(LayoutService)
+  public layoutService = inject(LayoutService);
   private customersService = inject(CustomersService);
   public customers = this.customersService.customers;
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
   public router = inject(Router);
-  public showUserForm: boolean = false
+  public showUserForm: boolean = false;
   public uploadService = inject(UploadService);
-
 
   public user: Customer = {
     id_customer: 0,
@@ -61,12 +60,19 @@ export default class UsersComponent {
     email: '',
     id: '',
     lastname: '',
-    name:'',
+    name: '',
     phone: '',
     photo: '',
     token: '',
     password: 'Antuca2024',
-  }
+  };
+
+  public userFormDirt = {
+    name: false,
+    lastname: false,
+    phone: false,
+    email: false,
+  };
 
   public onUpload(event: any) {
     console.log(event);
@@ -95,14 +101,13 @@ export default class UsersComponent {
     code: '+591',
   };
 
-
   constructor() {
     if (this.customers().length === 0) {
       this.customersService.getUsers();
     }
   }
 
-  removeUser(customer: Customer) {
+  public removeUser(customer: Customer) {
     this.confirmationService.confirm({
       message: '¿Está seguro de eliminar este usuario?',
       acceptLabel: 'Si',
@@ -126,10 +131,106 @@ export default class UsersComponent {
   }
 
   public editUser(customer: Customer): void {
-    this.router.navigateByUrl(`dashboard/user/${customer.id_customer}`);
+    this.user = customer;
+    const selectedCountry = this.optionsCodeCountries.find(
+      (o) => o.code === customer.code_country
+    );
+    this.showUserForm = true;
   }
 
   public createUser(): void {
     this.showUserForm = true;
+    this.user = {
+      id_customer: 0,
+      code_country: '+591',
+      email: '',
+      id: '',
+      lastname: '',
+      name: '',
+      phone: '',
+      photo: '',
+      token: '',
+      password: 'Antuca2024',
+    };
+  }
+
+  public async saveUser() {
+    if (!(await this.passItemForm())) return;
+
+    const newCustomer: Partial<Customer> = {
+      name: this.user.name,
+      lastname: this.user.lastname,
+      id: this.user.id,
+      email: this.user.email,
+      phone: this.user.phone.toString(),
+      code_country: this.selectedCodeCountry.code,
+      photo: this.user.photo,
+    };
+
+    if (this.user.password) {
+      newCustomer.password = this.user.password;
+    }
+
+    if (this.user.id_customer === 0) {
+      this.customersService.postCustomer(newCustomer).subscribe((resItem) => {
+        console.log(resItem);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Exito',
+          detail: 'El usuario se creo exitosamente',
+        });
+        this.showUserForm = false;
+      });
+    } else {
+      this.customersService
+        .updateUser(this.user.id_customer, newCustomer)
+        .subscribe((resItem) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Exito',
+            detail: 'El usuario se actualizo exitosamente',
+          });
+          this.showUserForm = false;
+        });
+    }
+  }
+  private passItemForm(): Promise<boolean> {
+    if (!this.user.name) {
+      this.userFormDirt.name = true;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Hay un error en el formulario revise porfavor',
+      });
+      return Promise.resolve(false);
+    }
+    if (!this.user.lastname) {
+      this.userFormDirt.lastname = true;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Hay un error en el formulario revise porfavor',
+      });
+      return Promise.resolve(false);
+    }
+    if (!this.user.email) {
+      this.userFormDirt.email = true;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Hay un error en el formulario revise porfavor',
+      });
+      return Promise.resolve(false);
+    }
+    if (!this.user.phone) {
+      this.userFormDirt.phone = true;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Hay un error en el formulario revise porfavor',
+      });
+      return Promise.resolve(false);
+    }
+    return Promise.resolve(true);
   }
 }
