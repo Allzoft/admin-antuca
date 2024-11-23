@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ItemsService } from '@services/items.service';
 import { TitleComponent } from '@shared/title/title.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DataViewModule } from 'primeng/dataview';
+import { DataView, DataViewModule } from 'primeng/dataview';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
@@ -28,13 +28,13 @@ import moment from 'moment';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DailyAvailabilityServices } from '../../../services/dailyAvailability.service';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
+import { LayoutService } from '@services/layout.service';
 
 @Component({
   selector: 'app-menu-items',
   standalone: true,
   imports: [
     CommonModule,
-    TitleComponent,
     FormsModule,
     ButtonModule,
     CardModule,
@@ -59,7 +59,8 @@ import { DailyAvailability } from '@interfaces/dailyAvailability';
   ],
   templateUrl: './menu-items.component.html',
 })
-export default class MenuItemsComponent implements OnDestroy {
+export default class MenuItemsComponent implements OnDestroy, OnInit {
+  public layoutService = inject(LayoutService);
   public configRef = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   public itemsService = inject(ItemsService);
@@ -68,9 +69,11 @@ export default class MenuItemsComponent implements OnDestroy {
   private dailyAvailabilityServices = inject(DailyAvailabilityServices);
 
   @ViewChild('op') op!: OverlayPanel;
+  @ViewChild('op2') op2!: OverlayPanel;
+  @ViewChild('dv') dv!: DataView;
 
-  public items = this.itemsService.items;
-  public filteredItems = [...this.itemsService.items()];
+  public items: Items[] = [];
+  public filteredItems: Items[] = [];
   public star = 4;
   public ref: DynamicDialogRef | undefined;
 
@@ -78,6 +81,8 @@ export default class MenuItemsComponent implements OnDestroy {
     { value: 'Disponible', severity: 'success' },
     { value: 'Agotado', severity: 'danger' },
   ];
+
+  public showFilters: boolean = false;
 
   public selectSort: { value: string; severity: string } | undefined;
 
@@ -87,6 +92,53 @@ export default class MenuItemsComponent implements OnDestroy {
   public quantity: number | undefined;
   public quantityDirty: boolean = false;
   public loadingAvailable: boolean = false;
+
+  public selectAvailable?: Partial<DailyAvailability> = {
+    date: moment().format('YYYY-MM-DD'),
+    itemIdItem: 0,
+    quantity: 0,
+  };
+
+  ngOnInit(): void {
+    this.itemsService.getItems().subscribe((res) => {
+      this.filteredItems = [...res];
+      this.items = res;
+      console.log(res);
+
+      const today = new Date();
+      today.setDate(today.getDate() + 1); // quitar para prod
+
+      this.dailyAvailabilityServices
+        .getAllByDatesDailyAvailability(today, today)
+        .subscribe((res) => {
+          // Asociar las dailyAvailabilities con sus items correspondientes
+          res.forEach((dailyAvailability) => {
+            this.items.forEach((item) => {
+              if (item.id_item === dailyAvailability.itemIdItem) {
+                item.dailyAvailabilities = item.dailyAvailabilities || []; // Inicializar si no existe
+                item.dailyAvailabilities.push(dailyAvailability);
+              }
+            });
+          });
+
+          // Ordenar los items: los que tienen dailyAvailabilities primero
+          this.items.sort((a, b) => {
+            const aHasAvailability =
+              a.dailyAvailabilities && a.dailyAvailabilities.length > 0;
+            const bHasAvailability =
+              b.dailyAvailabilities && b.dailyAvailabilities.length > 0;
+
+            return aHasAvailability === bHasAvailability
+              ? 0
+              : aHasAvailability
+              ? -1
+              : 1;
+          });
+
+          console.log(this.items); // Verificar el orden
+        });
+    });
+  }
 
   ngOnDestroy(): void {
     if (this.ref) {
@@ -132,6 +184,8 @@ export default class MenuItemsComponent implements OnDestroy {
           summary: 'Exito!',
           detail: `Item ${item.name} actualizado exitosamente`,
         });
+        const index = this.items.findIndex((it) => it.id_item === item.id_item);
+        this.items[index] = item;
       }
     });
   }
@@ -150,6 +204,7 @@ export default class MenuItemsComponent implements OnDestroy {
           summary: 'Exito!',
           detail: `Item ${item.name} creado exitosamente`,
         });
+        this.items.push(item);
       }
     });
   }
@@ -177,19 +232,59 @@ export default class MenuItemsComponent implements OnDestroy {
     this.itemsService.updateItems(itemsFiltered);
   }
 
-  sortData(event: DropdownChangeEvent) {
-    console.log(event.value);
-    if (event.value.value === 'Disponible') {
-      const newOrderItems = this.items().sort(
-        (a: Items, b: Items) => b.available - a.available
-      );
-      this.itemsService.updateItems(newOrderItems);
-    } else {
-      const newOrderItems = this.items().sort(
-        (a: Items, b: Items) => a.available - b.available
-      );
-      this.itemsService.updateItems(newOrderItems);
+  public onSelectedItem(item: Items) {
+    this.selectedItem = item;
+    this.quantity = 0;
+  }
+
+  public onSelectedAvailable(
+    item: Items,
+    dailyAvailability: DailyAvailability
+  ) {
+    this.selectedItem = item;
+    this.selectAvailable = dailyAvailability;
+  }
+
+  public updateAvailability() {
+    if (!this.selectAvailable!.quantity) {
+      this.quantityDirty = true;
+      return;
     }
+
+    const newAvailability: Partial<DailyAvailability> = {
+      date:
+        moment(this.selectAvailable!.date).format('YYYY-MM-DD') +
+        'T04:00:00.0000Z',
+      quantity: this.selectAvailable!.quantity,
+    };
+    this.dailyAvailabilityServices
+      .updateDailyAvailability(
+        this.selectAvailable?.id_daily_availability!,
+        newAvailability
+      )
+      .subscribe(
+        (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Exito!',
+            detail: `Disponibilidad de ${res.quantity} items de ${
+              this.selectedItem!.name
+            } actualizada exitosamente`,
+          });
+          const index = this.items.findIndex(
+            (i) => i.id_item === res.itemIdItem
+          );
+          this.items[index].dailyAvailabilities![0] = res;
+          this.op2.hide();
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.error.message,
+          });
+        }
+      );
   }
 
   public createAvailability() {
@@ -198,35 +293,31 @@ export default class MenuItemsComponent implements OnDestroy {
       return;
     }
 
-    const updateItem: Partial<Items> = {
-      available: 1,
-    };
-
     const newAvailability: Partial<DailyAvailability> = {
       date: moment(this.date).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
       quantity: this.quantity,
       itemIdItem: this.selectedItem!.id_item,
     };
-
-    this.itemsService
-      .updateItem(this.selectedItem!.id_item, updateItem)
-      .subscribe((res) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Exito!',
-          detail:
-            'Disponibilidad de item ' + res.name + ' actualizada exitosamente',
-        });
-        this.dailyAvailabilityServices
-          .postDailyAvailability(newAvailability)
-          .subscribe((resA) => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Exito!',
-              detail: `Disponibilidad de ${resA.quantity} items de ${res.name} creada exitosamente`,
-            });
-            this.op.hide()
+    this.dailyAvailabilityServices
+      .postDailyAvailability(newAvailability)
+      .subscribe(
+        (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Exito!',
+            detail: `Disponibilidad de ${res.quantity} items de ${
+              this.selectedItem!.name
+            } creada exitosamente`,
           });
-      });
+          this.op.hide();
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.error.message,
+          });
+        }
+      );
   }
 }

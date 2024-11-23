@@ -142,19 +142,19 @@ export default class DailySummaryComponent {
   ];
 
   constructor() {
-    this.dailyAvailabilityService
-      .getAllByDatesDailyAvailability(
-        moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
-        moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z'
-      )
-      .subscribe(
-        (res) => {
-          this.menuItems = res;
-        },
-        (error) => {
-          this.menuItems = [];
-        }
-      );
+    // this.dailyAvailabilityService
+    //   .getAllByDatesDailyAvailability(
+    //     moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
+    //     moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z'
+    //   )
+    //   .subscribe(
+    //     (res) => {
+    //       this.menuItems = res;
+    //     },
+    //     (error) => {
+    //       this.menuItems = [];
+    //     }
+    //   );
   }
 
   selectOptionOrder(order: Order): void {
@@ -162,20 +162,20 @@ export default class DailySummaryComponent {
   }
 
   searchByDate(date: Date): void {
-    this.signalDate.set(moment(date).format('YYYY-MM-DD'));
-    this.dailyAvailabilityService
-      .getAllByDatesDailyAvailability(
-        moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
-        moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z'
-      )
-      .subscribe(
-        (res) => {
-          this.menuItems = res;
-        },
-        (error) => {
-          this.menuItems = [];
-        }
-      );
+    // this.signalDate.set(moment(date).format('YYYY-MM-DD'));
+    // this.dailyAvailabilityService
+    //   .getAllByDatesDailyAvailability(
+    //     moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z',
+    //     moment(this.signalDate()).format('YYYY-MM-DD') + 'T04:00:00.0000Z'
+    //   )
+    //   .subscribe(
+    //     (res) => {
+    //       this.menuItems = res;
+    //     },
+    //     (error) => {
+    //       this.menuItems = [];
+    //     }
+    //   );
   }
 
   public showClient(client: Client): void {

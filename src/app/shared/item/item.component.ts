@@ -59,7 +59,6 @@ export class ItemComponent {
     id_item: 0,
     name: '',
     price: 12,
-    available: 1,
     description: '',
     photo: '',
     type_item: 1,
@@ -78,10 +77,6 @@ export class ItemComponent {
       this.type_item = this.typeItems.find(
         (i) => i.code === this.item.type_item
       );
-      if (this.item.available === 0) {
-        this.typeAvailable[0].isSelect = false;
-        this.typeAvailable[1].isSelect = true;
-      }
     }
   }
 
@@ -112,7 +107,6 @@ export class ItemComponent {
       name: this.item.name,
       price: this.item.price,
       description: this.item.description,
-      available: this.typeAvailable[0].isSelect ? 1 : 0,
       type_item: this.type_item!.code,
       photo: this.item.photo,
     };

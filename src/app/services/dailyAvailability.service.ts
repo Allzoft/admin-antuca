@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '@environment/environment';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
+import moment from 'moment';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,11 +18,13 @@ export class DailyAvailabilityServices {
   }
 
   getAllByDatesDailyAvailability(
-    dateStart: string,
-    dateEnd: string
+    dateStart: Date,
+    dateEnd: Date
   ): Observable<DailyAvailability[]> {
+    const filterStart = moment(dateStart).format('YYYY-MM-DD');
+    const filterEnd = moment(dateEnd).format('YYYY-MM-DD');
     return this.http.get<DailyAvailability[]>(
-      `${environment.url_api}/daily-availability/bydates/${dateStart}/${dateEnd}`
+      `${environment.url_api}/daily-availability/bydates/${filterStart}/${filterEnd}`
     );
   }
 

@@ -22,7 +22,6 @@ export class ItemsService {
     items: [],
   });
 
-
   public items = computed(() => this.#state().items);
   public loading = computed(() => this.#state().loading);
 
@@ -63,18 +62,8 @@ export class ItemsService {
     );
   }
 
-  public getItems(): void {
-    this.#state.set({
-      loading: true,
-      items: this.#state().items,
-    });
-    this.http.get<Items[]>(`${this.env.url_api}/items`).subscribe((res) => {
-      this.#state.set({
-        loading: false,
-        items: res,
-      });
-      localStorage.setItem('items', JSON.stringify(this.#state().items));
-    });
+  public getItems(): Observable<Items[]> {
+    return this.http.get<Items[]>(`${this.env.url_api}/items`);
   }
 
   public updateItem(id: number, item: Partial<Items>): Observable<Items> {

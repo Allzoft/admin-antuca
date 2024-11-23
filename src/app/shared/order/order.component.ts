@@ -70,8 +70,6 @@ export class OrderComponent {
   public editTotal: boolean = false;
   public showAllItems: boolean = false;
 
-
-
   public order: Order = {
     id_order: 0,
     customerIdCustomer: this.customerService.customer()!.id_customer,
@@ -110,7 +108,6 @@ export class OrderComponent {
 
   public itemsAvailable = this.itemsService
     .items()
-    .filter((i) => i.available === 1)
     .sort((a, b) =>
       a.type_item > b.type_item ? 1 : a.type_item < b.type_item ? -1 : 0
     );
