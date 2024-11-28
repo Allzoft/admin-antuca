@@ -36,6 +36,7 @@ import { MeterGroupModule } from 'primeng/metergroup';
 import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChartData } from 'chart.js';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-daily-summary',
@@ -54,6 +55,7 @@ import { ChartData } from 'chart.js';
     ChartModule,
     CalendarModule,
     ConfirmDialogModule,
+    ProgressSpinnerModule,
     ToastModule,
     MeterGroupModule,
     OverlayPanelModule,
@@ -78,7 +80,7 @@ export default class DailySummaryComponent {
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
 
-  public filterDate: Date = new Date();
+  public filterDate: Date[] = [new Date(), new Date()];
 
   public date = moment().format('YYYY-MM-DD');
   public signalDate = signal(moment().format('YYYY-MM-DD'));
