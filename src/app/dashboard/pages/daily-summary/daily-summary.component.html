@@ -1,4 +1,6 @@
-<section class="w-full px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between">
+<section
+  class="w-full px-2 md:px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between"
+>
   <div class="flex flex-column gap-1 md:gap-2">
     <span class="text-4xl">Resúmen Diario</span>
     <span class="text-lg text-400">Bienvenido al resúmen diario</span>
@@ -26,12 +28,12 @@
 </section>
 
 <section class="w-full grid m-0 mt-3 p-0">
-  <div class="col-12 md:col-3 px-3">
+  <div class="col-6 md:col-3 px-2 md:px-3">
     <div
-      class="w-full relative bg-white py-4 align-items-center px-4 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-4 md:gap-5"
+      class="w-full relative bg-white md:py-4 align-items-center p-2 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
     >
       <div
-        class="flex align-items-center justify-content-center h-6rem w-6rem border-circle bg-primary-100"
+        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
       >
         <i class="text-6xl text-primary-600 pi pi-clipboard"></i>
       </div>
@@ -61,12 +63,12 @@
     </div>
   </div>
 
-  <div class="col-12 md:col-3 px-3">
+  <div class="col-6 md:col-3 px-2 md:px-3">
     <div
-      class="w-full relative bg-white py-4 align-items-center px-4 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-4 md:gap-5"
+      class="w-full relative bg-white md:py-4 align-items-center p-2 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
     >
       <div
-        class="flex align-items-center justify-content-center h-6rem w-6rem border-circle bg-primary-100"
+        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
       >
         <i class="text-6xl text-primary-600 pi pi-dollar"></i>
       </div>
@@ -78,9 +80,11 @@
           styleClass="mb-1"
         />
         } @else {
-        <span class="text-2xl md:text-4xl white-space-nowrap">{{ "1" }}</span>
+        <span class="text-2xl md:text-4xl white-space-nowrap">{{
+          "Bs. 1"
+        }}</span>
         }
-        <span class="text-xs md:text-sm text-700">Ordenes con convenio</span>
+        <span class="text-xs md:text-sm text-700">Total de ingresos</span>
         @if(loadingOrders()){
         <p-skeleton
           height="1.2rem"
@@ -95,12 +99,12 @@
       </div>
     </div>
   </div>
-  <div class="col-12 md:col-3 px-3">
+  <div class="col-6 md:col-3 px-2 md:px-3">
     <div
-      class="w-full relative bg-white py-4 align-items-center px-4 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-4 md:gap-5"
+      class="w-full relative bg-white md:py-4 align-items-center p-2 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
     >
       <div
-        class="flex align-items-center justify-content-center h-6rem w-6rem border-circle bg-primary-100"
+        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
       >
         <i class="text-6xl text-primary-600 pi pi-ticket"></i>
       </div>
@@ -112,9 +116,9 @@
           styleClass="mb-1"
         />
         } @else {
-        <span class="text-2xl md:text-4xl white-space-nowrap">{{ "2" }}</span>
+        <span class="text-2xl md:text-4xl white-space-nowrap">{{ "100" }}</span>
         }
-        <span class="text-sm md:text-sm text-700">Ordenes facturadas</span>
+        <span class="text-xs md:text-sm text-700">Total de ordenes</span>
         @if(loadingOrders()){
         <p-skeleton
           height="1.2rem"
@@ -129,12 +133,13 @@
       </div>
     </div>
   </div>
-  <div class="col-12 md:col-3 px-3">
+
+  <div class="col-6 md:col-3 px-2 md:px-3">
     <div
-      class="w-full relative bg-white py-4 align-items-center px-4 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-4 md:gap-5"
+      class="w-full relative bg-white md:py-4 align-items-center p-2 md:pl-6 md:pr-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
     >
       <div
-        class="flex align-items-center justify-content-center h-6rem w-6rem border-circle bg-primary-100"
+        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
       >
         <i class="text-6xl text-primary-600 pi pi-users"></i>
       </div>
@@ -147,10 +152,10 @@
         />
         } @else {
         <span class="text-2xl md:text-3xl md:mb-1 white-space-nowrap">{{
-          "Bs. "
+          "54"
         }}</span>
         }
-        <span class="text-sm text-700">Total de ingresos</span>
+        <span class="text-xs md:text-sm text-700">Clientes nuevos</span>
         @if(loadingOrders()){
         <p-skeleton
           height="1.2rem"
@@ -162,6 +167,200 @@
           ><i class="pi pi-arrow-circle-up text-green-500 text-sm"></i> 8% (30
           días)</span
         >}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="w-full grid m-0 p-0">
+  <div class="col-12 md:col-6 px-2 md:px-3 h-auto">
+    <div
+      class="w-full relative h-full bg-white md:py-4 p-2 pt-3 md:px-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-3 md:justify-content-between"
+    >
+      <div
+        class="flex flex-column md:flex-row w-full md:justify-content-between align-items-center md:align-items-start gap-2"
+      >
+        <div class="flex flex-column gap-2">
+          <div class="text-800 font-medium text-xl text-center md:text-left">
+            Resúmen de ordenes
+          </div>
+          <div class="text-500 text-center md:text-left text-xs">
+            Visualiza las órdenes por modo y tipo de servicio.
+          </div>
+        </div>
+        <p-selectButton
+          [options]="stateOptions"
+          [(ngModel)]="value"
+          optionLabel="label"
+          [allowEmpty]="false"
+          styleClass="align-self-center"
+        />
+      </div>
+      <div
+        class="w-full bg-green-50 border-round p-3 flex justify-content-between gap-1"
+      >
+        <div class="flex gap-2 md:gap-3 align-items-center">
+          <p-tag
+            severity="success"
+            [value]="'25'"
+            styleClass="h-2rem w-4rem text-lg"
+          ></p-tag>
+          <div class="text-800 text-sm font-semibold">
+            Nuevas ordendes
+            <i
+              class="pi pi-circle-fill text-green-400 md:ml-2 ml-1 mt-1 text-xs"
+            ></i>
+          </div>
+        </div>
+
+        <p-button
+          severity="info"
+          icon="pi pi-angle-right text-sm"
+          [label]="layoutService.isMobile() ? '' : 'Manejar ordenes'"
+          iconPos="right"
+          [text]="true"
+        />
+      </div>
+      <div class="w-full flex gap-2">
+        <div
+          class="w-full border-1 border-200 border-round p-3 flex flex-column gap-1"
+        >
+          <div class="text-xl md:text-3xl font-semibold text-600">50</div>
+          <div class="text-600 text-sm">En sala</div>
+        </div>
+        <div
+          class="w-full border-1 border-200 border-round p-3 flex flex-column gap-1"
+        >
+          <div class="text-xl md:text-3xl font-semibold text-600">20</div>
+          <div class="text-600 text-sm">Delivery</div>
+        </div>
+        <div
+          class="w-full border-1 border-200 border-round p-3 flex flex-column gap-1"
+        >
+          <div class="text-xl md:text-3xl font-semibold text-600">30</div>
+          <div class="text-600 text-sm">Para llevar</div>
+        </div>
+      </div>
+
+      <p-meterGroup [value]="valueMeter" class="mt-1" />
+    </div>
+  </div>
+  <div class="col-12 md:col-6 px-2 md:px-3 h-auto">
+    <div
+      class="w-full h-full relative bg-white md:py-4 p-2 pt-3 md:px-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-2 md:gap-3"
+    >
+      <div
+        class="flex flex-column md:flex-row w-full md:justify-content-between align-items-center md:align-items-start gap-2"
+      >
+        <div class="flex flex-column gap-2">
+          <div class="text-800 font-medium text-xl text-center md:text-left">
+            Resúmen de ingresos
+          </div>
+          <div class="text-500 text-center md:text-left text-xs">
+            Analiza los ingresos totales desglosados por periodos de tiempo.
+          </div>
+        </div>
+
+        <p-dropdown
+          variant="filled"
+          dropdownIcon="text-primary-300 pi pi-angle-down"
+          styleClass="border-none"
+          [options]="dateIncomeOptions"
+          [(ngModel)]="dateIncomeSelected"
+        ></p-dropdown>
+      </div>
+      <div class="w-full flex justify-content-between">
+        <div class="flex gap-3 md:gap-4 align-items-center">
+          <div class="flex gap-2 align-items-center">
+            <div class="h-1rem w-1rem bg-primary-300 border-round-sm"></div>
+            <div class="text-700 text-sm">Ingresos</div>
+          </div>
+          <div class="flex gap-2 align-items-center">
+            <div class="h-1rem w-1rem bg-orange-300 border-round-sm"></div>
+            <div class="text-700 text-sm">Salidas</div>
+          </div>
+        </div>
+        <div class="flex gap-3 md:gap-4 align-items-center">
+          <div class="flex gap-2 align-items-center">
+            <i class="pi pi-chart-bar text-3xl text-primary-300"></i>
+            <div class="flex flex-column gap-1">
+              <div class="text-xs text-500">Ingresos</div>
+              <div class="text-sm text-700">249,032</div>
+            </div>
+          </div>
+          <div class="flex gap-2 align-items-center">
+            <i class="pi pi-chart-bar text-3xl text-orange-500"></i>
+            <div class="flex flex-column gap-1">
+              <div class="text-xs text-500">Salidas</div>
+              <div class="text-sm text-700">184,325</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-chart height="230px" type="line" [data]="data" [options]="options" />
+    </div>
+  </div>
+</section>
+
+<section class="w-full grid m-0 p-0">
+  <div class="col-12 md:col-9 px-2 md:px-3 h-auto">
+    <div
+      class="w-full relative h-full bg-white md:py-4 p-2 pt-3 md:px-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-3 md:justify-content-between"
+    >
+      <div
+        class="flex flex-column md:flex-row w-full md:justify-content-between align-items-center md:align-items-start gap-2"
+      >
+        <div class="flex flex-column gap-2">
+          <div class="text-800 font-medium text-xl text-center md:text-left">
+            Mapeo de clientes nuevos
+          </div>
+          <div class="text-500 text-center md:text-left text-xs">
+            Visualiza el crecimiento de la base de clientes en diferentes
+            períodos.
+          </div>
+        </div>
+        <p-selectButton
+          [options]="stateOptions"
+          [(ngModel)]="value"
+          optionLabel="label"
+          [allowEmpty]="false"
+          styleClass="align-self-center"
+        />
+      </div>
+
+      <p-chart
+        type="bar"
+        height="200px"
+        [data]="dataBar"
+        [options]="optionsBar"
+      />
+    </div>
+  </div>
+  <div class="col-12 md:col-3 px-2 md:px-3 h-auto">
+    <div
+      class="overflow-hidden w-full h-full relative surface-700 md:py-4 p-4 md:px-4 transition-colors transition-duration-300 hover:surface-600 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-2 md:gap-3"
+    >
+      <i
+        [style]="
+          layoutService.isMobile()
+            ? 'font-size: 10rem; margin-top: -3.6rem; margin-right: -2rem'
+            : 'font-size: 13rem; margin-top: -3rem; margin-right: -2rem'
+        "
+        class="absolute top-0 right-0 pi pi-th-large text-white opacity-30"
+      ></i>
+      <div class="w-full flex flex-column h-full justify-content-end gap-4">
+        <i class="pi pi-th-large text-white text-7xl"></i>
+        <div class="text-white text-2xl md:text-xl">
+          Manejo el orden de tu tablero
+        </div>
+        <div class="w-full flex align-items-center justify-content-between">
+          <div class="text-400 text-sm">Acceso rápido al orden de tablero</div>
+          <p-button
+            [text]="true"
+            icon="pi pi-arrow-right text-white"
+            severity="contrast"
+          />
+        </div>
       </div>
     </div>
   </div>

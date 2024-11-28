@@ -31,6 +31,11 @@ import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { MeterGroupModule } from 'primeng/metergroup';
+import { ChartModule } from 'primeng/chart';
+import { DropdownModule } from 'primeng/dropdown';
+import { ChartData } from 'chart.js';
 
 @Component({
   selector: 'app-daily-summary',
@@ -44,11 +49,15 @@ import { SkeletonModule } from 'primeng/skeleton';
     TieredMenuModule,
     TagModule,
     CardModule,
+    SelectButtonModule,
     CalendarModule,
+    ChartModule,
     CalendarModule,
     ConfirmDialogModule,
     ToastModule,
+    MeterGroupModule,
     OverlayPanelModule,
+    DropdownModule,
     PipesModule,
   ],
   providers: [
@@ -69,7 +78,7 @@ export default class DailySummaryComponent {
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
 
-  public  filterDate: Date = new Date();
+  public filterDate: Date = new Date();
 
   public date = moment().format('YYYY-MM-DD');
   public signalDate = signal(moment().format('YYYY-MM-DD'));
@@ -87,13 +96,26 @@ export default class DailySummaryComponent {
       })
   );
 
+  public stateOptions: { label: string; value: string }[] = [
+    { label: 'Mensual', value: '0' },
+    { label: 'Semanal', value: '1' },
+    { label: 'Hoy', value: '2' },
+  ];
+
+  value: { label: string; value: string } = { label: 'Hoy', value: '2' };
+
+  public dateIncomeOptions: string[] = ['Mensual', 'Semanal', 'Hoy'];
+  public dateIncomeSelected: string = 'Mensual';
+
   public filteredOrders = [...this.ordersService.orders()];
 
   public selectOrder: Order | undefined;
 
   public ref: DynamicDialogRef | undefined;
 
-  public loadingOrders = this.ordersService.loading;
+  public loadingOrders(): boolean {
+    return false;
+  }
 
   public menuItems: DailyAvailability[] = [];
 
@@ -104,6 +126,34 @@ export default class DailySummaryComponent {
     { fill: true },
     { fill: false },
   ];
+
+  documentStyle = getComputedStyle(document.documentElement);
+  textColor = this.documentStyle.getPropertyValue('--text-color');
+
+  valueMeter = [
+    {
+      label: 'En sala',
+      value: 50,
+      color: this.documentStyle.getPropertyValue('--yellow-400'),
+    },
+    {
+      label: 'Delivery',
+      value: 20,
+      color: this.documentStyle.getPropertyValue('--bluegray-500'),
+    },
+    {
+      label: 'Para llevar',
+      value: 30,
+      color: this.documentStyle.getPropertyValue('--primary-500'),
+    },
+  ];
+
+  data: ChartData;
+
+  options: any;
+
+  dataBar: ChartData;
+  optionsBar: any;
 
   public items: MenuItem[] = [
     {
@@ -155,6 +205,175 @@ export default class DailySummaryComponent {
     //       this.menuItems = [];
     //     }
     //   );
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue(
+      '--text-color-secondary'
+    );
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+    this.data = {
+      labels: [
+        'Ene',
+        'Feb',
+        'Mar',
+        'Abr',
+        'May',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Sep',
+        'Oct',
+        'Nov',
+      ],
+      datasets: [
+        {
+          label: 'Ingresos',
+          fill: {
+            target: 'origin',
+
+            above: 'rgba(239, 241, 106, 0.1)',
+            below: 'rgba(255, 255, 102, 0.1)',
+          },
+          borderColor: documentStyle.getPropertyValue('--primary-300'),
+          backgroundColor: documentStyle.getPropertyValue('--primary-300'),
+          yAxisID: 'y',
+          tension: 0.4,
+          data: [
+            24540, 16308, 16980, 15041, 21322, 24619, 22298, 22285, 21017,
+            22613, 18149,
+          ],
+          pointRadius: 1.5,
+        },
+        {
+          label: 'Salidas',
+          fill: {
+            target: 'origin',
+            above: 'rgba(255, 165, 0, 0.1)',
+            below: 'rgba(255, 184, 77, 0.1)',
+          },
+          borderColor: documentStyle.getPropertyValue('--orange-400'),
+          backgroundColor: documentStyle.getPropertyValue('--orange-400'),
+          yAxisID: 'y1',
+          tension: 0.4,
+          data: [
+            19774, 19634, 22028, 17586, 16489, 22527, 15471, 23557, 24971,
+            20838, 19575,
+          ],
+          pointRadius: 1.5,
+        },
+      ],
+    };
+
+    this.options = {
+      stacked: false,
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: '',
+          },
+        },
+        y: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          ticks: {
+            count: 6,
+            color: textColorSecondary,
+            callback: function (value: number) {
+              if (value >= 1000) {
+                return value / 1000 + 'k';
+              }
+              return value;
+            },
+          },
+          grid: {
+            color: surfaceBorder,
+          },
+        },
+        y1: {
+          display: false,
+        },
+      },
+    };
+
+    this.dataBar = {
+      labels: [
+        'Ene',
+        'Feb',
+        'Maz',
+        'Abr',
+        'May',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Sep',
+        'Oct',
+        'Nov',
+      ],
+      datasets: [
+        {
+          label: 'My First dataset',
+          backgroundColor: documentStyle.getPropertyValue('--primary-300'),
+          borderColor: documentStyle.getPropertyValue('--primary-300'),
+          data: [65, 59, 80, 81, 56, 55, 40, 15, 30, 21, 12],
+          categoryPercentage: 0.4,
+          borderRadius: 5,
+        },
+      ],
+    };
+
+    this.optionsBar = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+        legend: {
+          display: false,
+          labels: {
+            color: textColor,
+          },
+        },
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+            font: {
+              weight: 500,
+            },
+          },
+          grid: {
+            display: false,
+            color: surfaceBorder,
+            drawBorder: false,
+          },
+        },
+        y: {
+          ticks: {
+            callback: function (value: number) {
+              return value === 0 ? '' : value;
+            },
+            color: textColorSecondary,
+            count: 4,
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false,
+            borderColor: 'transparent',
+          },
+        },
+      },
+    };
   }
 
   selectOptionOrder(order: Order): void {
