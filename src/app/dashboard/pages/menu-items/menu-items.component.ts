@@ -100,10 +100,13 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
   };
 
   ngOnInit(): void {
+    if (localStorage.getItem('items')) {
+      this.items = JSON.parse(localStorage.getItem('items')!);
+    }
     this.itemsService.getItems().subscribe((res) => {
       this.filteredItems = [...res];
       console.log(res);
-
+      localStorage.setItem('items', JSON.stringify(res));
       const today = new Date();
       today.setDate(today.getDate() + 1); // quitar para prod
 

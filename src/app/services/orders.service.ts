@@ -121,6 +121,12 @@ export class OrdersService {
     );
   }
 
+  public getImpressOrder(id: number): Observable<Blob> {
+    return this.http.get(`${environment.url_api}/orders/impressOrder/${id}`, {
+      responseType: 'blob',
+    });
+  }
+
   public updateOrders(orders: Order[]) {
     this.#state.set({
       loading: false,

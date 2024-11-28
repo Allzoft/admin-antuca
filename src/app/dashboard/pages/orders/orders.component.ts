@@ -59,7 +59,7 @@ export default class OrdersComponent {
   public statesService = inject(StatesService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
-  public layoutService = inject(LayoutService)
+  public layoutService = inject(LayoutService);
 
   public orders: Signal<Order[]> = this.ordersService.orders;
   public selectOrder: Order | undefined;
@@ -73,6 +73,8 @@ export default class OrdersComponent {
     return s.name;
   });
   public filterStateSelect: string = 'Todos los estados';
+
+  public loadingOrderImpress: boolean = false;
 
   public items: MenuItem[] = [
     {
@@ -112,7 +114,7 @@ export default class OrdersComponent {
 
   constructor() {
     this.statesService.getAllStates();
-    this.refreshData()
+    this.refreshData();
     this.optionsFilterState.push('Todos los estados');
   }
 
@@ -120,7 +122,7 @@ export default class OrdersComponent {
     this.ordersService.getOrders();
   }
 
-  selectOptionOrder(order: Order): void {
+  public selectOptionOrder(order: Order): void {
     this.selectOrder = order;
   }
 
@@ -214,14 +216,29 @@ export default class OrdersComponent {
     });
   }
 
-  public getOrders = ( orderItems: OrderItems[] ):string => {
-    return orderItems.map((i)=>{return i.quantity + ' ' + i.item.name}).join(', ')
-  }
+  public getOrders = (orderItems: OrderItems[]): string => {
+    return orderItems
+      .map((i) => {
+        return i.quantity + ' ' + i.item.name;
+      })
+      .join(', ');
+  };
 
   public get totalAmount(): number {
     return this.orders().reduce(
       (total, order) => total + +order.total_amount,
       0
     );
+  }
+
+  public getImpressOrder(order: Order) {
+    this.loadingOrderImpress = true;
+    this.ordersService.getImpressOrder(order.id_order).subscribe((res) => {
+      this.loadingOrderImpress = false;
+      const url = window.URL.createObjectURL(res);
+
+      window.open(url, '_blank');
+      window.URL.revokeObjectURL(url);
+    });
   }
 }

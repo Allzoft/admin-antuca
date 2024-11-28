@@ -2,6 +2,7 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
   RouterModule,
   provideRouter,
+  withHashLocation,
   withViewTransitions,
 } from '@angular/router';
 
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
+      withHashLocation(),
       withViewTransitions({
         onViewTransitionCreated() {},
       })

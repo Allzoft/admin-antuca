@@ -153,19 +153,24 @@
           <td class="white-space-nowrap">
             <p-button
               icon="pi pi-pencil"
-              [rounded]="true"
               [outlined]="true"
               styleClass="h-2rem w-2rem"
               (onClick)="showOrder(order)"
-            ></p-button>
+            />
             <p-button
               icon="pi pi-trash"
               severity="danger"
-              [rounded]="true"
               [outlined]="true"
               styleClass="h-2rem w-2rem ml-2"
               (onClick)="deleteOrder(order)"
-            ></p-button>
+            />
+            <p-button
+              [loading]="loadingOrderImpress"
+              icon="pi pi-print"
+              [outlined]="true"
+              styleClass="h-2rem w-2rem ml-2"
+              (onClick)="getImpressOrder(order)"
+            />
           </td>
         </tr>
       </ng-template>

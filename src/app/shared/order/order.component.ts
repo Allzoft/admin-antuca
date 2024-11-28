@@ -134,7 +134,7 @@ export class OrderComponent {
   public getItems() {
     this.loadingItems = true
     const today = new Date();
-    today.setDate(today.getDate() + 1); // quitar para prod
+    // today.setDate(today.getDate() + 1); // quitar para prod
     this.dailyAvailabilityServices
     .getAllByDatesDailyAvailability(today, today)
     .subscribe((res) => {

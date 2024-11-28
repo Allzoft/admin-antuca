@@ -388,4 +388,15 @@ export default class DailyMonitorComponent implements OnInit {
         return 0; // Mantén el orden relativo de los demás
       });
   }
+
+  public getImpressOrder(order: Order) {
+    this.ordersService.getImpressOrder(order.id_order).subscribe((res) => {
+      const url = window.URL.createObjectURL(res);
+      window.open(url, '_blank');
+      window.URL.revokeObjectURL(url);
+    });
+  }
+  
+
+ 
 }
