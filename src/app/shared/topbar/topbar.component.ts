@@ -53,7 +53,7 @@ export class TopbarComponent {
   public layoutService = inject(LayoutService);
   private customerService = inject(CustomersService);
   private confirmationService = inject(ConfirmationService);
-  private router = inject(Router);
+  public router = inject(Router);
 
   public ref: DynamicDialogRef | undefined;
 

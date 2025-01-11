@@ -1,5 +1,5 @@
 <div
-  class="w-full  flex flex-column transition-ease-in-out transition-duration-500 align-items-center"
+  class="w-full flex flex-column transition-ease-in-out transition-duration-500 align-items-center"
 >
   <div class="w-full px-4 py-4 md:py-2">
     @if (layoutService.isMobile()) {
@@ -64,6 +64,36 @@
             } @else {
             <i [class]="' text-400 pi pi-' + item.icon"></i>
             <div class="poppins-regular text-400 text-sm">{{ item.name }}</div>
+            }
+          </a>
+          } @if (layoutService.isMobile()) {
+          <a
+            [href]="'#/' + 'admin' + '/settings'"
+            (click)="navigateTo('admin/settings'); $event.preventDefault()"
+            class="cursor-pointer relative no-underline w-full flex gap-3 py-3 hover:surface-100 align-items-center"
+            style="padding-left: 1.35rem"
+          >
+            @if (isOnModule('admin/settings')) {
+            <i [class]="' text-900 pi pi-' + 'cog'"></i>
+            <div class="poppins-medium text-md text-900">
+              {{ "configuración" }}
+            </div>
+            <div
+              style="margin-left: -1.7rem"
+              class="absolute left-0 bg-primary-600 w-2rem h-full top-0 border-round-right"
+            ></div>
+            <div
+              class="absolute right-0 w-12 h-full top-0"
+              style="
+                background: linear-gradient(to left, #e6c56d, #ffae00);
+                opacity: 0.2;
+              "
+            ></div>
+            } @else {
+            <i [class]="' text-400 pi pi-' + 'cog'"></i>
+            <div class="poppins-regular text-400 text-sm">
+              {{ "Configuración" }}
+            </div>
             }
           </a>
           }

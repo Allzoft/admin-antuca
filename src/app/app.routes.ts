@@ -13,88 +13,71 @@ export const routes: Routes = [
         path: 'control-panel/daily-summary',
         title: 'Resúmen diario',
         loadComponent: () =>
-          import(
-            './dashboard/pages/daily-summary/daily-summary.component'
-          ),
+          import('./dashboard/pages/daily-summary/daily-summary.component'),
       },
       {
         path: 'control-panel/daily-monitor',
         title: 'Monitor diario',
         loadComponent: () =>
-          import(
-            './dashboard/pages/daily-monitor/daily-monitor.component'
-          ),
+          import('./dashboard/pages/daily-monitor/daily-monitor.component'),
       },
       {
         path: 'orders/orders-list',
         title: 'Ordenes',
         loadComponent: () =>
-          import(
-            './dashboard/pages/orders/orders.component'
-          ),
+          import('./dashboard/pages/orders/orders.component'),
       },
       {
         path: 'orders/clients-list',
         title: 'Clientes',
         loadComponent: () =>
-          import(
-            './dashboard/pages/clients/clients.component'
-          ),
+          import('./dashboard/pages/clients/clients.component'),
       },
       {
         path: 'admin/menu-items',
         title: 'Menu Items',
         loadComponent: () =>
-          import(
-            './dashboard/pages/menu-items/menu-items.component'
-          ),
+          import('./dashboard/pages/menu-items/menu-items.component'),
       },
       {
         path: 'admin/payments-type',
         title: 'Tipos de pago',
         loadComponent: () =>
-          import(
-            './dashboard/pages/payments-type/payments-type.component'
-          ),
+          import('./dashboard/pages/payments-type/payments-type.component'),
       },
       {
         path: 'admin/users-list',
         title: 'Lista de usuarios',
-        loadComponent: () =>
-          import(
-            './dashboard/pages/users/users.component'
-          ),
+        loadComponent: () => import('./dashboard/pages/users/users.component'),
       },
       {
         path: 'user/:id',
         title: 'Usuario',
-        loadComponent: () =>
-          import(
-            './dashboard/pages/user/user.component'
-          ),
+        loadComponent: () => import('./dashboard/pages/user/user.component'),
       },
       {
         path: 'user/create',
         title: 'Usuario',
-        loadComponent: () =>
-          import(
-            './dashboard/pages/user/user.component'
-          ),
+        loadComponent: () => import('./dashboard/pages/user/user.component'),
       },
       {
         path: 'admin/states',
         title: 'Estados',
         loadComponent: () =>
-          import(
-            './dashboard/pages/states/states.component'
-          ),
+          import('./dashboard/pages/states/states.component'),
+      },
+      {
+        path: 'admin/settings',
+        title: 'Configuración',
+        loadComponent: () =>
+          import('./dashboard/pages/settings/settings.component'),
       },
       {
         path: '',
         redirectTo: 'control-panel/daily-summary',
         pathMatch: 'full',
       },
-    ]
+    ],
   },
   {
     path: '',

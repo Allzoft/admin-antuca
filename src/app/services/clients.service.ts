@@ -84,6 +84,7 @@ export class ClientsService {
     );
   }
 
+
   public updateClient(id: number, client: Partial<Client>): Observable<Client> {
     return this.http
       .patch<Client>(`${this.env.url_api}/clients/${id}`, client)
