@@ -56,7 +56,7 @@ export default class AuthComponent {
         this.accessSuccess = true;
         this.messageService.add({
           severity: 'success',
-          summary: 'Error',
+          summary: 'Exito!',
           detail: `¡Hola ${res.customer.name}! Tu accesso fue exitoso`,
         });
         setTimeout(() => {

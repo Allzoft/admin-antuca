@@ -159,7 +159,7 @@ export default class OrdersComponent {
     });
   }
 
-  public showItem(item: Items): void {
+  public showItem (item: Items): void {
     this.ref = this.dialogService.open(ItemComponent, {
       header: 'Item: ' + item.name,
       draggable: true,
