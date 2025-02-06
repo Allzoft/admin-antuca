@@ -73,6 +73,12 @@ export const routes: Routes = [
           import('./dashboard/pages/states/states.component'),
       },
       {
+        path: 'admin/restaurants-list',
+        title: 'Lista de restaurantes',
+        loadComponent: () =>
+          import('./dashboard/pages/restaurants-list/restaurants-list.component'),
+      },
+      {
         path: 'admin/settings',
         title: 'Configuración',
         loadComponent: () =>
