@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Customer } from '@interfaces/customer';
 import { CustomersService } from '@services/customers.service';
 import { TitleComponent } from '@shared/title/title.component';
@@ -20,6 +20,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { UploadService } from '@services/upload.service';
+import { RoleService } from '@services/roles.service';
 
 @Component({
   selector: 'app-users',
@@ -44,7 +45,7 @@ import { UploadService } from '@services/upload.service';
   providers: [ConfirmationService, MessageService],
   templateUrl: './users.component.html',
 })
-export default class UsersComponent {
+export default class UsersComponent implements OnInit {
   public layoutService = inject(LayoutService);
   private customersService = inject(CustomersService);
   public customers = this.customersService.customers;
@@ -53,6 +54,9 @@ export default class UsersComponent {
   public router = inject(Router);
   public showUserForm: boolean = false;
   public uploadService = inject(UploadService);
+  public rolesService = inject(RoleService);
+
+  public roles = this.rolesService.roles;
 
   public user: Customer = {
     id_customer: 0,
@@ -73,7 +77,12 @@ export default class UsersComponent {
     lastname: false,
     phone: false,
     email: false,
+    role: false,
   };
+
+  public ngOnInit(): void {
+    this.rolesService.getRoles();
+  }
 
   public onUpload(event: any) {
     console.log(event);
@@ -165,6 +174,7 @@ export default class UsersComponent {
       id: this.user.id,
       email: this.user.email,
       phone: this.user.phone.toString(),
+      roleIdRole: this.user.role?.id_role,
       code_country: this.selectedCodeCountry.code,
       photo: this.user.photo,
     };
@@ -230,6 +240,16 @@ export default class UsersComponent {
         severity: 'error',
         summary: 'Error',
         detail: 'Hay un error en el formulario revise porfavor',
+      });
+      return Promise.resolve(false);
+    }
+    if (!this.user.role) {
+      this.userFormDirt.role = true;
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail:
+          'Hay un error en el formulario el ROL es obligatorio revise porfavor',
       });
       return Promise.resolve(false);
     }

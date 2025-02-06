@@ -249,6 +249,33 @@
         </div>
       </div>
     </div>
+    <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="username">
+          <i class="pi pi-check mr-2"></i> Rol</label
+        >
+        <p-dropdown
+          [options]="roles()"
+          optionLabel="name"
+          placeholder="Agregar Rol (Obligatorio)"
+          styleClass="w-full"
+          class="w-full"
+          [(ngModel)]="user.role"
+        ></p-dropdown>
+      </div>
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="username">
+          <i class="pi pi-home mr-2"></i> Restaurante</label
+        >
+        <p-dropdown
+          [options]="roles()"
+          optionLabel="name"
+          placeholder="Agregar Restuarante (Obligatorio)"
+          styleClass="w-full"
+          class="w-full"
+        ></p-dropdown>
+      </div>
+    </div>
     <div
       class="flex w-full flex-column gap-3 justify-content-center align-items-center"
     >
@@ -278,7 +305,7 @@
       (onClick)="saveUser()"
       severity="success"
       label="Crear Usuario"
-      styleClass="w-full"
+      styleClass="w-full poppins-regular"
     ></p-button>
   </ng-template>
 </p-sidebar>
