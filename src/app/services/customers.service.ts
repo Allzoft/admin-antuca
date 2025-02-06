@@ -4,6 +4,7 @@ import {
   Customer,
   CustomerLogin,
   CustomerResponse,
+  MenuItem,
 } from '@interfaces/customer';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -12,6 +13,7 @@ import { environment } from '@environment/environment';
 interface State {
   customer: Customer | undefined;
   token: string | undefined;
+  access: MenuItem[];
   loading: boolean;
 }
 
@@ -32,6 +34,7 @@ export class CustomersService {
   #state = signal<State>({
     loading: true,
     customer: undefined,
+    access: [],
     token: undefined,
   });
 
@@ -43,6 +46,7 @@ export class CustomersService {
   public customer = computed(() => this.#state().customer);
   public loading = computed(() => this.#state().loading);
   public token = computed(() => this.#state().token);
+  public access = computed(() => this.#state().access);
 
   public customers = computed(() => this.#stateCustomers().customers);
   public loadingCustomers = computed(
@@ -73,6 +77,7 @@ export class CustomersService {
             loading: false,
             customer: res.customer,
             token: res.access_token,
+            access: res.customer.role!.access,
           });
         })
       );
@@ -80,6 +85,10 @@ export class CustomersService {
 
   private saveStorage(resCustomer: CustomerResponse) {
     localStorage.setItem('customer', JSON.stringify(resCustomer.customer));
+    localStorage.setItem(
+      'access',
+      JSON.stringify(resCustomer.customer.role!.access)
+    );
     localStorage.setItem('token', resCustomer.access_token.toString());
   }
 
@@ -100,6 +109,7 @@ export class CustomersService {
         loading: false,
         customer: JSON.parse(localStorage.getItem('customer')!),
         token: localStorage.getItem('token')!,
+        access: JSON.parse(localStorage.getItem('access')!),
       });
       if (this.router.url.includes('/auth')) {
         this.router.navigateByUrl('/dashboard');
@@ -109,6 +119,7 @@ export class CustomersService {
         loading: true,
         customer: undefined,
         token: undefined,
+        access: [],
       });
       this.router.navigateByUrl('/auth');
     }
@@ -130,6 +141,7 @@ export class CustomersService {
       loading: true,
       customer: undefined,
       token: undefined,
+      access: [],
     });
     this.router.navigateByUrl('/auth');
   }
@@ -199,6 +211,7 @@ export class CustomersService {
         loading: false,
         customer: updateCustomer,
         token: localStorage.getItem('token')!,
+        access: JSON.parse(localStorage.getItem('access')!),
       });
     }
     return this.http

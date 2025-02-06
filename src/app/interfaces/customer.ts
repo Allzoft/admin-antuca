@@ -1,3 +1,5 @@
+import { Role } from "./role";
+
 export interface Customer {
   id_customer: number;
   name: string;
@@ -7,11 +9,13 @@ export interface Customer {
   password?: string;
   token: string;
   code_country: string;
+  roleIdRole: number;
   phone: string;
   photo: string;
   status?: number;
   created_at?: Date;
   updated_at?: Date;
+  role?: Role
 }
 
 export interface CustomerResponse {
@@ -22,4 +26,15 @@ export interface CustomerResponse {
 export interface CustomerLogin {
   email: string;
   password: string;
+}
+
+export interface MenuItem {
+  id_access: number;
+  name: string;
+  icon: string;
+  link: string;
+  section: string;
+  father: string;
+  position: string;
+  isSelect: boolean;
 }

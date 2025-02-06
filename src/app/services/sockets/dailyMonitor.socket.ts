@@ -7,7 +7,13 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class DailyMonitorSocket extends Socket {
   constructor() {
-    super({ url: environment.url_api + '/ws', options: {} });
+    const token: string | null = localStorage.getItem('token');
+    super({
+      url: environment.url_api + '/ws',
+      options: {
+        auth: { token: `Bearer ${token}` },
+      },
+    });
     this.setupSocketListeners();
   }
 
@@ -51,16 +57,6 @@ export class DailyMonitorSocket extends Socket {
 
   public getError(): Observable<any> {
     return this.fromEvent('error');
-  }
-
-
-
-  public getUrlTracker(socketId: string) {
-    const message = {
-      socketId,
-    };
-
-    this.emit('getLink', message);
   }
 
   public closeConnection(): void {

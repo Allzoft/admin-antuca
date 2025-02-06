@@ -53,6 +53,7 @@ export default class UserComponent implements OnInit {
     code_country: '+591',
     email: '',
     id: '',
+    roleIdRole: 1,
     name: '',
     lastname: '',
     phone: '',
