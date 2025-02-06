@@ -23,7 +23,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextareaModule,
     CheckboxModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
   ],
   providers: [MessageService],
   templateUrl: './auth.component.html',
@@ -52,6 +52,7 @@ export default class AuthComponent {
 
     this.customerService.authLogin(authCustomer, this.remember).subscribe(
       (res) => {
+        console.log(res);
 
         this.accessSuccess = true;
         this.messageService.add({

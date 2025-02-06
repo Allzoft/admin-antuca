@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Client } from '@interfaces/client';
+import { Client, TypeBusiness } from '@interfaces/client';
 import { ClientsService } from '@services/clients.service';
 import { DropdownModule } from 'primeng/dropdown';
 import {
@@ -45,7 +45,7 @@ export class ClientComponent {
     code_country: '',
     phone: '',
     id: '',
-    type_business: 0,
+    type_business: TypeBusiness.B2C,
     gender: '',
     info: '',
     google: 0,
