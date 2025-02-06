@@ -1,4 +1,5 @@
 import { DailyAvailability } from './dailyAvailability';
+import { Restaurant } from './restaurant';
 
 export interface Items {
   id_item: number;
@@ -7,5 +8,7 @@ export interface Items {
   type_item: number;
   photo: string;
   price: number;
+  restaurantIdRestaurant?: number;
   dailyAvailabilities?: DailyAvailability[];
+  restaurant?: Restaurant;
 }

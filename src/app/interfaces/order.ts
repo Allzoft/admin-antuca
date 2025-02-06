@@ -2,19 +2,21 @@ import { Client } from './client';
 import { Customer } from './customer';
 import { Items } from './items';
 import { PaymentType } from './paymentType';
+import { Restaurant } from './restaurant';
 import { State } from './state';
 
 export enum ServiceMode {
-  EN_SALA =  "En Sala",
-  PARA_LLEVAR = "Para llevar",
-  DELIVERY = "Delivery",
-  MIXTO = "Mixto"
+  EN_SALA = 'En Sala',
+  PARA_LLEVAR = 'Para llevar',
+  DELIVERY = 'Delivery',
+  MIXTO = 'Mixto',
 }
 
 export interface Order {
   id_order: number;
   customerIdCustomer: number;
   clientIdClient: number;
+  restaurantIdRestaurant?: number;
   date: string;
   stateIdState: number;
   total_amount: number;
@@ -29,6 +31,7 @@ export interface Order {
   customer?: Customer;
   state?: State;
   paymentType?: PaymentType;
+  restaurant?: Restaurant;
 }
 
 export interface OrderItems {

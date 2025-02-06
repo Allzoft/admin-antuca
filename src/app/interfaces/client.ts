@@ -8,11 +8,13 @@ export interface Client {
   phone: string;
   id: string;
   type_business: TypeBusiness;
+  restaurantIdRestaurant?: number;
   gender: string;
   info: string;
   google: number;
   created_at?: Date;
   updated_at?: Date;
+  restaurant?: number 
 }
 
 

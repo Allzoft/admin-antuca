@@ -1,4 +1,5 @@
-import { Role } from "./role";
+import { Restaurant } from './restaurant';
+import { Role } from './role';
 
 export interface Customer {
   id_customer: number;
@@ -10,12 +11,14 @@ export interface Customer {
   token: string;
   code_country: string;
   roleIdRole: number;
+  restaurantIdRestaurant: number;
   phone: string;
   photo: string;
   status?: number;
   created_at?: Date;
   updated_at?: Date;
-  role?: Role
+  role?: Role;
+  restaurant?: Restaurant
 }
 
 export interface CustomerResponse {

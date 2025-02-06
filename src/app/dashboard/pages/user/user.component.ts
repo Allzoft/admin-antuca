@@ -54,6 +54,7 @@ export default class UserComponent implements OnInit {
     email: '',
     id: '',
     roleIdRole: 1,
+    restaurantIdRestaurant: 1,
     name: '',
     lastname: '',
     phone: '',
