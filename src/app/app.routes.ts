@@ -34,6 +34,12 @@ export const routes: Routes = [
           import('./dashboard/pages/clients/clients.component'),
       },
       {
+        path: 'admin/roles',
+        title: 'Roles',
+        loadComponent: () =>
+          import('./dashboard/pages/roles/roles.component'),
+      },
+      {
         path: 'admin/menu-items',
         title: 'Menu Items',
         loadComponent: () =>
