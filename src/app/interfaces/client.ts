@@ -2,7 +2,7 @@ export interface Client {
   id_client: number;
   name: string;
   lastname: string;
-  email: string;
+  email?: string;
   photo: string;
   code_country: string;
   phone: string;
