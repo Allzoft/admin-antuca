@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Client, TypeBusiness } from '@interfaces/client';
+import { Client, Gender, TypeBusiness } from '@interfaces/client';
 import { ClientsService } from '@services/clients.service';
 import { DropdownModule } from 'primeng/dropdown';
 import {
@@ -40,13 +40,13 @@ export class ClientComponent {
     id_client: 0,
     name: '',
     lastname: '',
-    email: '',
     photo: '',
+    email: '',
     code_country: '',
     phone: '',
     id: '',
     type_business: TypeBusiness.B2C,
-    gender: '',
+    gender: Gender.MASCULINO,
     info: '',
     google: 0,
   };
@@ -84,7 +84,6 @@ export class ClientComponent {
     const newClient: Partial<Client> = {
       name: this.client.name,
       lastname: this.client.lastname,
-      email: this.client.email,
       photo: this.client.photo,
       code_country: this.selectedCodeCountry.code,
       phone: this.client.phone,
@@ -94,6 +93,9 @@ export class ClientComponent {
       info: this.client.info,
       google: this.client.google,
     };
+    if (this.client.email) {
+      newClient.email = this.client.email;
+    }
     if (this.client.id_client === 0) {
       this.clientsService.postClient(newClient).subscribe((resClient) => {
         this.ref.close(resClient);
@@ -110,10 +112,6 @@ export class ClientComponent {
   public passClientForm(): Promise<boolean> {
     if (!this.client.name) {
       this.inputNameDirt = true;
-      return Promise.resolve(false);
-    }
-    if (!this.client.phone) {
-      this.inputPhoneDirt = true;
       return Promise.resolve(false);
     }
     return Promise.resolve(true);

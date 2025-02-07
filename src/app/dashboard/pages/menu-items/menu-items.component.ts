@@ -13,7 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ImageModule } from 'primeng/image';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Items } from '@interfaces/items';
+import { Items, TypeItem } from '@interfaces/items';
 import { ToastModule } from 'primeng/toast';
 import {
   DialogService,
@@ -70,21 +70,15 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
 
   @ViewChild('op') op!: OverlayPanel;
   @ViewChild('op2') op2!: OverlayPanel;
-  @ViewChild('dv') dv!: DataView;
 
   public items: Items[] = [];
   public filteredItems: Items[] = [];
   public star = 4;
   public ref: DynamicDialogRef | undefined;
 
-  public sortOptions: { value: string; severity: string }[] = [
-    { value: 'Disponible', severity: 'success' },
-    { value: 'Agotado', severity: 'danger' },
-  ];
+  public sortOptions: string[] = Object.values(TypeItem);
 
   public showFilters: boolean = false;
-
-  public selectSort: { value: string; severity: string } | undefined;
 
   public selectedItem: Items | undefined;
 
@@ -100,47 +94,50 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
   };
 
   ngOnInit(): void {
-    if (localStorage.getItem('items')) {
-      this.items = JSON.parse(localStorage.getItem('items')!);
-    }
     this.itemsService.getItems().subscribe((res) => {
       this.filteredItems = [...res];
       console.log(res);
-      localStorage.setItem('items', JSON.stringify(res));
       const today = new Date();
-      today.setDate(today.getDate() + 1); // quitar para prod
 
       this.dailyAvailabilityServices
         .getAllByDatesDailyAvailability(today, today)
-        .subscribe((res) => {
-          // Asociar las dailyAvailabilities con sus items correspondientes
-          res.forEach((dailyAvailability) => {
-            this.filteredItems.forEach((item) => {
-              if (item.id_item === dailyAvailability.itemIdItem) {
-                item.dailyAvailabilities = item.dailyAvailabilities || []; // Inicializar si no existe
-                item.dailyAvailabilities.push(dailyAvailability);
-              }
+        .subscribe(
+          (res) => {
+            // Asociar las dailyAvailabilities con sus items correspondientes
+            res.forEach((dailyAvailability) => {
+              this.filteredItems.forEach((item) => {
+                if (item.id_item === dailyAvailability.itemIdItem) {
+                  item.dailyAvailabilities = item.dailyAvailabilities || []; // Inicializar si no existe
+                  item.dailyAvailabilities.push(dailyAvailability);
+                }
+              });
             });
-          });
 
-          // Ordenar los items: los que tienen dailyAvailabilities primero
-          this.filteredItems.sort((a, b) => {
-            const aHasAvailability =
-              a.dailyAvailabilities && a.dailyAvailabilities.length > 0;
-            const bHasAvailability =
-              b.dailyAvailabilities && b.dailyAvailabilities.length > 0;
+            // Ordenar los items: los que tienen dailyAvailabilities primero
+            this.filteredItems.sort((a, b) => {
+              const aHasAvailability =
+                a.dailyAvailabilities && a.dailyAvailabilities.length > 0;
+              const bHasAvailability =
+                b.dailyAvailabilities && b.dailyAvailabilities.length > 0;
 
-            return aHasAvailability === bHasAvailability
-              ? 0
-              : aHasAvailability
-              ? -1
-              : 1;
-          });
+              return aHasAvailability === bHasAvailability
+                ? 0
+                : aHasAvailability
+                ? -1
+                : 1;
+            });
 
-          this.items = this.filteredItems;
-
-          console.log(this.items); // Verificar el orden
-        });
+            this.items = this.filteredItems;
+          },
+          (error) => {
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Sin disponibilidad',
+              detail: `No hay ninguna disponiblidad creada aún`,
+            });
+            this.items = this.filteredItems;
+          }
+        );
     });
   }
 
@@ -196,7 +193,7 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
 
   public createItem() {
     this.ref = this.dialogService.open(ItemComponent, {
-      header: 'Nuevo plato',
+      header: 'Nuevo item',
       draggable: true,
       styleClass: 'w-11 md:w-5',
     });
@@ -218,7 +215,7 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
   }
 
   public customGlobalFilter(event: any) {
-    const filterValue = event.target.value.trim().toLowerCase();
+    const filterValue = event.target!.value.trim().toLowerCase() || '';
     const filterWords = filterValue.split(' ');
 
     const itemsFiltered = this.filteredItems.filter((rowData: Items) => {
@@ -233,7 +230,21 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
       return wordsPresent.length === filterWords.length;
     });
 
-    this.itemsService.updateItems(itemsFiltered);
+    this.items = itemsFiltered;
+  }
+
+  public filterByTypeItem(event: DropdownChangeEvent) {
+    console.log(event);
+
+    if (!event.value) {
+      this.items = this.filteredItems;
+      return;
+    }
+    const selectType = event.value;
+    const itemsFiltered = this.filteredItems.filter((item: Items) => {
+      return item.type_item === selectType;
+    });
+    this.items = itemsFiltered;
   }
 
   public onSelectedItem(item: Items) {

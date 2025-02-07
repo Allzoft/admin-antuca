@@ -45,22 +45,11 @@
   <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
     <p-dropdown
       [options]="sortOptions"
-      [(ngModel)]="selectSort"
-      optionLabel="name"
-      placeholder="Ordenar por diponibilidad"
+      placeholder="Filtrar por tipo de item"
+      (onChange)="filterByTypeItem($event)"
+      [showClear]="true"
       styleClass="p-inputtext-sm w-full md:w-auto"
-    >
-      <ng-template pTemplate="selectedItem">
-        <div class="flex align-items-center gap-2" *ngIf="selectSort">
-          <p-tag [value]="selectSort.value" />
-        </div>
-      </ng-template>
-      <ng-template let-item pTemplate="item">
-        <div class="flex align-items-center gap-2">
-          <p-tag [value]="item.value" [severity]="item.severity" />
-        </div>
-      </ng-template>
-    </p-dropdown>
+    />
     <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
       <input
@@ -74,123 +63,110 @@
   </div>
   }
   <div class="p-0 border-round">
-    <p-dataView #dv [value]="items" [rows]="5" [paginator]="true">
-      <ng-template pTemplate="list" let-products>
-        <div class="grid grid-nogutter mt-2">
-          <div class="col-12" *ngFor="let item of products; let first = first">
+    <div class="grid grid-nogutter mt-2">
+      <div class="col-12" *ngFor="let item of items; let first = first">
+        <div
+          class="flex bg-white flex-column xl:flex-row xl:align-items-start p-4 gap-4 border-top-1 surface-border"
+          [ngClass]="{ 'border-top-1 surface-border': !first }"
+        >
+          <p-image
+            imageClass="w-8  sm:w-16rem xl:w-10rem  px-2 block xl:block mx-auto border-round"
+            styleClass="px-2 w-full"
+            [preview]="true"
+            [src]="item.photo | item"
+            [alt]="item.name"
+          />
+          <div
+            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-center flex-1 gap-4"
+          >
             <div
-              class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4 border-top-1 surface-border"
-              [ngClass]="{ 'border-top-1 surface-border': !first }"
+              class="flex flex-column align-items-center sm:align-items-start gap-3"
             >
-              <p-image
-                imageClass="w-8  sm:w-16rem xl:w-10rem  px-2 block xl:block mx-auto border-round"
-                styleClass="px-2 w-full"
-                [preview]="true"
-                [src]="item.photo | item"
-                [alt]="item.name"
-              />
-              <div
-                class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-center flex-1 gap-4"
-              >
+              <div class="text-2xl font-bold text-900">{{ item.name }}</div>
+              <p-rating
+                [(ngModel)]="star"
+                [readonly]="false"
+                [cancel]="false"
+              ></p-rating>
+              <div class="flex align-items-center gap-3">
+                <span class="flex align-items-center gap-2">
+                  <i class="pi pi-tag"></i>
+                  <span class="font-semibold">{{ item.type_item }}</span>
+                </span>
+              </div>
+            </div>
+            <div
+              class="flex flex-column justify-content-center align-items-center sm:align-items-end gap-3 md:gap-4"
+            >
+              <div class="surface-100 p-1" style="border-radius: 30px">
                 <div
-                  class="flex flex-column align-items-center sm:align-items-start gap-3"
+                  style="border-radius: 30px"
+                  class="surface-0 price-style poppins-medium flex align-items-center gap-2 justify-content-center py-1 px-2"
                 >
-                  <div class="text-2xl font-bold text-900">{{ item.name }}</div>
-                  <p-rating
-                    [(ngModel)]="star"
-                    [readonly]="false"
-                    [cancel]="false"
-                  ></p-rating>
-                  <div class="flex align-items-center gap-3">
-                    <span class="flex align-items-center gap-2">
-                      <i class="pi pi-tag"></i>
-                      @if (item.type_item === 0) {
-                      <span class="font-semibold">Sopa o entrante</span>
-                      } @if (item.type_item === 1) {
-                      <span class="font-semibold">Segundo</span>
-                      } @if (item.type_item === 2) {
-                      <span class="font-semibold">Otro</span>
-                      }
-                    </span>
-                  </div>
-                </div>
-                <div
-                  class="flex flex-column justify-content-center align-items-center sm:align-items-end gap-3 md:gap-4"
-                >
-                  <div class="surface-100 p-1" style="border-radius: 30px">
-                    <div
-                      style="border-radius: 30px"
-                      class="surface-0 price-style poppins-medium flex align-items-center gap-2 justify-content-center py-1 px-2"
-                    >
-                      <span class="text-primary">Bs.</span>
-                      <span class="text-900 font-medium text-lg">{{
-                        item.price
-                      }}</span>
-                    </div>
-                  </div>
-                  <div class="flex gap-2">
-                    <p-button
-                      styleClass="border-none bg-primary-50"
-                      icon="pi pi-pencil font-medium text-xl"
-                      [outlined]="true"
-                      class="md:align-self-end"
-                      (onClick)="showItem(item)"
-                    />
-                    <p-button
-                      styleClass="border-none surface-100"
-                      icon="pi pi-trash font-medium text-xl"
-                      severity="secondary"
-                      [outlined]="true"
-                      class="md:align-self-end"
-                      (onClick)="deleteItem(item)"
-                    />
-                    <p-button
-                      styleClass="border-none bg-primary-50"
-                      icon="pi pi-eye font-medium text-xl"
-                      [outlined]="true"
-                      class="md:align-self-end"
-                      (onClick)="op.toggle($event)"
-                      (onClick)="onSelectedItem(item)"
-                    />
-                  </div>
-                  @if(item.dailyAvailabilities.length === 0){
-                  <div
-                    class="flex gap-2 align-items-center text-500 text-xs md:text-sm poppins-regular"
-                  >
-                    <i class="pi pi-circle text-400"> </i>
-                    <span>
-                      No tenemos la disponibilidad de este item para hoy
-                    </span>
-                  </div>
-                  } @else {
-                  <div
-                    (click)="
-                      onSelectedAvailable(item, item.dailyAvailabilities[0])
-                    "
-                    (click)="op2.toggle($event)"
-                    class="flex gap-2 align-items-center text-700 px-3 py-2 cursor-pointer hover:surface-100 border-round text-sm md:text-base poppins-regular text-center"
-                  >
-                    <i class="pi pi-circle-fill text-green-400"> </i>
-                    <span>
-                      {{
-                        "Tenemos " +
-                          (item.dailyAvailabilities[0].quantity -
-                            item.dailyAvailabilities[0].sold) +
-                          " disponible(s) para Hoy"
-                      }}
-                    </span>
-                  </div>
-                  }
+                  <span class="text-primary">Bs.</span>
+                  <span class="text-900 font-medium text-lg">{{
+                    item.price
+                  }}</span>
                 </div>
               </div>
+              <div class="flex gap-2">
+                <p-button
+                  styleClass="border-none bg-primary-50"
+                  icon="pi pi-pencil font-medium text-xl"
+                  [outlined]="true"
+                  class="md:align-self-end"
+                  (onClick)="showItem(item)"
+                />
+                <p-button
+                  styleClass="border-none surface-100"
+                  icon="pi pi-trash font-medium text-xl"
+                  severity="secondary"
+                  [outlined]="true"
+                  class="md:align-self-end"
+                  (onClick)="deleteItem(item)"
+                />
+                <p-button
+                  styleClass="border-none bg-primary-50"
+                  icon="pi pi-eye font-medium text-xl"
+                  [outlined]="true"
+                  class="md:align-self-end"
+                  (onClick)="op.toggle($event)"
+                  (onClick)="onSelectedItem(item)"
+                />
+              </div>
+              @if(item.dailyAvailabilities!.length === 0){
+              <div
+                class="flex gap-2 align-items-center text-500 text-xs md:text-sm poppins-regular"
+              >
+                <i class="pi pi-circle text-400"> </i>
+                <span>
+                  No tenemos la disponibilidad de este item para hoy
+                </span>
+              </div>
+              } @else {
+              <div
+                (click)="
+                  onSelectedAvailable(item, item.dailyAvailabilities![0])
+                "
+                (click)="op2.toggle($event)"
+                class="flex gap-2 align-items-center text-700 px-3 py-2 cursor-pointer hover:surface-100 border-round text-sm md:text-base poppins-regular text-center"
+              >
+                <i class="pi pi-circle-fill text-green-400"> </i>
+                <span>
+                  {{
+                    "Tenemos " +
+                      (item.dailyAvailabilities![0].quantity -
+                        item.dailyAvailabilities![0].sold) +
+                      " disponible(s) para Hoy"
+                  }}
+                </span>
+              </div>
+              }
             </div>
           </div>
         </div>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <p colspan="6">No hay clientes registrados</p>
-      </ng-template>
-    </p-dataView>
+      </div>
+    </div>
   </div>
 </div>
 <p-toast position="top-center"></p-toast>

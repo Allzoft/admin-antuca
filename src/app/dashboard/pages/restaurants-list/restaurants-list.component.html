@@ -1,1 +1,456 @@
-<p>restaurants-list works!</p>,
+<section
+  class="w-full px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between"
+>
+  <div class="flex flex-column gap-1 md:gap-2">
+    <span class="text-4xl">Lista de Restaurantes</span>
+    <span class="text-lg text-400">Histórico de restaurantes asociados</span>
+  </div>
+  <div
+    class="flex flex-column md:flex-row align-items-center gap-3 md:gap-4 w-full md:w-auto"
+  >
+    <div
+      class="hover:surface-50 cursor-pointer flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+    >
+      <i class="text-primary pi pi- pi-sliders-h text-3xl md:text-6xl"></i>
+      <div class="flex flex-column gap-2">
+        <div class="md:px-3">Filtros</div>
+      </div>
+    </div>
+
+    @if(!layoutService.isMobile()){
+    <div
+      (click)="createRestaurant()"
+      class="transition-colors transition-duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 hover:shadow-3 shadow-2 px-3 w-full md:w-auto py-3 border-round align-items-center gap-2"
+    >
+      <i class="text-primary pi pi-plus text-6xl"></i>
+    </div>
+    } @else {
+    <div
+      class="flex surface-100 hover:surface-200 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      (click)="createRestaurant()"
+    >
+      <i class="text-primary pi pi-plus text-3xl md:text-6xl"></i>
+      <div class="flex flex-column gap-2">
+        <span class="">Añadir restaurante</span>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<div class="px-3 mt-3 md:mt-4">
+  <div class="p-0 border-round">
+    <p-table
+      [value]="restaurants()"
+      styleClass=""
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th
+            pSortableColumn="id_restaurant"
+            class="py-3 pl-8 white-space-nowrap"
+          >
+            Id de restaurante <p-sortIcon field="id_restaurant" />
+          </th>
+          <th pSortableColumn="name" class="py-3 white-space-nowrap">
+            Nombre de restaurante <p-sortIcon field="name" />
+          </th>
+          <th pSortableColumn="ower" class="py-3 white-space-nowrap">
+            Propietario <p-sortIcon field="ower" />
+          </th>
+          <th pSortableColumn="onwer_phone" class="py-3 white-space-nowrap">
+            Teléfono del propietario <p-sortIcon field="onwer_phone" />
+          </th>
+          <th pSortableColumn="subscription" class="py-3 white-space-nowrap">
+            Tipo de subscripción <p-sortIcon field="subscription" />
+          </th>
+          <th class="py-3"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-restaurant>
+        <tr>
+          <td class="pl-8">{{ "RAR-" + restaurant.id_restaurant }}</td>
+          <td>
+            <div class="flex align-items-center gap-2">
+              <img
+                [src]="restaurant.logo_image | item"
+                class="border-round w-2rem h-2rem"
+                alt="Profile"
+              />
+              <span>{{ restaurant.name }} </span>
+            </div>
+          </td>
+          <td>
+            {{ restaurant.owner }}
+          </td>
+          <td>
+            {{ restaurant.owner_phone }}
+          </td>
+          <td>
+            {{ restaurant.subscription }}
+          </td>
+
+          <td class="white-space-nowrap">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [outlined]="true"
+              styleClass="h-2rem w-2rem"
+              (onClick)="editRestaurant(restaurant)"
+            ></p-button>
+            <!-- (onClick)="showRestaurant(restaurant)" -->
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [outlined]="true"
+              styleClass="h-2rem w-2rem ml-2"
+              (onClick)="removeRestaurant(restaurant)"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{ "Total: " + restaurants().length }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">No hay Restaurantes registrados</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-sidebar
+  [(visible)]="showRestaurantForm"
+  position="right"
+  styleClass="w-12 md:w-5"
+>
+  <ng-template pTemplate="header">
+    @if (restaurant.id_restaurant === 0) {
+    <span class="font-semibold text-xl">Formulario de nuevo restaurante</span>
+    } @else {
+    <span class="font-semibold text-xl">Formulario de actualizacion a restaurante</span>
+    }
+  </ng-template>
+  <div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
+    <div class="flex w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="restaurantname">Nombre</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-home"></i>
+          <input
+            id="restaurantname"
+            type="text"
+            pInputText
+            placeholder="Nombre del restaurante"
+            [(ngModel)]="restaurant.name"
+            class="w-full p-inputtext-sm"
+            [ngClass]="{ 'ng-invalid ng-dirty': restaurant.name.length === 0 }"
+          />
+        </span>
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="address"
+          ><i class="pi pi-circle-on mr-2"></i> ¿Está habilitado?</label
+        >
+        <div
+          class="flex gap-2 text-sm align-items-center justify-content-center md:justify-content-start pl-0 md:pl-3 mt-1 text-500"
+        >
+          <span>No</span>
+          <p-inputSwitch
+            [(ngModel)]="restaurant.is_enabled"
+            [trueValue]="1"
+            [falseValue]="0"
+          />
+          <span>Si</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="category">Categoría</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-tag"></i>
+          <input
+            id="category"
+            type="text"
+            pInputText
+            placeholder="Cómida rápida, Cocina gourmet, saludable, etc."
+            [(ngModel)]="restaurant.category"
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="address">Dirección</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-map-marker"></i>
+          <input
+            id="address"
+            type="text"
+            pInputText
+            placeholder="Dirección del restaurante"
+            [(ngModel)]="restaurant.address"
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="max_capacity">Aforo máximo</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-info-circle"></i>
+          <input
+            id="max_capacity"
+            type="number"
+            placeholder="Aforo máximo del restaurante"
+            pInputText
+            [(ngModel)]="restaurant.max_capacity"
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2 w-12 ml-0 mt-2 md:mt-0">
+        <label for="email" class="poppins-regular"
+          ><i class="pi pi-mobile"></i> Teléfono del restaurante</label
+        >
+        <div class="flex gap-2 w-full">
+          <p-dropdown
+            [options]="optionsCodeCountries"
+            [(ngModel)]="selectedCodeCountry"
+            placeholder="+0"
+            optionLabel="name"
+            styleClass="p-inputtext-sm"
+          >
+            <ng-template pTemplate="selectedItem">
+              @if (selectedCodeCountry) {
+              <div class="flex align-items-center gap-2">
+                <img [src]="selectedCodeCountry.flag" style="width: 18px" />
+                <div>{{ selectedCodeCountry.code }}</div>
+              </div>
+              }
+            </ng-template>
+            <ng-template let-item pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <img [src]="item.flag" style="width: 18px" />
+                <div>{{ item.code }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <p-inputNumber
+            inputId="integeronly"
+            [useGrouping]="false"
+            [(ngModel)]="restaurant.phone_number"
+            inputStyleClass="w-full p-inputtext-sm"
+            styleClass="w-full"
+            class="w-full"
+          />
+          <!-- [ngClass]="{ 'ng-dirty ng-invalid': inputPhoneDirt }" -->
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="schedule"
+          >Horario de atencion</label
+        >
+        <span class="p-input-icon-left">
+          <i class="pi pi-calendar-clock"></i>
+          <input
+            id="schedule"
+            type="text"
+            pInputText
+            placeholder="Cómida rápida, Cocina gourmet, saludable, etc."
+            [(ngModel)]="restaurant.schedule"
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="type_cuisine">Tipo de cocina</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-thumbtack"></i>
+          <input
+            id="type_cuisine"
+            type="text"
+            pInputText
+            placeholder="Fusión, contemporánea, tradicional, etc."
+            [(ngModel)]="restaurant.type_cuisine"
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+    </div>
+
+    <div class="flex w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="schedule">Color primario</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-palette"></i>
+          <input
+            id="schedule"
+            type="text"
+            [disabled]="true"
+            pInputText
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="schedule">Color secundario</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-palette"></i>
+          <input
+            id="schedule"
+            type="text"
+            [disabled]="true"
+            pInputText
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+    </div>
+    <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="schedule"
+          ><i class="mr-2 pi pi-address-book"></i>Subscripción</label
+        >
+        <p-dropdown
+          [options]="subscriptionArray"
+          placeholder="Tipo de subscripción"
+          styleClass="w-full"
+          class="w-full"
+          [(ngModel)]="restaurant.subscription"
+        ></p-dropdown>
+      </div>
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="schedule"
+          ><i class="pi pi-bell mr-2"></i> ¿Permite notificaciones?</label
+        >
+        <div
+          class="flex gap-2 text-sm align-items-center justify-content-center md:justify-content-start pl-0 md:pl-3 mt-1 text-500"
+        >
+          <span>No</span>
+          <p-inputSwitch
+            [(ngModel)]="restaurant.allow_notifications"
+            [trueValue]="1"
+            [falseValue]="0"
+          />
+          <span>Si</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-column md:flex-row w-full gap-3">
+      <div class="flex flex-column gap-2 w-full">
+        <label class="poppins-regular" for="owner">Propietario</label>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-user"></i>
+          <input
+            id="owner"
+            type="text"
+            placeholder="Escriba el nombre del propietario"
+            pInputText
+            [(ngModel)]="restaurant.owner"
+            class="w-full p-inputtext-sm"
+          />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2 w-12 ml-0 md:ml-3 mt-2 md:mt-0">
+        <label class="poppins-regular" for="email"
+          ><i class="pi pi-mobile mr-2"></i>Teléfono del propietario</label
+        >
+        <div class="flex gap-2 w-full">
+          <p-dropdown
+            [options]="optionsCodeCountries"
+            [(ngModel)]="selectedCodeCountry"
+            placeholder="+0"
+            optionLabel="name"
+            styleClass="p-inputtext-sm"
+          >
+            <ng-template pTemplate="selectedItem">
+              @if (selectedCodeCountry) {
+              <div class="flex align-items-center gap-2">
+                <img [src]="selectedCodeCountry.flag" style="width: 18px" />
+                <div>{{ selectedCodeCountry.code }}</div>
+              </div>
+              }
+            </ng-template>
+            <ng-template let-item pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <img [src]="item.flag" style="width: 18px" />
+                <div>{{ item.code }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <p-inputNumber
+            inputId="integeronly"
+            [useGrouping]="false"
+            [(ngModel)]="restaurant.owner_phone"
+            inputStyleClass="w-full p-inputtext-sm"
+            styleClass="w-full"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="md:mt-3 flex w-full flex-column gap-3 justify-content-center align-items-center"
+    >
+      <div
+        class="w-10rem h-10rem border-round-3xl surface-200 flex justify-content-center align-items-center"
+      >
+        @if (restaurant.logo_image) {
+        <img
+          [src]="restaurant.logo_image"
+          alt="restaurant_image"
+          class="w-full"
+        />
+        } @else {
+        <i class="pi pi-home text-7xl"></i>
+        }
+      </div>
+      <p-fileUpload
+        mode="basic"
+        name="file[]"
+        [auto]="true"
+        accept="image/*"
+        styleClass="p-button-help surface-100 text-800 p-button-outlined border-none p-button-sm"
+        chooseStyleClass="poppins-regular"
+        chooseLabel="Subir imagen"
+        [customUpload]="true"
+        (uploadHandler)="onUpload($event)"
+      ></p-fileUpload>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      (onClick)="saveRestaurant()"
+      severity="success"
+      [label]="
+        restaurant.id_restaurant === 0
+          ? 'Crear Restaurante'
+          : 'Actualizar Restaurante'
+      "
+      styleClass="w-full poppins-regular"
+    ></p-button>
+  </ng-template>
+</p-sidebar>
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>

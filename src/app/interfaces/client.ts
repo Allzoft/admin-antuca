@@ -9,7 +9,7 @@ export interface Client {
   id: string;
   type_business: TypeBusiness;
   restaurantIdRestaurant?: number;
-  gender: string;
+  gender: Gender.MASCULINO;
   info: string;
   google: number;
   created_at?: Date;
@@ -23,3 +23,8 @@ export enum TypeBusiness {
   B2C = 'B2C',
 }
 
+export enum Gender {
+  MASCULINO = 'Masculino',
+  FEMENINO = 'Femenino',
+  OTRO = 'Otro',
+}

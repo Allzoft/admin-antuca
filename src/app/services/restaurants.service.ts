@@ -44,7 +44,7 @@ export class RestaurantsService {
         restaurants: JSON.parse(localStorage.getItem('restaurants')!),
       });
     } else {
-      this.getRestaurant();
+      this.getRestaurants();
     }
   }
 
@@ -62,7 +62,7 @@ export class RestaurantsService {
     );
   }
 
-  public getRestaurant(): void {
+  public getRestaurants(): void {
     this.#state.set({
       loading: true,
       restaurants: this.#state().restaurants,

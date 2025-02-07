@@ -304,19 +304,10 @@
             </div>
             <span class="flex align-items-center gap-2">
               <i class="pi pi-tag text-400"></i>
-              @if (item.item!.type_item === 0) {
-              <span class="font-semibold text-sm text-500 poppins-regular"
-                >Sopa o entrante</span
-              >
-              } @if (item.item!.type_item === 1) {
-              <span class="font-semibold text-sm text-500 poppins-regular"
-                >Segundo</span
-              >
-              } @if (item.item!.type_item === 2) {
-              <span class="font-semibold text-sm text-500 poppins-regular"
-                >Otro</span
-              >
-              }
+
+              <span class="font-semibold text-sm text-500 poppins-regular">{{
+                item.item?.type_item
+              }}</span>
             </span>
           </div>
           <div
@@ -325,7 +316,9 @@
             <div class="text-md font-semibold poppins-regular text-primary">
               {{ item.quantity - item.sold }}
             </div>
-            <span class="text-sm flex align-items-center  text-600 poppins-regular">
+            <span
+              class="text-sm flex align-items-center text-600 poppins-regular"
+            >
               Disponibles
             </span>
           </div>

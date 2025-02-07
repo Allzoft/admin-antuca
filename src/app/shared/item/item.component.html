@@ -1,40 +1,43 @@
 <div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
   <div class="flex w-full gap-3 md:gap-5">
     <div class="flex flex-column gap-2 w-full">
-      <label for="username">Nombre</label>
-      <span class="p-input-icon-left">
-        <i class="pi pi-book"></i>
-        <input
-          id="username"
-          type="text"
-          pInputText
-          [(ngModel)]="item.name"
-          class="w-full p-inputtext-sm"
-          [ngClass]="{'ng-invalid ng-dirty': inputDirt}"
-          [ngClass]="{'ng-invalid ng-dirty': item.name.length === 0}"
-        />
-      </span>
+      <label class="poppins-regular" for="username">
+        <i class="pi pi-user mr-2"></i>Nombre</label
+      >
+
+      <input
+        id="username"
+        type="text"
+        pInputText
+        [(ngModel)]="item.name"
+        placeholder="Nombre del producto"
+        class="w-full p-inputtext-sm"
+        [ngClass]="{ 'ng-invalid ng-dirty': inputDirt }"
+        [ngClass]="{ 'ng-invalid ng-dirty': item.name.length === 0 }"
+      />
     </div>
 
     <div class="flex flex-column gap-2 w-full">
-      <label for="username">Precio</label>
-      <p-inputNumber
-        inputId="integeronly"
-        mode="decimal"
-        [minFractionDigits]="2"
+      <label class="poppins-regular" for="username"
+        ><i class="pi pi-money-bill mr-2"></i>Precio</label
+      >
+      <input
+        id="username"
+        type="number "
+        pInputText
         [(ngModel)]="item.price"
-        inputStyleClass="w-full p-inputtext-sm"
-        styleClass="w-full"
-        prefix="Bs. "
+        class="w-full p-inputtext-sm"
+        [ngClass]="{ 'ng-invalid ng-dirty': inputDirt }"
       />
     </div>
   </div>
   <div class="flex flex-column gap-2 w-full">
-    <label for="username">Descripción</label>
+    <label class="poppins-regular" for="username"><i class="pi pi-info-circle mr-2"></i>Descripción</label>
     <textarea
       rows="2"
       cols="30"
       pInputTextarea
+      placeholder="Descripcion sobre el producto (Opcional)"
       [(ngModel)]="item.description"
       [autoResize]="true"
       class="w-full"
@@ -42,30 +45,12 @@
   </div>
   <div class="flex flex-column md:flex-row w-full gap-5">
     <div class="flex flex-column w-full gap-2">
-      <label for="username">Disponibilidad</label>
-      <div
-        class="flex gap-2 w-full justify-content-around md:justify-content-between"
-      >
-        @for (availalbe of typeAvailable; track $index) {
-        <p-button
-          [label]="availalbe.label"
-          [severity]="availalbe.label === 'Disponible' ? 'success':'danger'"
-          [outlined]="!availalbe.isSelect"
-          size="small"
-          (onClick)="selectTypeAvailable($index)"
-        ></p-button>
-        }
-      </div>
-    </div>
-
-    <div class="flex flex-column w-full gap-2">
-      <label for="username">Tipo de plato</label>
+      <label class="poppins-regular" for="username"><i class="pi pi-tag mr-2"></i>Tipo de plato</label>
       <p-dropdown
         inputId="integeronly"
-        [(ngModel)]="type_item"
+        [(ngModel)]="item.type_item"
         [options]="typeItems"
-        optionLabel="label"
-        styleClass="p-inputtext-sm w-full"
+        styleClass="p-inputtext-sm w-full poppins-regular"
       />
     </div>
   </div>
@@ -75,7 +60,7 @@
       class="flex flex-column justify-content-center align-items-center w-7 md:w-4 h-6rem md:h-7rem border-1 border-round-lg border-gray-600"
     >
       <i class="pi pi-image text-3xl text-gray-600 mt-2"></i>
-      <p class="text-gray-600 text-xs mt-1">No hay imagen</p>
+      <p class="text-gray-600 text-xs mt-1 poppins-regular">No hay imagen</p>
     </div>
     } @else {
     <div
@@ -86,15 +71,16 @@
     }
 
     <div
-      class="w-full flex flex-column justify-content-end align-items-end gap-3"
+      class="w-full flex flex-column justify-content-center  align-items-center  gap-3"
     >
       <p-fileUpload
         mode="basic"
         name="file[]"
         [auto]="true"
         accept="image/*"
-        styleClass="p-button-help p-button-sm"
+        styleClass="p-button-secondary  p-button-sm poppins-regular"
         chooseLabel="Subir imagen"
+        chooseIcon="pi pi-images"
         [disabled]="config.data?.disabled ? true : false"
         [customUpload]="true"
         (uploadHandler)="onUpload($event)"
@@ -102,8 +88,8 @@
     </div>
     <div class="w-full">
       <p-button
-        styleClass="w-full"
-        [label]="this.config.data ? 'Actualizar' : 'Crear'"
+        styleClass="w-full poppins-regular"
+        [label]="this.config.data ? 'Actualizar Item' : 'Crear Item'"
         [disabled]="config.data?.disabled ? true : false"
         severity="success"
         size="small"

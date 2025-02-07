@@ -20,7 +20,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { BadgeModule } from 'primeng/badge';
 import { ItemsService } from '@services/items.service';
 import { TableModule } from 'primeng/table';
-import { Items } from '@interfaces/items';
+import { Items, TypeItem } from '@interfaces/items';
 import { CarouselModule } from 'primeng/carousel';
 import { LayoutService } from '@services/layout.service';
 import moment from 'moment';
@@ -262,13 +262,13 @@ export class OrderComponent {
       return;
     }
     const startersItems = this.order.orderItems!.filter(
-      (i) => i.item.type_item === 0
+      (i) => i.item.type_item === TypeItem.SOPA
     );
     const secondsItems = this.order.orderItems!.filter(
-      (i) => i.item.type_item === 1
+      (i) => i.item.type_item === TypeItem.SEGUNDO
     );
     const otherItemsItems = this.order.orderItems!.filter(
-      (i) => i.item.type_item === 2
+      (i) => i.item.type_item === TypeItem.OTRO ||  i.item.type_item === TypeItem.BEBIDA
     );
 
     let startersCount = 0;

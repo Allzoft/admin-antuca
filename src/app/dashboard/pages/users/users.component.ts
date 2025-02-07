@@ -21,6 +21,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { UploadService } from '@services/upload.service';
 import { RoleService } from '@services/roles.service';
+import { RestaurantsService } from '@services/restaurants.service';
+import { Role } from '@interfaces/role';
 
 @Component({
   selector: 'app-users',
@@ -55,8 +57,10 @@ export default class UsersComponent implements OnInit {
   public showUserForm: boolean = false;
   public uploadService = inject(UploadService);
   public rolesService = inject(RoleService);
+  public restaurantsService = inject(RestaurantsService);
 
-  public roles = this.rolesService.roles;
+  public restaurants = this.restaurantsService.restaurants;
+  public roles: Role[] = [];
 
   public user: Customer = {
     id_customer: 0,
@@ -82,7 +86,10 @@ export default class UsersComponent implements OnInit {
   };
 
   public ngOnInit(): void {
-    this.rolesService.getRoles();
+    this.customersService.getUsers();
+    this.rolesService.getRoles().subscribe((res) => {
+      this.roles = res;
+    });
   }
 
   public onUpload(event: any) {
@@ -178,6 +185,7 @@ export default class UsersComponent implements OnInit {
       phone: this.user.phone.toString(),
       roleIdRole: this.user.role?.id_role,
       code_country: this.selectedCodeCountry.code,
+      restaurantIdRestaurant: this.user.restaurant?.id_restaurant,
       photo: this.user.photo,
     };
 

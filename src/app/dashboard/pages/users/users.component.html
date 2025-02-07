@@ -196,7 +196,7 @@
         </span>
       </div>
     </div>
-    <div class="flex flex-column md:flex-row w-full">
+    <div class="flex flex-column md:flex-row w-full gap-3">
       <div class="flex flex-column gap-2 w-full">
         <label for="email">Contraseña</label>
         <span class="p-input-icon-left">
@@ -212,7 +212,7 @@
           />
         </span>
       </div>
-      <div class="flex flex-column gap-2 w-12 ml-0 md:ml-5 mt-2 md:mt-0">
+      <div class="flex flex-column gap-2 w-12 ml-0 md:ml-4 mt-2 md:mt-0">
         <label for="email">Teléfono</label>
         <div class="flex gap-2 w-full">
           <p-dropdown
@@ -255,7 +255,7 @@
           <i class="pi pi-check mr-2"></i> Rol</label
         >
         <p-dropdown
-          [options]="roles()"
+          [options]="roles"
           optionLabel="name"
           placeholder="Agregar Rol (Obligatorio)"
           styleClass="w-full"
@@ -268,11 +268,12 @@
           <i class="pi pi-home mr-2"></i> Restaurante</label
         >
         <p-dropdown
-          [options]="roles()"
+          [options]="restaurants()"
           optionLabel="name"
           placeholder="Agregar Restuarante (Obligatorio)"
           styleClass="w-full"
           class="w-full"
+          [(ngModel)]="user.restaurant"
         ></p-dropdown>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Items } from '@interfaces/items';
+import { Items, TypeItem } from '@interfaces/items';
 import { ItemsService } from '@services/items.service';
 import { environment } from '@environment/environment';
 
@@ -49,19 +49,15 @@ export class ItemComponent {
     { label: 'Agotado', isSelect: false },
   ];
 
-  public typeItems: { code: number; label: string }[] = [
-    { code: 0, label: 'Sopa o entrante' },
-    { code: 1, label: 'Segundo' },
-    { code: 2, label: 'Otro' },
-  ];
+  public typeItems: string[] = Object.values(TypeItem);
 
   public item: Items = {
     id_item: 0,
     name: '',
-    price: 12,
+    price: 0,
     description: '',
     photo: '',
-    type_item: 1,
+    type_item: TypeItem.SEGUNDO,
   };
 
   public type_item: { code: number; label: string } | undefined = {
@@ -74,9 +70,6 @@ export class ItemComponent {
   constructor() {
     if (this.config.data) {
       this.item = this.config.data.item;
-      this.type_item = this.typeItems.find(
-        (i) => i.code === this.item.type_item
-      );
     }
   }
 
@@ -107,7 +100,7 @@ export class ItemComponent {
       name: this.item.name,
       price: this.item.price,
       description: this.item.description,
-      type_item: this.type_item!.code,
+      type_item: this.item.type_item,
       photo: this.item.photo,
     };
     if (this.item.id_item === 0) {

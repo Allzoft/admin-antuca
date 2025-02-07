@@ -25,28 +25,7 @@ export class ItemsService {
   public items = computed(() => this.#state().items);
   public loading = computed(() => this.#state().loading);
 
-  constructor() {
-    this.loadStorage();
-  }
-
-  private saveStorage(items: Items[]) {
-    if (items.length > 0) {
-      localStorage.setItem('items', JSON.stringify(this.#state().items));
-    } else {
-      localStorage.removeItem('items');
-    }
-  }
-
-  private loadStorage() {
-    if (localStorage.getItem('items')) {
-      this.#state.set({
-        loading: false,
-        items: JSON.parse(localStorage.getItem('items')!),
-      });
-    } else {
-      this.getItems();
-    }
-  }
+  constructor() {}
 
   public postItem(item: Partial<Items>): Observable<Items> {
     return this.http.post<Items>(`${this.env.url_api}/items`, item).pipe(
@@ -57,7 +36,6 @@ export class ItemsService {
           loading: false,
           items: oldItems,
         });
-        this.saveStorage(this.#state().items);
       })
     );
   }
@@ -76,7 +54,6 @@ export class ItemsService {
           loading: false,
           items: oldItems,
         });
-        this.saveStorage(this.#state().items);
       })
     );
   }
@@ -86,7 +63,6 @@ export class ItemsService {
       loading: false,
       items: this.items().filter((i) => i.id_item !== id),
     });
-    this.saveStorage(this.#state().items);
 
     return this.http.delete(`${this.env.url_api}/items/${id}`);
   }
