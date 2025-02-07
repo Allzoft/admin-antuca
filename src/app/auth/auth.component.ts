@@ -40,6 +40,8 @@ export default class AuthComponent {
   public accessDenied: boolean = false;
   public accessSuccess: boolean = false;
 
+  public loadingAuth: boolean = false;
+
   constructor(private route: Router) {
     this.email = localStorage.getItem('email') || '';
   }
@@ -49,11 +51,12 @@ export default class AuthComponent {
       email: this.email,
       password: this.password,
     };
+    this.loadingAuth = true;
 
     this.customerService.authLogin(authCustomer, this.remember).subscribe(
       (res) => {
         console.log(res);
-
+        this.loadingAuth = false;
         this.accessSuccess = true;
         this.messageService.add({
           severity: 'success',
@@ -65,6 +68,7 @@ export default class AuthComponent {
         }, 3000);
       },
       (error) => {
+        this.loadingAuth = false;
         this.accessDenied = true;
         this.messageService.add({
           severity: 'error',

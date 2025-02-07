@@ -1,16 +1,44 @@
 <section class="m-0 z-2">
   <div
-    class="flex flex-column align-items-center justify-content-center px-4 py-5 h-screen m-0 z-2"
+    class="flex relative flex-column align-items-center justify-content-center px-4 py-5 h-screen m-0 z-2"
+    style="
+      background-image: url('/assets/bg-login.png');
+      background-size: cover;
+      background-position: center;
+    "
   >
-    <a href="#" class="flex align-items-center text-2xl font-semibold">
+    <div
+      class="absolute cursor-pointer hover:shadow-3 bottom-0 md:right-0 mb-4 md:mr-4  md:w-auto w-10 h-3rem surface-100 flex gap-2 px-3 py-2 flex align-items-center justify-content-center"
+    >
+      <span class="poppins-regular text-sm md:text-xl">Desarrollado por</span>
+      <img
+        src="../../assets/logo-allzoft.png"
+        style="height: 2.5rem"
+        alt="logo-allzoft"
+      />
+      <img
+        src="../../assets/name-allsoft.png"
+        class="h-1rem"
+        alt="name-allsoft"
+      />
+    </div>
+    <a
+      href="#"
+      class="flex flex-column align-items-center text-2xl font-semibold"
+    >
       <img
         class="w-20rem md:w-30rem z-2"
-        src="../../assets/logo-antuca.svg"
+        src="../../assets/logo.png"
+        alt="logo"
+      />
+      <img
+        class="w-20rem md:w-30rem z-2 -mt-5"
+        src="../../assets/name-slogan.png"
         alt="logo"
       />
     </a>
     <div
-      class="md:w-4 w-12 border-round-lg shadow border md:mt-0 xl:p-0 surface-100 z-2"
+      class="md:w-4 w-12 hover:shadow-3 shadow border md:mt-0 xl:p-0 surface-100 z-2"
     >
       <div class="px-4 pt-2 pb-5 md:px-5 flex flex-column gap-3">
         <h1 class="text-lg font-bold md:text-2xl poppins-regular">
@@ -88,6 +116,7 @@
         </div>
         <p-button
           label="Ingresar"
+          [loading]="loadingAuth"
           styleClass="w-full poppins-regular"
           (click)="authCustomer()"
         ></p-button>
