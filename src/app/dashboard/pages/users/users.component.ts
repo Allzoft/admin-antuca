@@ -74,7 +74,7 @@ export default class UsersComponent implements OnInit {
     phone: '',
     photo: '',
     token: '',
-    password: 'Antuca2024',
+    password: 'Dishdy2024',
   };
 
   public userFormDirt = {
@@ -170,7 +170,7 @@ export default class UsersComponent implements OnInit {
       phone: '',
       photo: '',
       token: '',
-      password: 'Antuca2024',
+      password: 'Dishdy2024',
     };
   }
 
