@@ -23,27 +23,27 @@ import { OrderComponent } from '@shared/order/order.component';
 import { Order } from '@interfaces/order';
 
 @Component({
-    selector: 'app-topbar',
-    imports: [
-        CommonModule,
-        ButtonModule,
-        BreadcrumbModule,
-        InputTextModule,
-        PipesModule,
-        RouterModule,
-        ConfirmDialogModule,
-        InputIconModule,
-        SplitButtonModule,
-        ToastModule,
-        IconFieldModule,
-    ],
-    providers: [
-        ConfirmationService,
-        MessageService,
-        DialogService,
-        DynamicDialogConfig,
-    ],
-    templateUrl: './topbar.component.html'
+  selector: 'app-topbar',
+  imports: [
+    CommonModule,
+    ButtonModule,
+    BreadcrumbModule,
+    InputTextModule,
+    PipesModule,
+    RouterModule,
+    ConfirmDialogModule,
+    InputIconModule,
+    SplitButtonModule,
+    ToastModule,
+    IconFieldModule,
+  ],
+  providers: [
+    ConfirmationService,
+    MessageService,
+    DialogService,
+    DynamicDialogConfig,
+  ],
+  templateUrl: './topbar.component.html',
 })
 export class TopbarComponent {
   public configRef = inject(DynamicDialogConfig);
@@ -63,6 +63,8 @@ export class TopbarComponent {
   customer: Customer = this.customerService.customer()!;
 
   public user = this.customerService.customer;
+
+  public isLightMode: boolean = true;
 
   onMenuButtonClick() {
     console.log(this.layoutService.state.staticMenuDesktopInactive);
@@ -107,5 +109,13 @@ export class TopbarComponent {
         this.customerService.closeSession();
       },
     });
+  }
+
+  toggleDarkMode() {
+    const element = document.querySelector('html');
+    if (!element !== null) {
+      this.isLightMode = !this.isLightMode;
+      element?.classList.toggle('my-app-dark');
+    }
   }
 }

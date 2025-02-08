@@ -85,9 +85,10 @@
           class="bg-yellow-300 border-circle absolute right-0 top-0 z-2 -mt-1 -mr-1"
         ></div> -->
         <p-button
-          icon="pi pi-comments"
+          [icon]="isLightMode ?  'pi pi-sun' : 'pi pi-moon'"
           [outlined]="true"
           styleClass="bg-primary-100 border-none"
+          (onClick)="toggleDarkMode()"
         />
       </div>
       <div class="relative">

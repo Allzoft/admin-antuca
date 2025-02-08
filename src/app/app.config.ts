@@ -19,6 +19,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { authInterceptor } from '@services/interceptors/auth.interceptor';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { MyPreset } from './presets/primarypreset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,9 +27,9 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       ripple: true,
       theme: {
-        preset: Aura,
+        preset: MyPreset,
         options: {
-          darkModeSelector: false
+          darkModeSelector: '.my-app-dark'
         }
       },
     }),
