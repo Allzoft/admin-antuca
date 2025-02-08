@@ -40,30 +40,29 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ReportsService } from '@services/reports.service';
 
 @Component({
-  selector: 'app-daily-summary',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CarouselModule,
-    SkeletonModule,
-    ButtonModule,
-    TieredMenuModule,
-    TagModule,
-    CardModule,
-    SelectButtonModule,
-    CalendarModule,
-    ChartModule,
-    CalendarModule,
-    ProgressSpinnerModule,
-    ToastModule,
-    MeterGroupModule,
-    OverlayPanelModule,
-    DropdownModule,
-    PipesModule,
-  ],
-  providers: [MessageService],
-  templateUrl: './daily-summary.component.html',
+    selector: 'app-daily-summary',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CarouselModule,
+        SkeletonModule,
+        ButtonModule,
+        TieredMenuModule,
+        TagModule,
+        CardModule,
+        SelectButtonModule,
+        CalendarModule,
+        ChartModule,
+        CalendarModule,
+        ProgressSpinnerModule,
+        ToastModule,
+        MeterGroupModule,
+        OverlayPanelModule,
+        DropdownModule,
+        PipesModule,
+    ],
+    providers: [MessageService],
+    templateUrl: './daily-summary.component.html'
 })
 export default class DailySummaryComponent {
   public layoutService = inject(LayoutService);

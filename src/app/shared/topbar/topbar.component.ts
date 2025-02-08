@@ -23,28 +23,27 @@ import { OrderComponent } from '@shared/order/order.component';
 import { Order } from '@interfaces/order';
 
 @Component({
-  selector: 'app-topbar',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ButtonModule,
-    BreadcrumbModule,
-    InputTextModule,
-    PipesModule,
-    RouterModule,
-    ConfirmDialogModule,
-    InputIconModule,
-    SplitButtonModule,
-    ToastModule,
-    IconFieldModule,
-  ],
-  providers: [
-    ConfirmationService,
-    MessageService,
-    DialogService,
-    DynamicDialogConfig,
-  ],
-  templateUrl: './topbar.component.html',
+    selector: 'app-topbar',
+    imports: [
+        CommonModule,
+        ButtonModule,
+        BreadcrumbModule,
+        InputTextModule,
+        PipesModule,
+        RouterModule,
+        ConfirmDialogModule,
+        InputIconModule,
+        SplitButtonModule,
+        ToastModule,
+        IconFieldModule,
+    ],
+    providers: [
+        ConfirmationService,
+        MessageService,
+        DialogService,
+        DynamicDialogConfig,
+    ],
+    templateUrl: './topbar.component.html'
 })
 export class TopbarComponent {
   public configRef = inject(DynamicDialogConfig);

@@ -31,33 +31,32 @@ import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { LayoutService } from '@services/layout.service';
 
 @Component({
-  selector: 'app-menu-items',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ButtonModule,
-    CardModule,
-    DataViewModule,
-    PipesModule,
-    RatingModule,
-    TagModule,
-    InputTextModule,
-    ImageModule,
-    ConfirmDialogModule,
-    ToastModule,
-    DropdownModule,
-    OverlayPanelModule,
-    CalendarModule,
-    InputNumberModule,
-  ],
-  providers: [
-    ConfirmationService,
-    MessageService,
-    DialogService,
-    DynamicDialogConfig,
-  ],
-  templateUrl: './menu-items.component.html',
+    selector: 'app-menu-items',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ButtonModule,
+        CardModule,
+        DataViewModule,
+        PipesModule,
+        RatingModule,
+        TagModule,
+        InputTextModule,
+        ImageModule,
+        ConfirmDialogModule,
+        ToastModule,
+        DropdownModule,
+        OverlayPanelModule,
+        CalendarModule,
+        InputNumberModule,
+    ],
+    providers: [
+        ConfirmationService,
+        MessageService,
+        DialogService,
+        DynamicDialogConfig,
+    ],
+    templateUrl: './menu-items.component.html'
 })
 export default class MenuItemsComponent implements OnDestroy, OnInit {
   public layoutService = inject(LayoutService);

@@ -9,17 +9,16 @@ import { SidebarModule } from 'primeng/sidebar';
 import { CustomersService } from '@services/customers.service';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [
-    CommonModule,
-    SidemenuComponent,
-    TopbarComponent,
-    RouterOutlet,
-    SidebarModule,
-  ],
-  templateUrl: './layout.component.html',
-  styles: `
+    selector: 'app-dashboard',
+    imports: [
+        CommonModule,
+        SidemenuComponent,
+        TopbarComponent,
+        RouterOutlet,
+        SidebarModule,
+    ],
+    templateUrl: './layout.component.html',
+    styles: `
   .w-0 {
     width: 0%;
   }

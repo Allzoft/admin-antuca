@@ -10,24 +10,23 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CustomersService } from '@services/customers.service';
 @Component({
-  selector: 'app-sidemenu',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ButtonModule,
-    MenuModule,
-    ToastModule,
-    ConfirmDialogModule,
-  ],
-  providers: [MessageService, ConfirmationService],
-  templateUrl: './sidemenu.component.html',
-  styles: `
+    selector: 'app-sidemenu',
+    imports: [
+        CommonModule,
+        RouterModule,
+        ButtonModule,
+        MenuModule,
+        ToastModule,
+        ConfirmDialogModule,
+    ],
+    providers: [MessageService, ConfirmationService],
+    templateUrl: './sidemenu.component.html',
+    styles: `
   .dot-card {
     width: 3px;
     height: 3px;
   }
-  `,
+  `
 })
 export class SidemenuComponent {
   public layoutService = inject(LayoutService);

@@ -20,20 +20,19 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { UploadService } from '@services/upload.service';
 
 @Component({
-  selector: 'app-item',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    InputTextModule,
-    InputNumberModule,
-    InputTextareaModule,
-    ButtonModule,
-    ImageModule,
-    DropdownModule,
-    FileUploadModule,
-  ],
-  templateUrl: './item.component.html',
+    selector: 'app-item',
+    imports: [
+        CommonModule,
+        FormsModule,
+        InputTextModule,
+        InputNumberModule,
+        InputTextareaModule,
+        ButtonModule,
+        ImageModule,
+        DropdownModule,
+        FileUploadModule,
+    ],
+    templateUrl: './item.component.html'
 })
 export class ItemComponent {
   public dialogService = inject(DialogService);

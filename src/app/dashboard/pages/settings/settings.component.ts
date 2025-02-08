@@ -5,10 +5,9 @@ import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [ImageModule, ButtonModule, TagModule],
-  templateUrl: './settings.component.html',
+    selector: 'app-settings',
+    imports: [ImageModule, ButtonModule, TagModule],
+    templateUrl: './settings.component.html'
 })
 export default class SettingsComponent implements OnInit {
   public layoutService = inject(LayoutService)

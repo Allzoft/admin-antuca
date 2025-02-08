@@ -31,25 +31,24 @@ import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
 import { TagModule } from 'primeng/tag';
 
 @Component({
-  selector: 'app-order',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DropdownModule,
-    InputTextareaModule,
-    InputTextModule,
-    RadioButtonModule,
-    InputNumberModule,
-    InputSwitchModule,
-    ButtonModule,
-    BadgeModule,
-    TableModule,
-    CarouselModule,
-    TagModule,
-    CalendarModule,
-  ],
-  templateUrl: './order.component.html',
+    selector: 'app-order',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DropdownModule,
+        InputTextareaModule,
+        InputTextModule,
+        RadioButtonModule,
+        InputNumberModule,
+        InputSwitchModule,
+        ButtonModule,
+        BadgeModule,
+        TableModule,
+        CarouselModule,
+        TagModule,
+        CalendarModule,
+    ],
+    templateUrl: './order.component.html'
 })
 export class OrderComponent {
   public dialogService = inject(DialogService);

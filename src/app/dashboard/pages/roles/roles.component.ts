@@ -14,21 +14,20 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
-  selector: 'app-roles',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    TableModule,
-    ButtonModule,
-    InputTextModule,
-    ToastModule,
-    ConfirmDialogModule,
-    CheckboxModule,
-    SkeletonModule,
-  ],
-  providers: [ConfirmationService, MessageService],
-  templateUrl: './roles.component.html',
+    selector: 'app-roles',
+    imports: [
+        CommonModule,
+        FormsModule,
+        TableModule,
+        ButtonModule,
+        InputTextModule,
+        ToastModule,
+        ConfirmDialogModule,
+        CheckboxModule,
+        SkeletonModule,
+    ],
+    providers: [ConfirmationService, MessageService],
+    templateUrl: './roles.component.html'
 })
 export default class RolesComponent {
   private confirmationService = inject(ConfirmationService);

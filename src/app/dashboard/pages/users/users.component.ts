@@ -25,27 +25,26 @@ import { RestaurantsService } from '@services/restaurants.service';
 import { Role } from '@interfaces/role';
 
 @Component({
-  selector: 'app-users',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CardModule,
-    TableModule,
-    InputTextModule,
-    FormsModule,
-    PipesModule,
-    ButtonModule,
-    ToastModule,
-    ConfirmDialogModule,
-    DropdownModule,
-    RouterModule,
-    InputNumberModule,
-    FileUploadModule,
-    TagModule,
-    SidebarModule,
-  ],
-  providers: [ConfirmationService, MessageService],
-  templateUrl: './users.component.html',
+    selector: 'app-users',
+    imports: [
+        CommonModule,
+        CardModule,
+        TableModule,
+        InputTextModule,
+        FormsModule,
+        PipesModule,
+        ButtonModule,
+        ToastModule,
+        ConfirmDialogModule,
+        DropdownModule,
+        RouterModule,
+        InputNumberModule,
+        FileUploadModule,
+        TagModule,
+        SidebarModule,
+    ],
+    providers: [ConfirmationService, MessageService],
+    templateUrl: './users.component.html'
 })
 export default class UsersComponent implements OnInit {
   public layoutService = inject(LayoutService);

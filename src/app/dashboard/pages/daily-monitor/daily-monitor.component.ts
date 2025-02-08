@@ -30,35 +30,34 @@ import { DailyMonitorSocket } from '@services/sockets/dailyMonitor.socket';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-daily-monitor',
-  standalone: true,
-  imports: [
-    CommonModule,
-    DropdownModule,
-    FormsModule,
-    ButtonModule,
-    SidebarModule,
-    MultiSelectModule,
-    MessagesModule,
-    TagModule,
-    BadgeModule,
-    InputSwitchModule,
-    ToastModule,
-    ConfirmDialogModule,
-  ],
-  providers: [
-    ConfirmationService,
-    MessageService,
-    DialogService,
-    DynamicDialogConfig,
-    DailyMonitorSocket,
-  ],
-  styles: `
+    selector: 'app-daily-monitor',
+    imports: [
+        CommonModule,
+        DropdownModule,
+        FormsModule,
+        ButtonModule,
+        SidebarModule,
+        MultiSelectModule,
+        MessagesModule,
+        TagModule,
+        BadgeModule,
+        InputSwitchModule,
+        ToastModule,
+        ConfirmDialogModule,
+    ],
+    providers: [
+        ConfirmationService,
+        MessageService,
+        DialogService,
+        DynamicDialogConfig,
+        DailyMonitorSocket,
+    ],
+    styles: `
     .w-0 {
       width: 0%;
     }
   `,
-  templateUrl: './daily-monitor.component.html',
+    templateUrl: './daily-monitor.component.html'
 })
 export default class DailyMonitorComponent implements OnInit {
   private messageService = inject(MessageService);

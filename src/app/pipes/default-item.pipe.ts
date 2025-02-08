@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { environment } from '@environment/environment';
 @Pipe({
-  name: 'item',
+    name: 'item',
+    standalone: false
 })
 export default class ItemImagePipe implements PipeTransform {
   transform(img: any): any {

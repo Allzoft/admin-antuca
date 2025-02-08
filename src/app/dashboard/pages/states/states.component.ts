@@ -16,22 +16,21 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LayoutService } from '@services/layout.service';
 
 @Component({
-  selector: 'app-states',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    TableModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    SidebarModule,
-    DropdownModule,
-    ToastModule,
-    ConfirmDialogModule,
-  ],
-  providers: [ConfirmationService, MessageService],
-  templateUrl: './states.component.html',
+    selector: 'app-states',
+    imports: [
+        CommonModule,
+        FormsModule,
+        TableModule,
+        CardModule,
+        ButtonModule,
+        InputTextModule,
+        SidebarModule,
+        DropdownModule,
+        ToastModule,
+        ConfirmDialogModule,
+    ],
+    providers: [ConfirmationService, MessageService],
+    templateUrl: './states.component.html'
 })
 export default class StatesComponent {
   private confirmationService = inject(ConfirmationService);

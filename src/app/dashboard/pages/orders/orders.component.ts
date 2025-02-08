@@ -29,28 +29,27 @@ import { ToastModule } from 'primeng/toast';
 import { PipesModule } from '../../../pipes/pipes.module';
 
 @Component({
-  selector: 'app-orders',
-  standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    PipesModule,
-    DataViewModule,
-    TableModule,
-    DropdownModule,
-    ButtonModule,
-    TagModule,
-    TieredMenuModule,
-    ToastModule,
-    ConfirmDialogModule,
-  ],
-  providers: [
-    ConfirmationService,
-    MessageService,
-    DialogService,
-    DynamicDialogConfig,
-  ],
-  templateUrl: './orders.component.html',
+    selector: 'app-orders',
+    imports: [
+        FormsModule,
+        CommonModule,
+        PipesModule,
+        DataViewModule,
+        TableModule,
+        DropdownModule,
+        ButtonModule,
+        TagModule,
+        TieredMenuModule,
+        ToastModule,
+        ConfirmDialogModule,
+    ],
+    providers: [
+        ConfirmationService,
+        MessageService,
+        DialogService,
+        DynamicDialogConfig,
+    ],
+    templateUrl: './orders.component.html'
 })
 export default class OrdersComponent {
   public configRef = inject(DynamicDialogConfig);

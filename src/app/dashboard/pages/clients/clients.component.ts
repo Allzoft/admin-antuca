@@ -22,27 +22,26 @@ import { LayoutService } from '@services/layout.service';
 import { TagModule } from 'primeng/tag';
 
 @Component({
-  selector: 'app-clients',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ButtonModule,
-    CardModule,
-    TableModule,
-    PipesModule,
-    ToastModule,
-    ConfirmDialogModule,
-    DropdownModule,
-    InputTextModule,
-    TagModule,
-  ],
-  providers: [
-    ConfirmationService,
-    MessageService,
-    DialogService,
-    DynamicDialogConfig,
-  ],
-  templateUrl: './clients.component.html',
+    selector: 'app-clients',
+    imports: [
+        CommonModule,
+        ButtonModule,
+        CardModule,
+        TableModule,
+        PipesModule,
+        ToastModule,
+        ConfirmDialogModule,
+        DropdownModule,
+        InputTextModule,
+        TagModule,
+    ],
+    providers: [
+        ConfirmationService,
+        MessageService,
+        DialogService,
+        DynamicDialogConfig,
+    ],
+    templateUrl: './clients.component.html'
 })
 export default class ClientsComponent implements OnDestroy, OnInit {
   public clientsService = inject(ClientsService);

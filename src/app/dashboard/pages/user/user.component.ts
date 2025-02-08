@@ -17,23 +17,22 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-user',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    CardModule,
-    ProgressSpinnerModule,
-    ButtonModule,
-    FileUploadModule,
-    InputTextModule,
-    FormsModule,
-    PipesModule,
-    ToastModule,
-    ConfirmDialogModule,
-  ],
-  providers: [ConfirmationService, MessageService],
-  templateUrl: './user.component.html',
+    selector: 'app-user',
+    imports: [
+        CommonModule,
+        RouterModule,
+        CardModule,
+        ProgressSpinnerModule,
+        ButtonModule,
+        FileUploadModule,
+        InputTextModule,
+        FormsModule,
+        PipesModule,
+        ToastModule,
+        ConfirmDialogModule,
+    ],
+    providers: [ConfirmationService, MessageService],
+    templateUrl: './user.component.html'
 })
 export default class UserComponent implements OnInit {
   private uploadService = inject(UploadService);

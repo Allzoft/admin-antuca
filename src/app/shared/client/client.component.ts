@@ -16,19 +16,18 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'app-client',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DropdownModule,
-    InputTextareaModule,
-    InputTextModule,
-    InputNumberModule,
-    InputSwitchModule,
-    ButtonModule,
-  ],
-  templateUrl: './client.component.html',
+    selector: 'app-client',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DropdownModule,
+        InputTextareaModule,
+        InputTextModule,
+        InputNumberModule,
+        InputSwitchModule,
+        ButtonModule,
+    ],
+    templateUrl: './client.component.html'
 })
 export class ClientComponent {
   public dialogService = inject(DialogService);

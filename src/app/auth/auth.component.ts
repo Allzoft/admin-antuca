@@ -13,20 +13,19 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    ToastModule,
-    MessagesModule,
-    InputTextareaModule,
-    CheckboxModule,
-    InputTextModule,
-    ButtonModule,
-  ],
-  providers: [MessageService],
-  templateUrl: './auth.component.html',
+    imports: [
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        ToastModule,
+        MessagesModule,
+        InputTextareaModule,
+        CheckboxModule,
+        InputTextModule,
+        ButtonModule,
+    ],
+    providers: [MessageService],
+    templateUrl: './auth.component.html'
 })
 export default class AuthComponent {
   private customerService = inject(CustomersService);
