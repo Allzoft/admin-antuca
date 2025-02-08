@@ -12,7 +12,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { ImageModule } from 'primeng/image';
@@ -20,19 +20,19 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { UploadService } from '@services/upload.service';
 
 @Component({
-    selector: 'app-item',
-    imports: [
-        CommonModule,
-        FormsModule,
-        InputTextModule,
-        InputNumberModule,
-        InputTextareaModule,
-        ButtonModule,
-        ImageModule,
-        DropdownModule,
-        FileUploadModule,
-    ],
-    templateUrl: './item.component.html'
+  selector: 'app-item',
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    InputNumberModule,
+    TextareaModule,
+    ButtonModule,
+    ImageModule,
+    DropdownModule,
+    FileUploadModule,
+  ],
+  templateUrl: './item.component.html',
 })
 export class ItemComponent {
   public dialogService = inject(DialogService);

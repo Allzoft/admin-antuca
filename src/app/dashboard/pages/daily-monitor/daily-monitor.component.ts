@@ -1,9 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, type OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  signal,
+  type OnInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Order, ServiceMode } from '@interfaces/order';
 import { LayoutService } from '@services/layout.service';
-import { ConfirmationService, Message, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Message } from 'primeng/message';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -28,36 +35,46 @@ import { CustomersService } from '@services/customers.service';
 import { OrdersService } from '@services/orders.service';
 import { DailyMonitorSocket } from '@services/sockets/dailyMonitor.socket';
 import { Subscription } from 'rxjs';
+import { MessageModule } from 'primeng/message';
+
+interface MessageToasted {
+  severity: 'success' | 'info' | 'warn' | 'error';
+  content: string;
+  styleClass?: string;
+  icon?: string;
+}
 
 @Component({
-    selector: 'app-daily-monitor',
-    imports: [
-        CommonModule,
-        DropdownModule,
-        FormsModule,
-        ButtonModule,
-        SidebarModule,
-        MultiSelectModule,
-        MessagesModule,
-        TagModule,
-        BadgeModule,
-        InputSwitchModule,
-        ToastModule,
-        ConfirmDialogModule,
-    ],
-    providers: [
-        ConfirmationService,
-        MessageService,
-        DialogService,
-        DynamicDialogConfig,
-        DailyMonitorSocket,
-    ],
-    styles: `
+  selector: 'app-daily-monitor',
+  imports: [
+    CommonModule,
+    DropdownModule,
+    FormsModule,
+    ButtonModule,
+    SidebarModule,
+    MultiSelectModule,
+    MessagesModule,
+    TagModule,
+    BadgeModule,
+    InputSwitchModule,
+    ToastModule,
+    ConfirmDialogModule,
+    MessageModule,
+    Message,
+  ],
+  providers: [
+    ConfirmationService,
+    MessageService,
+    DialogService,
+    DynamicDialogConfig,
+    DailyMonitorSocket,
+  ],
+  styles: `
     .w-0 {
       width: 0%;
     }
   `,
-    templateUrl: './daily-monitor.component.html'
+  templateUrl: './daily-monitor.component.html',
 })
 export default class DailyMonitorComponent implements OnInit {
   private messageService = inject(MessageService);
@@ -87,18 +104,26 @@ export default class DailyMonitorComponent implements OnInit {
   public serviceModes: ServiceMode[] = Object.values(ServiceMode);
   public filterServiceModeSelect: ServiceMode[] = [];
 
-  public messages: Message[] = [
+  public messages: Partial<MessageToasted>[] = [
     {
       severity: 'success',
-      detail: 'Hola! ' + this.usersService.customer()!.name + ', a trabajar.',
+      content: 'Hola! ' + this.usersService.customer()!.name + ', a trabajar.',
       icon: 'pi pi-check',
     },
   ];
 
+  // public messages: Message[] = [
+  //   {
+  //     // severity: 'success',
+  //     // content: 'Hola! ' + this.usersService.customer()!.name + ', a trabajar.',
+  //     // icon: 'pi pi-check',
+  //   },
+  // ];
+
   public orders: Order[] = [];
   public filteredOrders: Order[] = [];
 
-  public messagesToSend: Message[] = [];
+  public messagesToSend: MessageToasted[] = [];
 
   private newOrderSubscription: Subscription;
   private updateOrderSubscription: Subscription;
@@ -119,12 +144,12 @@ export default class DailyMonitorComponent implements OnInit {
     });
 
     this.dailyMonitorSocket.on('message', (msg: string) => {
-      const newMessage: Message = {
+      const newMessage: MessageToasted = {
         severity: 'info',
-        detail: msg,
+        content: msg,
         icon: 'pi pi-info-circle',
       };
-      this.messageService.add(newMessage);
+      this.messages.push(newMessage);
     });
   }
 
@@ -136,9 +161,9 @@ export default class DailyMonitorComponent implements OnInit {
     this.newOrderSubscription = this.dailyMonitorSocket
       .getNewOrder()
       .subscribe((order: Order) => {
-        const newMessage: Message = {
+        const newMessage: MessageToasted = {
           severity: 'warn',
-          detail:
+          content:
             'Creacion de orden con ID ' +
             order.id_order +
             ' al cliente: ' +
@@ -153,9 +178,9 @@ export default class DailyMonitorComponent implements OnInit {
     this.updateOrderSubscription = this.dailyMonitorSocket
       .getUpdateOrder()
       .subscribe((order: Order) => {
-        const newMessage: Message = {
+        const newMessage: MessageToasted = {
           severity: 'info',
-          detail:
+          content:
             'Actualizacion de la orden ' +
             order.id_order +
             ' al cliente: ' +
@@ -167,9 +192,9 @@ export default class DailyMonitorComponent implements OnInit {
     this.deleteOrderSubscription = this.dailyMonitorSocket
       .getDeleteOrder()
       .subscribe((order: Order) => {
-        const newMessage: Message = {
+        const newMessage: MessageToasted = {
           severity: 'error',
-          detail: 'Eliminacion',
+          content: 'Eliminacion',
           icon: 'pi pi-info-circle',
         };
         this.onDeleteOrder(order);
@@ -395,7 +420,4 @@ export default class DailyMonitorComponent implements OnInit {
       window.URL.revokeObjectURL(url);
     });
   }
-  
-
- 
 }

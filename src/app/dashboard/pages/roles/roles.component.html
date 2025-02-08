@@ -8,8 +8,6 @@
   <div
     class="flex flex-column md:flex-row align-items-center gap-3 md:gap-4 w-full md:w-auto"
   >
-    
-
     @if(!layoutServices.isMobile()){
     <div
       (click)="createRole()"
@@ -30,165 +28,173 @@
     }
   </div>
 </section>
-  
-  <section class="flex flex-column md:flex-row gap-1 md:gap-4 px-3">
-    @if (loadingRoles()) {
-    <div
-      class="col-12 md:col-6 p-0 border-300 border-1 md:mb-3 shadow-4 border-round mt-4 overflow-hidden h-10rem md:h-auto"
+
+<section class="flex flex-column md:flex-row gap-1 md:gap-4 px-3">
+  @if (loadingRoles()) {
+  <div
+    class="col-12 md:col-6 p-0 border-300 border-1 md:mb-3 shadow-4 border-round mt-4 overflow-hidden h-10rem md:h-auto"
+  >
+    <p-skeleton styleClass="w-full h-full"></p-skeleton>
+  </div>
+  } @else {
+  <div
+    class="bg-white col-12 md:col-6 p-0 border-300 border-1 md:mb-3 shadow-4 mt-4 overflow-hidden"
+  >
+    <p-table
+      #dt
+      [value]="roles()"
+      [showCurrentPageReport]="true"
+      styleClass="p-datatable-sm"
+      responsiveLayout="scroll"
     >
-      <p-skeleton styleClass="w-full h-full"></p-skeleton>
-    </div>
-    } @else {
-    <div
-      class="bg-white col-12 md:col-6 p-0 border-300 border-1 md:mb-3 shadow-4 mt-4 overflow-hidden"
-    >
-      <p-table
-        #dt
-        [value]="roles()"
-        [showCurrentPageReport]="true"
-        styleClass="p-datatable-sm"
-        responsiveLayout="scroll"
-      >
-        <ng-template pTemplate="header">
-          <tr>
-            <th
-              pSortableColumn="name"
-              class="white-space-nowrap pl-4 h-3rem surface-200"
-            >
-              Nombre
-              <p-sortIcon class="ml-8" field="name"></p-sortIcon>
-            </th>
-            <th class="surface-200"></th>
-            <th class="surface-200"></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-role>
-          <tr>
-            <td class="pl-4">
-              {{ role.name }}
-            </td>
-            <td></td>
-            <td class="flex align-items-center gap-2 sm:justify-content-end">
-              <button
-                pButton
-                pRipple
-                type="button"
-                icon="pi pi-pencil"
-                class="p-button-rounded p-button-text ml-auto sm:ml-0 w-2rem h-2rem"
-                (click)="editRole(role)"
-              ></button>
-              <button
-                pButton
-                pRipple
-                type="button"
-                icon="pi pi-trash"
-                class="p-button-rounded p-button-text ml-auto sm:ml-0 w-2rem h-2rem"
-                (click)="deleteRole(role)"
-              ></button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="3">
-              Lista vacía
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-    } @if (loadingAccesses()) {
-    <div
-      class="border-300 border-1 shadow-4 border-round mt-4 overflow-hidden w-full p-0 mb-3 h-30rem"
-    >
-      <p-skeleton styleClass="w-full h-full"></p-skeleton>
-    </div>
-    } @else {
-    <div
-      class="border-300 bg-white border-1 shadow-4 mt-4 overflow-hidden w-full p-0 mb-3"
-    >
-      <div
-        class="surface-200 h-3rem flex justify-content-center align-items-center"
-      >
-        <span class="font-semibold text-sm">FORMULARIO ROL</span>
-      </div>
-      <div class="grid">
-        <div class="col-12">
-          <div class="field grid flex justify-content-center">
-            <span class="p-input-icon-left w-6 mt-3">
-              <i class="pi pi-check text-base"></i>
-              <input
-                pInputText
-                type="text"
-                placeholder="Nombre de rol"
-                [(ngModel)]="selectedRole.name"
-                class="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': inputsDirt.name}"
-              />
-            </span>
-          </div>
-          <div
-            class="h-3rem surface-200 flex justify-content-center align-items-center"
+      <ng-template pTemplate="header">
+        <tr>
+          <th
+            pSortableColumn="name"
+            class="white-space-nowrap pl-4 h-3rem surface-200"
           >
-            <span class=" font-semibold text-sm poppins-medium">Acceso</span>
-          </div>
-          <div class="flex mt-3">
-            <div class="col-6 pl-5">
-              @for (access of accesses(); track $index) {
-              <div class="flex align-items-center gap-2">
+            Nombre
+            <p-sortIcon class="ml-8" field="name"></p-sortIcon>
+          </th>
+          <th class="surface-200"></th>
+          <th class="surface-200"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-role>
+        <tr>
+          <td class="pl-4">
+            {{ role.name }}
+          </td>
+          <td></td>
+          <td class="flex align-items-center gap-2 sm:justify-content-end">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text ml-auto sm:ml-0 w-2rem h-2rem"
+              (click)="editRole(role)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text ml-auto sm:ml-0 w-2rem h-2rem"
+              (click)="deleteRole(role)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="3">Lista vacía</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  } @if (loadingAccesses()) {
+  <div
+    class="border-300 border-1 shadow-4 border-round mt-4 overflow-hidden w-full p-0 mb-3 h-30rem"
+  >
+    <p-skeleton styleClass="w-full h-full"></p-skeleton>
+  </div>
+  } @else {
+  <div
+    class="border-300 bg-white border-1 shadow-4 mt-4 overflow-hidden w-full p-0 mb-3"
+  >
+    <div
+      class="surface-200 h-3rem flex justify-content-center align-items-center"
+    >
+      <span class="font-semibold text-sm">FORMULARIO ROL</span>
+    </div>
+    <div class="grid">
+      <div class="col-12">
+        <div class="field grid flex justify-content-center">
+          <span class="p-input-icon-left w-6 mt-3">
+            <i class="pi pi-check text-base"></i>
+            <input
+              pInputText
+              type="text"
+              placeholder="Nombre de rol"
+              [(ngModel)]="selectedRole.name"
+              class="w-full"
+              [ngClass]="{ 'ng-invalid ng-dirty': inputsDirt.name }"
+            />
+          </span>
+        </div>
+        <div
+          class="h-3rem surface-200 flex justify-content-center align-items-center"
+        >
+          <span class="font-semibold text-sm poppins-medium">Acceso</span>
+        </div>
+        <div class="flex mt-3">
+          <div class="col-6 pl-5">
+            @for (access of accesses(); track $index) {
+            <div class="flex align-items-center gap-2">
+              <div class="flex items-center">
                 <p-checkbox
+                  [inputId]="'access_' + access.name"
                   *ngIf="$index % 2 === 0"
-                  [label]="access.name"
+                  [name]="access.name"
                   labelStyleClass="text-sm text-600 mt-2"
                   [value]="access.id_access"
                   [(ngModel)]="access.isSelect"
                   [binary]="true"
                   class="field"
-                >
-                </p-checkbox>
-                <i
-                  [class]="'text-primary-600 mb-3 pi pi-' + access.icon "
-                  *ngIf="$index % 2 === 0"
-                ></i>
+                />
+                <label [for]="'access_' + access.name" class="ml-2">
+                  Mushroom
+                </label>
               </div>
-              }
+
+              <i
+                [class]="'text-primary-600 mb-3 pi pi-' + access.icon"
+                *ngIf="$index % 2 === 0"
+              ></i>
             </div>
-            <div class="col-6">
-              @for (access of accesses(); track $index) {
-              <div class="flex align-items-center gap-2">
+            }
+          </div>
+          <div class="col-6">
+            @for (access of accesses(); track $index) {
+            <div class="flex align-items-center gap-2">
+              <div class="flex items-center">
                 <p-checkbox
+                  [inputId]="'access_' + access.name"
                   *ngIf="$index % 2 === 1"
-                  [label]="access.name"
+                  [name]="access.name"
                   labelStyleClass="text-sm text-600 mt-2"
                   [value]="access.id_access"
                   [(ngModel)]="access.isSelect"
                   [binary]="true"
                   class="field"
-                >
-                </p-checkbox>
-                <i
-                  [class]="'text-primary-600 mb-3 pi pi-' + access.icon "
-                  *ngIf="$index % 2 === 1"
-                ></i>
+                />
+                <label [for]="'access_' + access.name" class="ml-2">
+                  Mushroom
+                </label>
               </div>
-              }
+              <i
+                [class]="'text-primary-600 mb-3 pi pi-' + access.icon"
+                *ngIf="$index % 2 === 1"
+              ></i>
             </div>
+            }
           </div>
-          <div class="col-12 flex justify-content-end">
-            <p-button
-              icon="pi pi-check"
-              label="Guardar"
-              styleClass="poppins-regular"
-              severity="success"
-              (onClick)="saveRole()"
-            ></p-button>
-          </div>
+        </div>
+        <div class="col-12 flex justify-content-end">
+          <p-button
+            icon="pi pi-check"
+            label="Guardar"
+            styleClass="poppins-regular"
+            severity="success"
+            (onClick)="saveRole()"
+          ></p-button>
         </div>
       </div>
     </div>
-    }
-  </section>
-  
-  <p-toast position="top-center"></p-toast>
-  <p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>
-  
+  </div>
+  }
+</section>
+
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>

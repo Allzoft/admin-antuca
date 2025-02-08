@@ -7,7 +7,7 @@ import { CustomersService } from '@services/customers.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TextareaModule } from 'primeng/textarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
@@ -19,7 +19,7 @@ import { ButtonModule } from 'primeng/button';
         RouterModule,
         ToastModule,
         MessagesModule,
-        InputTextareaModule,
+        TextareaModule,
         CheckboxModule,
         InputTextModule,
         ButtonModule,

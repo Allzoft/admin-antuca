@@ -79,7 +79,7 @@
       rows="2"
       cols="30"
       placeholder="Escriba acá cada las indicaciones importantes porfavor"
-      pInputTextarea
+      pTextarea
       [(ngModel)]="order.notes"
       [autoResize]="true"
       class="w-full text-sm"
@@ -117,7 +117,7 @@
               } @case (2) {
               <p-tag
                 icon="pi pi-circle-fill"
-                severity="warning"
+                severity="warn"
                 [value]="order.state!.name"
                 styleClass="poppins-medium"
               />
@@ -173,7 +173,7 @@
               } @case (2) {
               <p-tag
                 icon="pi pi-circle-fill"
-                severity="warning"
+                severity="warn"
                 [value]="state!.name"
                 styleClass="poppins-medium"
               />

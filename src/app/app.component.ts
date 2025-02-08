@@ -1,20 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { PrimeNGConfig } from 'primeng/api';
+import { PrimeNG } from 'primeng/config';
 
 @Component({
-    selector: 'app-root',
-    imports: [CommonModule, RouterOutlet],
-    providers: [PrimeNGConfig],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   title = 'admin';
-  constructor(private primengConfig: PrimeNGConfig) {}
+  constructor(private primeng: PrimeNG) {}
 
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
+    this.primeng.ripple.set(true);
   }
 }

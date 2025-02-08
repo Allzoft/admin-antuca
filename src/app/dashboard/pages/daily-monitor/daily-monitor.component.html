@@ -98,7 +98,7 @@
             } @case (2) {
             <p-tag
               icon="pi pi-circle-fill"
-              severity="warning"
+              severity="warn"
               [value]="order.state!.name"
               (click)="getImpressOrder(order)"
               styleClass="cursor-pointer hover:surface-200 poppins-medium"
@@ -240,13 +240,13 @@
       <span class="text-3xl poppins-medium">Notificaciones</span>
     </div>
     <div class="px-2">
-      <p-messages
-        #mssg
-        [(value)]="messages"
-        [enableService]="true"
-        [closable]="false"
-        styleClass="w-12 md:w-8 mb-8 flex flex-column-reverse my-0"
+      @for (message of messages; track message; let first = $first) {
+      <p-message
+        [severity]="message.severity"
+        [styleClass]="message.styleClass"
+        [text]="message.content"
       />
+      }
     </div>
   </div>
   @if (layoutService.isMobile()) {
@@ -319,7 +319,7 @@
     <div
       class="w-full flex white-space-normal align-items-center justify-content-between my-1"
     >
-      <div class="poppins-regular text-700">{{ "- " + message.detail }}</div>
+      <div class="poppins-regular text-700">{{ "- " + message.content }}</div>
       <p-button
         severity="secondary"
         [text]="true"
@@ -398,7 +398,7 @@
       <div
         class="w-full flex white-space-normal align-items-center justify-content-between my-1"
       >
-        <div class="poppins-regular text-700">{{ "- " + message.detail }}</div>
+        <div class="poppins-regular text-700">{{ "- " + message.content }}</div>
         <p-button
           severity="secondary"
           [text]="true"

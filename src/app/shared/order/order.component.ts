@@ -16,7 +16,7 @@ import {
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TextareaModule } from 'primeng/textarea';
 import { BadgeModule } from 'primeng/badge';
 import { ItemsService } from '@services/items.service';
 import { TableModule } from 'primeng/table';
@@ -31,24 +31,24 @@ import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
 import { TagModule } from 'primeng/tag';
 
 @Component({
-    selector: 'app-order',
-    imports: [
-        CommonModule,
-        FormsModule,
-        DropdownModule,
-        InputTextareaModule,
-        InputTextModule,
-        RadioButtonModule,
-        InputNumberModule,
-        InputSwitchModule,
-        ButtonModule,
-        BadgeModule,
-        TableModule,
-        CarouselModule,
-        TagModule,
-        CalendarModule,
-    ],
-    templateUrl: './order.component.html'
+  selector: 'app-order',
+  imports: [
+    CommonModule,
+    FormsModule,
+    DropdownModule,
+    TextareaModule,
+    InputTextModule,
+    RadioButtonModule,
+    InputNumberModule,
+    InputSwitchModule,
+    ButtonModule,
+    BadgeModule,
+    TableModule,
+    CarouselModule,
+    TagModule,
+    CalendarModule,
+  ],
+  templateUrl: './order.component.html',
 })
 export class OrderComponent {
   public dialogService = inject(DialogService);
@@ -131,13 +131,13 @@ export class OrderComponent {
   }
 
   public getItems() {
-    this.loadingItems = true
+    this.loadingItems = true;
     const today = new Date();
     // today.setDate(today.getDate() + 1); // quitar para prod
     this.dailyAvailabilityServices
-    .getAllByDatesDailyAvailability(today, today)
-    .subscribe((res) => {
-        this.loadingItems = false
+      .getAllByDatesDailyAvailability(today, today)
+      .subscribe((res) => {
+        this.loadingItems = false;
         this.itemsAvailables = res;
       });
   }
@@ -267,7 +267,9 @@ export class OrderComponent {
       (i) => i.item.type_item === TypeItem.SEGUNDO
     );
     const otherItemsItems = this.order.orderItems!.filter(
-      (i) => i.item.type_item === TypeItem.OTRO ||  i.item.type_item === TypeItem.BEBIDA
+      (i) =>
+        i.item.type_item === TypeItem.OTRO ||
+        i.item.type_item === TypeItem.BEBIDA
     );
 
     let startersCount = 0;

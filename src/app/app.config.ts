@@ -1,6 +1,7 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
   RouterModule,
+  RouterOutlet,
   provideRouter,
   withHashLocation,
   withViewTransitions,
@@ -23,8 +24,12 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
     providePrimeNG({
+      ripple: true,
       theme: {
         preset: Aura,
+        options: {
+          darkModeSelector: false
+        }
       },
     }),
     provideRouter(
