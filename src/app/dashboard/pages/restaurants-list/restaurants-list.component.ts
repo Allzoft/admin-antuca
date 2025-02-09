@@ -20,29 +20,34 @@ import { RestaurantsService } from '@services/restaurants.service';
 import { UploadService } from '@services/upload.service';
 import { Restaurant, TypeSubscription } from '@interfaces/restaurant';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { DrawerModule } from 'primeng/drawer';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
-    selector: 'app-restaurants-list',
-    imports: [
-        CommonModule,
-        CardModule,
-        TableModule,
-        InputTextModule,
-        FormsModule,
-        PipesModule,
-        ButtonModule,
-        ToastModule,
-        ConfirmDialogModule,
-        DropdownModule,
-        RouterModule,
-        InputSwitchModule,
-        InputNumberModule,
-        FileUploadModule,
-        TagModule,
-        SidebarModule,
-    ],
-    providers: [ConfirmationService, MessageService],
-    templateUrl: './restaurants-list.component.html'
+  selector: 'app-restaurants-list',
+  imports: [
+    CommonModule,
+    CardModule,
+    TableModule,
+    InputTextModule,
+    FormsModule,
+    PipesModule,
+    ButtonModule,
+    ToastModule,
+    ConfirmDialogModule,
+    DropdownModule,
+    RouterModule,
+    InputSwitchModule,
+    InputNumberModule,
+    FileUploadModule,
+    TagModule,
+    DrawerModule,
+    InputIconModule,
+    IconFieldModule,
+  ],
+  providers: [ConfirmationService, MessageService],
+  templateUrl: './restaurants-list.component.html',
 })
 export default class RestaurantsListComponent implements OnInit {
   public layoutService = inject(LayoutService);

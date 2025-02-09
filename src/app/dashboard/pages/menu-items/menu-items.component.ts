@@ -176,6 +176,7 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
       header: item.name,
       draggable: true,
       styleClass: 'w-11/12 md:w-5/12',
+      modal: true,
       closable: true,
       data: {
         item: item,
@@ -200,6 +201,7 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
       header: 'Nuevo item',
       draggable: true,
       styleClass: 'w-11/12 md:w-5/12',
+      modal: true,
       closable: true,
     });
 

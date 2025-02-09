@@ -1,18 +1,18 @@
 <section
-  class="w-full px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between"
+  class="w-full px-3 flex flex-col md:flex-row gap-3 mt-3 justify-between"
 >
-  <div class="flex flex-column gap-1 md:gap-2">
-    <span class="text-4xl">Lista de Restaurantes</span>
-    <span class="text-lg text-400">Histórico de restaurantes asociados</span>
+  <div class="flex flex-col gap-1 md:gap-2">
+    <span class="poppins-medium text-3xl">Lista de Restaurantes</span>
+    <span class="text-lg text-slate-400">Histórico de restaurantes asociados</span>
   </div>
   <div
-    class="flex flex-column md:flex-row align-items-center gap-3 md:gap-4 w-full md:w-auto"
+    class="flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full md:w-auto"
   >
     <div
-      class="hover:surface-50 cursor-pointer flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      class="hover:bg-slate-50  dark:hover:bg-gray-900/80 cursor-pointer flex bg-slate-100  dark:bg-gray-900 shadow-md  px-3 w-full md:w-auto py-2 md:py-3 rounded items-center gap-2"
     >
-      <i class="text-primary pi pi- pi-sliders-h text-3xl md:text-6xl"></i>
-      <div class="flex flex-column gap-2">
+      <i class="text-primary-500 dark:text-primary-400 pi pi-sliders-h text-3xl md:text-5xl"></i>
+      <div class="flex flex-col gap-2">
         <div class="md:px-3">Filtros</div>
       </div>
     </div>
@@ -20,17 +20,17 @@
     @if(!layoutService.isMobile()){
     <div
       (click)="createRestaurant()"
-      class="transition-colors transition-duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 hover:shadow-3 shadow-2 px-3 w-full md:w-auto py-3 border-round align-items-center gap-2"
+      class="transition-colors duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 dark:bg-primary-400/10 dark:hover:bg-primary-400/20 hover:shadow-lg shadow-md px-3 w-full md:w-auto py-3 rounded items-center gap-2"
     >
-      <i class="text-primary pi pi-plus text-6xl"></i>
+      <i class="text-primary-500 dark:text-primary-400 pi pi-plus text-5xl"></i>
     </div>
     } @else {
     <div
-      class="flex surface-100 hover:surface-200 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      class="flex bg-slate-100  dark:bg-gray-900 shadow-md hover:bg-slate-200 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 rounded items-center gap-2"
       (click)="createRestaurant()"
     >
       <i class="text-primary pi pi-plus text-3xl md:text-6xl"></i>
-      <div class="flex flex-column gap-2">
+      <div class="flex flex-col gap-2">
         <span class="">Añadir restaurante</span>
       </div>
     </div>
@@ -39,7 +39,7 @@
 </section>
 
 <div class="px-3 mt-3 md:mt-4">
-  <div class="p-0 border-round">
+  <div class="p-0 rounded">
     <p-table
       [value]="restaurants()"
       styleClass=""
@@ -74,10 +74,10 @@
         <tr>
           <td class="pl-8">{{ "RAR-" + restaurant.id_restaurant }}</td>
           <td>
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <img
                 [src]="restaurant.logo_image | item"
-                class="border-round w-2rem h-2rem"
+                class="rounded w-2rem h-2rem"
                 alt="Profile"
               />
               <span>{{ restaurant.name }} </span>
@@ -131,10 +131,10 @@
     </p-table>
   </div>
 </div>
-<p-sidebar
+<p-drawer
   [(visible)]="showRestaurantForm"
   position="right"
-  styleClass="w-12 md:w-5"
+  styleClass="w-full md:w-5/12"
 >
   <ng-template pTemplate="header">
     @if (restaurant.id_restaurant === 0) {
@@ -143,12 +143,12 @@
     <span class="font-semibold text-xl">Formulario de actualizacion a restaurante</span>
     }
   </ng-template>
-  <div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
+  <div class="w-full flex flex-col gap-3 mt-2 md:mt-0">
     <div class="flex w-full gap-3 md:gap-5">
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="restaurantname">Nombre</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-home"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-home"></p-inputicon>
           <input
             id="restaurantname"
             type="text"
@@ -158,15 +158,15 @@
             class="w-full p-inputtext-sm"
             [ngClass]="{ 'ng-invalid ng-dirty': restaurant.name.length === 0 }"
           />
-        </span>
+        </p-iconfield>
       </div>
 
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="address"
           ><i class="pi pi-circle-on mr-2"></i> ¿Está habilitado?</label
         >
         <div
-          class="flex gap-2 text-sm align-items-center justify-content-center md:justify-content-start pl-0 md:pl-3 mt-1 text-500"
+          class="flex gap-2 text-sm items-center justify-center md:justify-start pl-0 md:pl-3 mt-1 text-500"
         >
           <span>No</span>
           <p-inputSwitch
@@ -179,10 +179,10 @@
       </div>
     </div>
     <div class="flex w-full gap-3 md:gap-5">
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="category">Categoría</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-tag"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-tag"></p-inputicon>
           <input
             id="category"
             type="text"
@@ -191,13 +191,13 @@
             [(ngModel)]="restaurant.category"
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
 
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="address">Dirección</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-map-marker"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-map-marker"></p-inputicon>
           <input
             id="address"
             type="text"
@@ -206,15 +206,15 @@
             [(ngModel)]="restaurant.address"
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
     </div>
 
-    <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
-      <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col md:flex-row w-full gap-3 md:gap-5">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="max_capacity">Aforo máximo</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-info-circle"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-info-circle"></p-inputicon>
           <input
             id="max_capacity"
             type="number"
@@ -223,9 +223,9 @@
             [(ngModel)]="restaurant.max_capacity"
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
-      <div class="flex flex-column gap-2 w-12 ml-0 mt-2 md:mt-0">
+      <div class="flex flex-col gap-2 w-full ml-0 mt-2 md:mt-0">
         <label for="email" class="poppins-regular"
           ><i class="pi pi-mobile"></i> Teléfono del restaurante</label
         >
@@ -235,18 +235,19 @@
             [(ngModel)]="selectedCodeCountry"
             placeholder="+0"
             optionLabel="name"
-            styleClass="p-inputtext-sm"
+            styleClass="p-inputtext-sm h-9 w-60"
+            class="h-9 "
           >
             <ng-template pTemplate="selectedItem">
               @if (selectedCodeCountry) {
-              <div class="flex align-items-center gap-2">
+              <div class="flex items-center gap-2 -mt-2">
                 <img [src]="selectedCodeCountry.flag" style="width: 18px" />
                 <div>{{ selectedCodeCountry.code }}</div>
               </div>
               }
             </ng-template>
             <ng-template let-item pTemplate="item">
-              <div class="flex align-items-center gap-2">
+              <div class="flex items-center gap-2">
                 <img [src]="item.flag" style="width: 18px" />
                 <div>{{ item.code }}</div>
               </div>
@@ -257,20 +258,20 @@
             [useGrouping]="false"
             [(ngModel)]="restaurant.phone_number"
             inputStyleClass="w-full p-inputtext-sm"
-            styleClass="w-full"
-            class="w-full"
+            styleClass="w-full h-9"
+            class="w-full h-9"
           />
           <!-- [ngClass]="{ 'ng-dirty ng-invalid': inputPhoneDirt }" -->
         </div>
       </div>
     </div>
     <div class="flex w-full gap-3 md:gap-5">
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="schedule"
           >Horario de atencion</label
         >
-        <span class="p-input-icon-left">
-          <i class="pi pi-calendar-clock"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-calendar-clock"></p-inputicon>
           <input
             id="schedule"
             type="text"
@@ -279,13 +280,13 @@
             [(ngModel)]="restaurant.schedule"
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
 
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="type_cuisine">Tipo de cocina</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-thumbtack"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-thumbtack"></p-inputicon>
           <input
             id="type_cuisine"
             type="text"
@@ -294,15 +295,15 @@
             [(ngModel)]="restaurant.type_cuisine"
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
     </div>
 
     <div class="flex w-full gap-3 md:gap-5">
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="schedule">Color primario</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-palette"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-palette"></p-inputicon>
           <input
             id="schedule"
             type="text"
@@ -310,12 +311,12 @@
             pInputText
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="schedule">Color secundario</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-palette"></i>
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-palette"></p-inputicon>
           <input
             id="schedule"
             type="text"
@@ -323,11 +324,11 @@
             pInputText
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
     </div>
-    <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
-      <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col md:flex-row w-full gap-3 md:gap-5">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="schedule"
           ><i class="mr-2 pi pi-address-book"></i>Subscripción</label
         >
@@ -339,12 +340,12 @@
           [(ngModel)]="restaurant.subscription"
         ></p-dropdown>
       </div>
-      <div class="flex flex-column gap-2 w-full">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="schedule"
           ><i class="pi pi-bell mr-2"></i> ¿Permite notificaciones?</label
         >
         <div
-          class="flex gap-2 text-sm align-items-center justify-content-center md:justify-content-start pl-0 md:pl-3 mt-1 text-500"
+          class="flex gap-2 text-sm items-center justify-center md:justify-start pl-0 md:pl-3 mt-1 text-500"
         >
           <span>No</span>
           <p-inputSwitch
@@ -356,11 +357,11 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-column md:flex-row w-full gap-3">
-      <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col md:flex-row w-full gap-3">
+      <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="owner">Propietario</label>
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-user"></i>
+        <p-iconfield class="p-input-icon-left w-full">
+          <p-inputicon styleClass="pi pi-user"></p-inputicon>
           <input
             id="owner"
             type="text"
@@ -369,9 +370,9 @@
             [(ngModel)]="restaurant.owner"
             class="w-full p-inputtext-sm"
           />
-        </span>
+        </p-iconfield>
       </div>
-      <div class="flex flex-column gap-2 w-12 ml-0 md:ml-3 mt-2 md:mt-0">
+      <div class="flex flex-col gap-2 w-full ml-0 md:ml-3 mt-2 md:mt-0">
         <label class="poppins-regular" for="email"
           ><i class="pi pi-mobile mr-2"></i>Teléfono del propietario</label
         >
@@ -381,18 +382,19 @@
             [(ngModel)]="selectedCodeCountry"
             placeholder="+0"
             optionLabel="name"
-            styleClass="p-inputtext-sm"
+            styleClass="p-inputtext-sm h-9 w-60"
+            class="h-9 "
           >
             <ng-template pTemplate="selectedItem">
               @if (selectedCodeCountry) {
-              <div class="flex align-items-center gap-2">
+              <div class="flex items-center gap-2 -mt-2">
                 <img [src]="selectedCodeCountry.flag" style="width: 18px" />
                 <div>{{ selectedCodeCountry.code }}</div>
               </div>
               }
             </ng-template>
             <ng-template let-item pTemplate="item">
-              <div class="flex align-items-center gap-2">
+              <div class="flex items-center gap-2">
                 <img [src]="item.flag" style="width: 18px" />
                 <div>{{ item.code }}</div>
               </div>
@@ -403,18 +405,18 @@
             [useGrouping]="false"
             [(ngModel)]="restaurant.owner_phone"
             inputStyleClass="w-full p-inputtext-sm"
-            styleClass="w-full"
-            class="w-full"
+            styleClass="w-full h-9"
+            class="w-full h-9"
           />
         </div>
       </div>
     </div>
 
     <div
-      class="md:mt-3 flex w-full flex-column gap-3 justify-content-center align-items-center"
+      class="md:mt-3 flex w-full flex-col gap-3 justify-center items-center"
     >
       <div
-        class="w-10rem h-10rem border-round-3xl surface-200 flex justify-content-center align-items-center"
+        class="w-40 h-40 rounded-3xl bg-slate-200 dark:bg-gray-950 flex justify-center items-center"
       >
         @if (restaurant.logo_image) {
         <img
@@ -431,8 +433,8 @@
         name="file[]"
         [auto]="true"
         accept="image/*"
-        styleClass="p-button-help surface-100 text-800 p-button-outlined border-none p-button-sm"
-        chooseStyleClass="poppins-regular"
+        styleClass="p-button-help  p-button-outlined border-none p-button-sm"
+        chooseStyleClass="poppins-regular p-button-secondary p-button-sm"
         chooseLabel="Subir imagen"
         [customUpload]="true"
         (uploadHandler)="onUpload($event)"
@@ -451,6 +453,6 @@
       styleClass="w-full poppins-regular"
     ></p-button>
   </ng-template>
-</p-sidebar>
+</p-drawer>
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>
+<p-confirmDialog styleClass="w-auto md:w-5/12" position="bottom"></p-confirmDialog>
