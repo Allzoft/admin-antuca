@@ -12,6 +12,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
     selector: 'app-roles',
@@ -25,6 +27,8 @@ import { ToastModule } from 'primeng/toast';
         ConfirmDialogModule,
         CheckboxModule,
         SkeletonModule,
+        InputIconModule,
+        IconFieldModule
     ],
     providers: [ConfirmationService, MessageService],
     templateUrl: './roles.component.html'
