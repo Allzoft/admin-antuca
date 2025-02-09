@@ -3,8 +3,8 @@
 >
   <div class="flex gap-3 items-center">
     <div class="flex flex-col gap-1 md:gap-2">
-      <span class="text-4xl">Resúmen Diario</span>
-      <span class="text-lg text-400">Bienvenido al resúmen diario</span>
+      <span class="poppins-regular text-3xl">Resúmen Diario</span>
+      <span class="text-lg text-slate-400">Bienvenido al resúmen diario</span>
     </div>
     @if(loadingOrders()){
     <p-progressSpinner ariaLabel="loading" styleClass="h-4rem" />
@@ -511,11 +511,10 @@
           Manejo el orden de tu tablero
         </div>
         <div class="w-full flex items-center justify-between">
-          <div class="text-400 text-sm">Acceso rápido al orden de tablero</div>
+          <div class="text-slate-300 text-sm">Acceso rápido al orden de tablero</div>
           <p-button
-            [text]="true"
-            icon="pi pi-arrow-right text-white"
-            severity="contrast"
+            icon="pi pi-arrow-right "
+            severity="secondary"
           />
         </div>
       </div>
