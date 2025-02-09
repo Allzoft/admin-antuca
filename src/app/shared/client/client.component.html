@@ -1,9 +1,9 @@
-<div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
+<div class="w-full flex flex-col gap-3 mt-2 md:mt-0">
   <div class="flex w-full gap-3 md:gap-5">
-    <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col gap-2 w-full">
       <label for="username">Nombre</label>
-      <span class="p-input-icon-left">
-        <i class="pi pi-user"></i>
+      <p-iconfield >
+        <p-inputicon styleClass="pi pi-user"></p-inputicon>
         <input
           id="username"
           type="text"
@@ -13,13 +13,13 @@
           [ngClass]="{ 'ng-invalid ng-dirty': client.name.length === 0 }"
           [ngClass]="{ 'ng-invalid ng-dirty': inputNameDirt }"
         />
-      </span>
+      </p-iconfield>
     </div>
 
-    <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col gap-2 w-full">
       <label for="lastname">Apellido</label>
-      <span class="p-input-icon-left">
-        <i class="pi pi-user"></i>
+      <p-iconfield >
+        <p-inputicon styleClass="pi pi-user"></p-inputicon>
         <input
           id="lastname"
           type="text"
@@ -28,10 +28,10 @@
           class="w-full p-inputtext-sm"
           [ngClass]="{ 'ng-invalid ng-dirty': client.lastname.length === 0 }"
         />
-      </span>
+      </p-iconfield>
     </div>
   </div>
-  <div class="flex flex-column gap-2 w-full">
+  <div class="flex flex-col gap-2 w-full">
     <label for="username">Información adicional sobre el cliente:</label>
     <textarea
       rows="2"
@@ -43,10 +43,10 @@
     ></textarea>
   </div>
   <div class="flex w-full gap-3 md:gap-5">
-    <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col gap-2 w-full">
       <label for="email">C. I.</label>
-      <span class="p-input-icon-left">
-        <i class="pi pi-id-card"></i>
+      <p-iconfield >
+        <p-inputicon styleClass="pi pi-id-card"></p-inputicon>
         <input
           id="email"
           type="text"
@@ -55,13 +55,13 @@
           class="w-full p-inputtext-sm"
           [ngClass]="{ 'ng-invalid ng-dirty': client.id.length === 0 }"
         />
-      </span>
+      </p-iconfield>
     </div>
 
-    <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col gap-2 w-full">
       <label for="email">Correo</label>
-      <span class="p-input-icon-left">
-        <i class="pi pi-envelope"></i>
+      <p-iconfield >
+        <p-inputicon styleClass="pi pi-envelope"></p-inputicon>
         <input
           id="email"
           type="text"
@@ -69,17 +69,17 @@
           [(ngModel)]="client.email"
           class="w-full p-inputtext-sm"
         />
-      </span>
+      </p-iconfield>
     </div>
   </div>
-  <div class="flex flex-column md:flex-row w-full">
-    <div class="w-12 md:w-6 flex mt-0 md:ml-2 md:mt-2">
-      <div class="flex flex-column gap-2 w-full">
+  <div class="flex flex-col md:flex-row w-full">
+    <div class="w-full md:w-6/12 flex mt-0 md:ml-2 md:mt-2">
+      <div class="flex flex-col gap-2 w-full">
         <label for="isActive">Tipo</label>
-        <div class="flex align-items-center gap-2">
+        <div class="flex items-center gap-2">
           <label
             htmlFor="type_business"
-            class="block text-900"
+            class="block text-slate-900 dark:text-gray-100"
             style="white-space: nowrap; width: max-content"
             >B2C</label
           >
@@ -91,14 +91,14 @@
           ></p-inputSwitch>
           <label
             htmlFor="type_business"
-            class="block text-900"
+            class="block text-slate-900 dark:text-gray-100"
             style="white-space: nowrap; width: max-content"
             >B2B</label
           >
         </div>
       </div>
     </div>
-    <div class="flex flex-column gap-2 w-12 md:w-6 ml-0 md:ml-5 mt-2 md:mt-0">
+    <div class="flex flex-col gap-2 w-full md:w-6/12 ml-0 md:ml-5 mt-2 md:mt-0">
       <label for="email">Teléfono</label>
       <div class="flex gap-2">
         <p-dropdown
@@ -110,14 +110,14 @@
         >
           <ng-template pTemplate="selectedItem">
             @if (selectedCodeCountry) {
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <img [src]="selectedCodeCountry.flag" style="width: 18px" />
               <div>{{ selectedCodeCountry.code }}</div>
             </div>
             }
           </ng-template>
           <ng-template let-item pTemplate="item">
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <img [src]="item.flag" style="width: 18px" />
               <div>{{ item.code }}</div>
             </div>
@@ -135,37 +135,38 @@
       </div>
     </div>
   </div>
-  <div class="flex flex-column md:flex-row w-full gap-2 md:gap-0">
-    <div class="flex flex-column gap-2 w-12 md:w-6 ml-0 md:ml-2">
+  <div class="flex flex-col md:flex-row w-full gap-2 md:gap-0">
+    <div class="flex flex-col gap-2 w-full md:w-6/12 ml-0 md:ml-2">
       <label
         htmlFor="gender"
-        class="block text-900"
+        class="block text-slate-900 dark:text-gray-100"
         style="white-space: nowrap; width: max-content"
         >Género
       </label>
-      <div class="flex align-items-center gap-2">
+      <div class="flex items-center gap-2">
         <label
           htmlFor="gender"
-          class="block text-900"
+          class="block text-slate-900 dark:text-gray-100"
           style="white-space: nowrap; width: max-content"
           >Femenino</label
         >
         <p-inputSwitch
           inputId="gender"
           [(ngModel)]="client.gender"
+          styleClass="mt-2"
           [falseValue]="'Femenino'"
           [trueValue]="'Masculino'"
         ></p-inputSwitch>
         <label
           htmlFor="gender"
-          class="block text-900"
+          class="block text-slate-900 dark:text-gray-100"
           style="white-space: nowrap; width: max-content"
           >Masculino</label
         >
       </div>
     </div>
     <div
-      class="w-12 md:w-6 flex justify-content-center align-items-center gap-3"
+      class="w-full md:w-6/12 flex justify-center items-center gap-3"
     >
       <p-button
         icon="pi pi-google"
@@ -173,24 +174,25 @@
         [outlined]="true"
         severity="danger"
       ></p-button>
-      <div class="flex flex-column gap-2">
-        <div class="flex align-items-center gap-2">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
           <label
             htmlFor="google"
-            class="block text-900"
+            class="block text-slate-900 dark:text-gray-100"
             style="white-space: nowrap; width: max-content"
             >No</label
           >
           <p-inputSwitch
             inputId="google"
             [(ngModel)]="client.google"
+            styleClass="mt-2"
             [disabled]="true"
             [trueValue]="1"
             [falseValue]="0"
           ></p-inputSwitch>
           <label
             htmlFor="google"
-            class="block text-900"
+            class="block text-slate-900 dark:text-gray-100"
             style="white-space: nowrap; width: max-content"
             >Si</label
           >
@@ -198,9 +200,9 @@
       </div>
     </div>
   </div>
-  <div class="w-full justify-content-end">
+  <div class="w-full justify-end">
     <p-button
-      styleClass="w-full"
+      styleClass="w-full poppins-medium"
       [label]="config.data ? 'Actualizar cliente' : 'Crear cliente'"
       severity="success"
       [disabled]="config.data?.disabled ? true : false"

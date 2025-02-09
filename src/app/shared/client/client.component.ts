@@ -14,6 +14,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-client',
@@ -26,6 +28,8 @@ import { ButtonModule } from 'primeng/button';
     InputNumberModule,
     InputSwitchModule,
     ButtonModule,
+    InputIconModule,
+    IconFieldModule
   ],
   templateUrl: './client.component.html',
 })
