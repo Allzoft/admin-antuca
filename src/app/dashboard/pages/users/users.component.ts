@@ -23,6 +23,9 @@ import { UploadService } from '@services/upload.service';
 import { RoleService } from '@services/roles.service';
 import { RestaurantsService } from '@services/restaurants.service';
 import { Role } from '@interfaces/role';
+import { DrawerModule } from 'primeng/drawer';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
     selector: 'app-users',
@@ -41,7 +44,9 @@ import { Role } from '@interfaces/role';
         InputNumberModule,
         FileUploadModule,
         TagModule,
-        SidebarModule,
+        DrawerModule,
+            InputIconModule,
+            IconFieldModule
     ],
     providers: [ConfirmationService, MessageService],
     templateUrl: './users.component.html'
