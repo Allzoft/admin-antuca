@@ -94,23 +94,23 @@ export default class DailySummaryComponent {
   }
 
   documentStyle = getComputedStyle(document.documentElement);
-  textColor = this.documentStyle.getPropertyValue('--text-color');
+  textColor = this.documentStyle.getPropertyValue('--p-text-color');
 
   valueMeter = [
     {
       label: 'En sala',
       value: 50,
-      color: this.documentStyle.getPropertyValue('--yellow-400'),
+      color: this.documentStyle.getPropertyValue('--p-yellow-400'),
     },
     {
       label: 'Delivery',
       value: 20,
-      color: this.documentStyle.getPropertyValue('--bluegray-500'),
+      color: this.documentStyle.getPropertyValue('--p-bluegray-500'),
     },
     {
       label: 'Para llevar',
       value: 30,
-      color: this.documentStyle.getPropertyValue('--primary-500'),
+      color: this.documentStyle.getPropertyValue('--p-primary-500'),
     },
   ];
 
@@ -125,11 +125,11 @@ export default class DailySummaryComponent {
     this.fetchOrders();
 
     const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColor = documentStyle.getPropertyValue('--p-text-color');
     const textColorSecondary = documentStyle.getPropertyValue(
-      '--text-color-secondary'
+      '--p-text-muted-color'
     );
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    const surfaceBorder = documentStyle.getPropertyValue('--p-xyaxis-500');
 
     this.data = {
       labels: [
@@ -154,8 +154,8 @@ export default class DailySummaryComponent {
             above: 'rgba(239, 241, 106, 0.1)',
             below: 'rgba(255, 255, 102, 0.1)',
           },
-          borderColor: documentStyle.getPropertyValue('--primary-300'),
-          backgroundColor: documentStyle.getPropertyValue('--primary-300'),
+          borderColor: documentStyle.getPropertyValue('--p-primary-300'),
+          backgroundColor: documentStyle.getPropertyValue('--p-primary-300'),
           yAxisID: 'y',
           tension: 0.4,
           data: [
@@ -171,8 +171,8 @@ export default class DailySummaryComponent {
             above: 'rgba(255, 165, 0, 0.1)',
             below: 'rgba(255, 184, 77, 0.1)',
           },
-          borderColor: documentStyle.getPropertyValue('--orange-400'),
-          backgroundColor: documentStyle.getPropertyValue('--orange-400'),
+          borderColor: documentStyle.getPropertyValue('--p-secondary-400'),
+          backgroundColor: documentStyle.getPropertyValue('--p-secondary-400'),
           yAxisID: 'y1',
           tension: 0.4,
           data: [
@@ -243,8 +243,8 @@ export default class DailySummaryComponent {
       datasets: [
         {
           label: 'My First dataset',
-          backgroundColor: documentStyle.getPropertyValue('--primary-300'),
-          borderColor: documentStyle.getPropertyValue('--primary-300'),
+          backgroundColor: documentStyle.getPropertyValue('--p-primary-300'),
+          borderColor: documentStyle.getPropertyValue('--p-primary-300'),
           data: [65, 59, 80, 81, 56, 55, 40, 15, 30, 21, 12],
           categoryPercentage: 0.4,
           borderRadius: 5,

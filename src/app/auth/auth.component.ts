@@ -11,6 +11,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
+import { ThemeService } from '@services/theme.service';
 
 @Component({
   imports: [
@@ -28,6 +29,7 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './auth.component.html',
 })
 export default class AuthComponent implements OnInit {
+  private themeService = inject(ThemeService);
   private customerService = inject(CustomersService);
   private messageService = inject(MessageService);
 
@@ -40,28 +42,13 @@ export default class AuthComponent implements OnInit {
   public accessSuccess: boolean = false;
 
   public loadingAuth: boolean = false;
-  public isLightMode: boolean = true;
+  public isDarkMode = this.themeService.isDarkMode;
 
   constructor(private route: Router) {
     this.email = localStorage.getItem('email') || '';
   }
 
-  public ngOnInit(): void {
-    const themeMode = localStorage.getItem('theme_mode');
-    if (!themeMode) return; // Si no hay valor, no hacemos nada.
-  
-    this.isLightMode = themeMode === 'on';
-    const element = document.querySelector('html');
-  
-    if (element) {
-      if (!this.isLightMode) {
-        element.classList.add('my-app-dark', 'dark');
-      } else {
-        element.classList.remove('my-app-dark', 'dark');
-      }
-    }
-  }
-  
+  public ngOnInit(): void {}
 
   public authCustomer() {
     const authCustomer: CustomerLogin = {
@@ -97,12 +84,6 @@ export default class AuthComponent implements OnInit {
   }
 
   public toggleDarkMode() {
-    const element = document.querySelector('html');
-    if (!element !== null) {
-      this.isLightMode = !this.isLightMode;
-      localStorage.setItem('theme_mode', this.isLightMode ? 'on' : 'off');
-      element?.classList.toggle('my-app-dark');
-      element?.classList.toggle('dark');
-    }
+    this.themeService.toggleDarkMode();
   }
 }

@@ -1,12 +1,14 @@
-<div class="w-full flex flex-col ease-in-out duration-500 items-center">
-  <div class="w-full px-4 py-4 md:py-2">
+<div
+  class="w-full flex relative flex-col ease-in-out duration-500 items-center"
+>
+  <div class="w-full px-6 py-6 md:py-2">
     @if (layoutService.isMobile()) {
     <p-button
       icon="pi pi-times"
       severity="warn"
       [rounded]="true"
       [outlined]="true"
-      styleClass="h-2rem w-2rem absolute top-0 right-0 mt-4 mr-4"
+      styleClass="h-8 w-8 absolute  top-0 right-0 mt-4 mr-4"
       (onClick)="toogleMenu()"
     ></p-button>
     }
@@ -15,21 +17,21 @@
     <div
       class="w-screen md:w-full flex flex-col ease-in-out duration-500 items-center z-2 overflow-auto"
     >
+      @if (layoutService.isMobile()) {
       <div class="w-9 md:w-full px-4 py-4 md:py-2">
-        @if (layoutService.isMobile()) {
         <p-button
           icon="pi pi-times"
           severity="secondary"
           [rounded]="true"
           [outlined]="true"
-          styleClass="h-2rem w-2rem absolute top-0 right-0 mt-4 mr-4"
+          styleClass="h-8 w-8 absolute top-0 right-0 mt-4 mr-4"
           (onClick)="toogleMenu()"
         ></p-button>
-        }
       </div>
+      }
       <div class="w-full flex flex-col gap-2">
         <div
-          class="text-700 font-semibold text-xl"
+          class="text-slate-700 font-semibold text-xl"
           style="padding-left: 1.35rem"
         >
           Menú Principal
@@ -42,15 +44,15 @@
             (click)="
               navigateTo(item.father + item.link); $event.preventDefault()
             "
-            class="cursor-pointer relative no-underline w-full flex gap-3 py-3 hover:surface-100 items-center"
+            class="cursor-pointer relative no-underline w-full flex gap-3 py-3 hover:bg-slate-100 dark:hover:bg-gray-800 items-center"
             style="padding-left: 1.35rem"
           >
             @if (isOnModule(item.father + item.link)) {
-            <i [class]="' text-900 pi pi-' + item.icon"></i>
+            <i [class]="' text-slate-900 dark:text-gray-100 pi pi-' + item.icon"></i>
             <div class="poppins-medium text-md text-900">{{ item.name }}</div>
             <div
               style="margin-left: -1.7rem"
-              class="absolute left-0 bg-primary-600 w-2rem h-full top-0 border-round-right"
+              class="absolute left-0 bg-primary-600 w-8 h-full top-0  rounded-r-lg"
             ></div>
             <div
               class="absolute right-0 w-full h-full top-0"
@@ -60,8 +62,8 @@
               "
             ></div>
             } @else {
-            <i [class]="' text-400 pi pi-' + item.icon"></i>
-            <div class="poppins-regular text-400 text-sm">{{ item.name }}</div>
+            <i [class]="' text-slate-400 pi pi-' + item.icon"></i>
+            <div class="poppins-regular text-slate-400 text-sm">{{ item.name }}</div>
             }
           </a>
           } @if (layoutService.isMobile()) {
@@ -72,13 +74,13 @@
             style="padding-left: 1.35rem"
           >
             @if (isOnModule('admin/settings')) {
-            <i [class]="' text-900 pi pi-' + 'cog'"></i>
-            <div class="poppins-medium text-md text-900">
+            <i [class]="' text-slate-900 pi pi-' + 'cog'"></i>
+            <div class="poppins-medium text-md text-slate-900">
               {{ "configuración" }}
             </div>
             <div
               style="margin-left: -1.7rem"
-              class="absolute left-0 bg-primary-600 w-2rem h-full top-0 border-round-right"
+              class="absolute left-0 bg-primary-600 w-8 h-full top-0 border-round-right"
             ></div>
             <div
               class="absolute right-0 w-full h-full top-0"
@@ -102,7 +104,7 @@
           background: linear-gradient(to left, #d4a625, #e4a213);
           opacity: 0.8;
         "
-        class="relative w-2/3 md:w-11/12 mt-6 md:mt-4 border-round overflow-hidden h-32 flex flex-col gap-2 pl-4 pt-3"
+        class="relative w-2/3 md:w-11/12 mt-6 md:mt-4 rounded overflow-hidden h-32 flex flex-col gap-2 pl-4 pt-3"
       >
         <div class="w-full text-white font-semibold">
           Organiza tus menús
@@ -110,38 +112,37 @@
           a través de este boton
         </div>
         <p-button
-          icon="pi pi-arrow-right"
-          severity="contrast"
-          [text]="true"
-          styleClass="bg-white-alpha-40 mt-2"
+          icon="pi pi-arrow-right text-slate-900"
+          severity="secondary"
+          styleClass=" mt-2 bg-slate-200/70 border-none"
         />
         <div
-          class="absolute bottom-0 right-0 w-7rem h-7rem -mb-5 -mr-5 bg-white opacity-30 border-circle"
+          class="absolute bottom-0 right-0 w-28 h-28 -mb-8 -mr-8 bg-white opacity-30 rounded-full"
         ></div>
         <div class="absolute top-0 right-0 mt-3 mr-3 flex flex-col gap-1">
           <div class="flex gap-1">
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
           </div>
           <div class="flex gap-1">
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
           </div>
           <div class="flex gap-1">
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
           </div>
           <div class="flex gap-1">
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
-            <div class="bg-white dot-card border-circle"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
+            <div class="bg-white dot-card rounded-full"></div>
           </div>
         </div>
       </div>
@@ -149,7 +150,7 @@
         &copy; 2025 Dishdy Cloud. Todos los derechos reservados.
       </div>
       <div
-        class="cursor-pointer hover:shadow-3 w-11 h-3rem surface-100 flex mb-3 gap-2 px-3 py-2 items-center content-center"
+        class="cursor-pointer hover:shadow-3 w-11/12 h-12 bg-slate-100 dark:bg-gray-800 flex mb-3 gap-2 px-3 py-2 items-center content-center"
       >
         <span class="poppins-regular text-xs">Desarrollado por</span>
         <img

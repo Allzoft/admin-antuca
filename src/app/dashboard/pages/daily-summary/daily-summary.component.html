@@ -1,8 +1,8 @@
 <section
-  class="w-full px-2 md:px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between"
+  class="w-full p-2 md:p-3 flex flex-col md:flex-row gap-3 mt-3 justify-between"
 >
-  <div class="flex gap-3 align-items-center">
-    <div class="flex flex-column gap-1 md:gap-2">
+  <div class="flex gap-3 items-center">
+    <div class="flex flex-col gap-1 md:gap-2">
       <span class="text-4xl">Resúmen Diario</span>
       <span class="text-lg text-400">Bienvenido al resúmen diario</span>
     </div>
@@ -10,20 +10,22 @@
     <p-progressSpinner ariaLabel="loading" styleClass="h-4rem" />
     }
   </div>
-  <div class="flex align-items-center gap-2 w-full md:w-auto">
+  <div class="flex items-center gap-2 w-full md:w-auto">
     <div
-      class="flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 border-round align-items-center gap-2"
+      class="flex bg-slate-100 dark:bg-gray-900 dark:hover:bg-gray-950 duration-500 shadow-lg px-3 w-full md:w-auto py-2 rounded items-center gap-2"
     >
-      <i class="text-primary pi pi-calendar text-6xl"></i>
-      <div class="flex flex-column gap-2">
-        <span class="text-600 text-md font-semibold pl-3 -mb-1"
+      <i
+        class="text-primary-500 dark:text-primary-400 pi pi-calendar text-5xl"
+      ></i>
+      <div class="flex flex-col gap-2">
+        <span
+          class="text-slate-600 dark:text-gray-300 text-md font-semibold pl-3 -mb-1"
           >Periodo de filtro</span
         >
         <p-calendar
           [(ngModel)]="filterDate"
-          inputStyleClass="cursor-pointer surface-100 border-none text-600 text-sm shadow-none"
+          inputStyleClass="cursor-pointer bg-slate-100 dark:bg-gray-900 border-none text-slate-600 dark:text-gray-300 dark:text-gray-100 text-sm shadow-none"
           variant="filled"
-          [touchUI]="true"
           dateFormat="dd/mm/yy"
           [readonlyInput]="true"
           (ngModelChange)="fetchOrders()"
@@ -33,21 +35,23 @@
   </div>
 </section>
 
-<section class="w-full grid m-0 mt-3 p-0">
-  <div class="col-6 md:col-3 px-2 md:px-3">
+<section class="w-full grid md:grid-cols-4 m-0 mt-3 p-0">
+  <div class="p-2 md:p-3">
     <div
-      class="w-full relative bg-white md:py-4 align-items-center p-2 justify-content-center transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
+      class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
+        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
-        <i class="text-6xl text-primary-600 pi pi-clipboard"></i>
+        <i
+          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-clipboard"
+        ></i>
       </div>
-      <div class="flex flex-column justify-content-center">
+      <div class="flex flex-col justify-center">
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.8rem"
-          [width]="layoutService.isMobile() ? '6rem' : '8.2rem'"
+          [width]="layoutService.isMobile() ? '24' : '8.2rem'"
           styleClass="mb-1"
         />
         } @else {
@@ -55,21 +59,27 @@
           dailyReport()?.total_menus
         }}</span>
         }
-        <span class="text-xs md:text-sm text-700">Total de menús</span>
+        <span class="text-xs md:text-sm text-slate-700 dark:text-gray-200"
+          >Total de menús</span
+        >
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.2rem"
-          [width]="layoutService.isMobile() ? '4rem' : '6rem'"
+          [width]="layoutService.isMobile() ? '4rem' : '24'"
           styleClass="mt-1"
         />
         } @else {
-        <span class="text-xs mt-1 text-600 flex align-items-center gap-1">
+        <span
+          class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
+        >
           @if(dailyReport()!.weeklyGrowthRate_menus > 0){
           <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_menus < 0){
           <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_menus === 0){
-          <i class="pi pi-arrow-circle-right text-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+          ></i>
           }
           {{ dailyReport()?.weeklyGrowthRate_menus?.toFixed(2) }} % (7 días)
         </span>
@@ -78,20 +88,22 @@
     </div>
   </div>
 
-  <div class="col-6 md:col-3 px-2 md:px-3">
+  <div class="p-2 md:p-3">
     <div
-      class="w-full relative bg-white md:py-4 align-items-center p-2 justify-content-center transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
+      class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
+        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
-        <i class="text-6xl text-primary-600 pi pi-dollar"></i>
+        <i
+          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-dollar"
+        ></i>
       </div>
-      <div class="flex flex-column justify-content-center">
+      <div class="flex flex-col justify-center">
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.8rem"
-          [width]="layoutService.isMobile() ? '6rem' : '8.2rem'"
+          [width]="layoutService.isMobile() ? '24' : '8.2rem'"
           styleClass="mb-1"
         />
         } @else {
@@ -99,41 +111,49 @@
           "Bs. " + dailyReport()?.total_incomes
         }}</span>
         }
-        <span class="text-xs md:text-sm text-700">Total de ingresos</span>
+        <span class="text-xs md:text-sm text-slate-700 dark:text-gray-200"
+          >Total de ingresos</span
+        >
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.2rem"
-          [width]="layoutService.isMobile() ? '4rem' : '6rem'"
+          [width]="layoutService.isMobile() ? '4rem' : '24'"
           styleClass="mt-1"
         />
         } @else {
-        <span class="text-xs mt-1 text-600 flex align-items-center gap-1">
+        <span
+          class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
+        >
           @if(dailyReport()!.weeklyGrowthRate_incomes > 0){
           <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_incomes < 0){
           <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_incomes === 0){
-          <i class="pi pi-arrow-circle-right text-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+          ></i>
           }
           {{ dailyReport()?.weeklyGrowthRate_incomes?.toFixed(2) }} % (7 días) </span
         >}
       </div>
     </div>
   </div>
-  <div class="col-6 md:col-3 px-2 md:px-3">
+  <div class="p-2 md:p-3">
     <div
-      class="w-full relative bg-white md:py-4 align-items-center p-2 justify-content-center transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
+      class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
+        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
-        <i class="text-6xl text-primary-600 pi pi-ticket"></i>
+        <i
+          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-ticket"
+        ></i>
       </div>
-      <div class="flex flex-column justify-content-center">
+      <div class="flex flex-col justify-center">
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.8rem"
-          [width]="layoutService.isMobile() ? '6rem' : '8.2rem'"
+          [width]="layoutService.isMobile() ? '24' : '8.2rem'"
           styleClass="mb-1"
         />
         } @else {
@@ -141,21 +161,27 @@
           dailyReport()?.total_orders
         }}</span>
         }
-        <span class="text-xs md:text-sm text-700">Total de ordenes</span>
+        <span class="text-xs md:text-sm text-slate-700 dark:text-gray-200"
+          >Total de ordenes</span
+        >
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.2rem"
-          [width]="layoutService.isMobile() ? '4rem' : '6rem'"
+          [width]="layoutService.isMobile() ? '4rem' : '24'"
           styleClass="mt-1 "
         />
         } @else {
-        <span class="text-xs mt-1 text-600 flex align-items-center gap-1">
+        <span
+          class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
+        >
           @if(dailyReport()!.weeklyGrowthRate_orders > 0){
           <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_orders < 0){
           <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_orders === 0){
-          <i class="pi pi-arrow-circle-right text-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+          ></i>
           }
           {{ dailyReport()?.weeklyGrowthRate_orders?.toFixed(2) }} % (7 días) </span
         >}
@@ -163,20 +189,22 @@
     </div>
   </div>
 
-  <div class="col-6 md:col-3 px-2 md:px-3">
+  <div class="p-2 md:p-3">
     <div
-      class="w-full relative bg-white md:py-4 align-items-center p-2 justify-content-center transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex gap-2 md:gap-5"
+      class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex align-items-center justify-content-center md:h-6rem md:w-6rem h-5rem w-5rem border-circle bg-primary-100"
+        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
-        <i class="text-6xl text-primary-600 pi pi-users"></i>
+        <i
+          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-users"
+        ></i>
       </div>
-      <div class="flex flex-column justify-content-center">
+      <div class="flex flex-col justify-center">
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.8rem"
-          [width]="layoutService.isMobile() ? '6rem' : '8.2rem'"
+          [width]="layoutService.isMobile() ? '24' : '8.2rem'"
           styleClass="mb-1"
         />
         } @else {
@@ -184,21 +212,27 @@
           dailyReport()?.total_customers
         }}</span>
         }
-        <span class="text-xs md:text-sm text-700">Clientes nuevos</span>
+        <span class="text-xs md:text-sm text-slate-700 dark:text-gray-200"
+          >Clientes nuevos</span
+        >
         @if(loadingDailyReport()){
         <p-skeleton
           height="1.2rem"
-          [width]="layoutService.isMobile() ? '4rem' : '6rem'"
+          [width]="layoutService.isMobile() ? '4rem' : '24'"
           styleClass="mt-1"
         />
         } @else {
-        <span class="text-xs mt-1 text-600 flex align-items-center gap-1">
+        <span
+          class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
+        >
           @if(dailyReport()!.weeklyGrowthRate_customers > 0){
           <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_customers < 0){
           <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
           } @if(dailyReport()!.weeklyGrowthRate_customers === 0){
-          <i class="pi pi-arrow-circle-right text-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+          ></i>
           }
           {{ dailyReport()?.weeklyGrowthRate_customers?.toFixed(2) }} % (7 días)
         </span>
@@ -208,19 +242,23 @@
   </div>
 </section>
 
-<section class="w-full grid m-0 p-0">
-  <div class="col-12 md:col-6 px-2 md:px-3 h-auto">
+<section class="w-full grid grid-cols-2 m-0 p-0">
+  <div class="p-2 md:p-3 h-auto">
     <div
-      class="w-full relative h-full bg-white md:py-4 p-2 pt-3 md:px-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-3 md:justify-content-between"
+      class="w-full relative h-full bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 p-2 pt-3 md:px-6 transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-3 md:justify-between"
     >
       <div
-        class="flex flex-column md:flex-row w-full md:justify-content-between align-items-center md:align-items-start gap-2"
+        class="flex flex-col md:flex-row w-full md:justify-between items-center md:items-start gap-2"
       >
-        <div class="flex flex-column gap-2">
-          <div class="text-800 font-medium text-xl text-center md:text-left">
+        <div class="flex flex-col gap-2">
+          <div
+            class="text-slate-800 dark:text-gray-200 font-medium text-xl text-center md:text-left"
+          >
             Resúmen de ordenes
           </div>
-          <div class="text-500 text-center md:text-left text-xs">
+          <div
+            class="text-slate-500 dark:text-gray-400 text-center md:text-left text-xs"
+          >
             Visualiza las órdenes por modo y tipo de servicio.
           </div>
         </div>
@@ -229,19 +267,19 @@
           [(ngModel)]="value"
           optionLabel="label"
           [allowEmpty]="false"
-          styleClass="align-self-center"
+          styleClass="self-center"
         />
       </div>
       <!-- <div
-        class="w-full bg-green-50 border-round p-3 flex justify-content-between gap-1"
+        class="w-full bg-green-50 rounded p-3 flex justify-between gap-1"
       >
-        <div class="flex gap-2 md:gap-3 align-items-center">
+        <div class="flex gap-2 md:gap-3 items-center">
           <p-tag
             severity="success"
             [value]="'25'"
             styleClass="h-2rem w-4rem text-lg"
           ></p-tag>
-          <div class="text-800 text-sm font-semibold">
+          <div class="text-slate-800 dark:text-gray-200 text-sm font-semibold">
             Nuevas ordendes
             <i
               class="pi pi-circle-fill text-green-400 md:ml-2 ml-1 mt-1 text-xs"
@@ -259,59 +297,73 @@
       </div> -->
       <div class="w-full flex gap-2">
         <div
-          class="w-full border-1 border-200 border-round p-3 flex flex-column gap-1"
+          class="w-full border-slate-200 dark:border-gray-800 border-2 rounded p-3 flex flex-col gap-1"
         >
           @if(loadingOrders()){
           <p-skeleton
             height="1.8rem"
-            [width]="layoutService.isMobile() ? '6rem' : '11.2rem'"
+            [width]="layoutService.isMobile() ? 'w-24' : '11.2rem'"
           />
           } @else {
-          <div class="text-xl md:text-3xl font-semibold text-600">50</div>
+          <div
+            class="text-xl md:text-3xl font-bold text-slate-600 dark:text-gray-300"
+          >
+            50
+          </div>
           }
-          <div class="text-600 text-sm">En sala</div>
+          <div class="text-slate-600 dark:text-gray-300 text-sm">En sala</div>
         </div>
         <div
-          class="w-full border-1 border-200 border-round p-3 flex flex-column gap-1"
+          class="w-full border-slate-200 dark:border-gray-800 border-2 rounded p-3 flex flex-col gap-1"
         >
           @if(loadingOrders()){
           <p-skeleton
             height="1.8rem"
-            [width]="layoutService.isMobile() ? '6rem' : '11.2rem'"
+            [width]="layoutService.isMobile() ? 'w-24' : '11.2rem'"
           />
           } @else {
-          <div class="text-xl md:text-3xl font-semibold text-600">20</div>
+          <div
+            class="text-xl md:text-3xl font-bold text-slate-600 dark:text-gray-300"
+          >
+            20
+          </div>
           }
-          <div class="text-600 text-sm">Delivery</div>
+          <div class="text-slate-600 dark:text-gray-300 text-sm">Delivery</div>
         </div>
         <div
-          class="w-full border-1 border-200 border-round p-3 flex flex-column gap-1"
+          class="w-full border-slate-200 dark:border-gray-800 border-2 rounded p-3 flex flex-col gap-1"
         >
           @if(loadingOrders()){
           <p-skeleton
             height="1.8rem"
-            [width]="layoutService.isMobile() ? '6rem' : '11.2rem'"
+            [width]="layoutService.isMobile() ? 'w-24' : '11.2rem'"
           />
           } @else {
-          <div class="text-xl md:text-3xl font-semibold text-600">30</div>
+          <div
+            class="text-xl md:text-3xl font-bold text-slate-600 dark:text-gray-300"
+          >
+            30
+          </div>
           }
-          <div class="text-600 text-sm">Para llevar</div>
+          <div class="text-slate-600 dark:text-gray-300 text-sm">
+            Para llevar
+          </div>
         </div>
       </div>
       @if(loadingOrders()){
-      <p-skeleton height="1rem" class="w-full" />
-      <div class="flex w-full justify-content-between gap-2">
+      <p-skeleton height="4" class="w-full" />
+      <div class="flex w-full justify-between gap-2">
         <p-skeleton
           height="1.2rem"
-          [width]="layoutService.isMobile() ? '5rem' : '11.2rem'"
+          [width]="layoutService.isMobile() ? '20' : '11.2rem'"
         />
         <p-skeleton
           height="1.2rem"
-          [width]="layoutService.isMobile() ? '5rem' : '11.2rem'"
+          [width]="layoutService.isMobile() ? '20' : '11.2rem'"
         />
         <p-skeleton
           height="1.2rem"
-          [width]="layoutService.isMobile() ? '5rem' : '11.2rem'"
+          [width]="layoutService.isMobile() ? '20' : '11.2rem'"
         />
       </div>
       } @else {
@@ -319,18 +371,22 @@
       }
     </div>
   </div>
-  <div class="col-12 md:col-6 px-2 md:px-3 h-auto">
+  <div class="p-2 md:p-3 h-auto">
     <div
-      class="w-full h-full relative bg-white md:py-4 p-2 pt-3 md:px-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-2 md:gap-3"
+      class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 p-2 pt-3 md:px-6 transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-2 md:gap-3"
     >
       <div
-        class="flex flex-column md:flex-row w-full md:justify-content-between align-items-center md:align-items-start gap-2"
+        class="flex flex-col md:flex-row w-full md:justify-between items-center md:items-start gap-2"
       >
-        <div class="flex flex-column gap-2">
-          <div class="text-800 font-medium text-xl text-center md:text-left">
+        <div class="flex flex-col gap-2">
+          <div
+            class="text-slate-800 dark:text-gray-200 font-medium text-xl text-center md:text-left"
+          >
             Resúmen de ingresos
           </div>
-          <div class="text-500 text-center md:text-left text-xs">
+          <div
+            class="text-slate-500 dark:text-gray-400 text-center md:text-left text-xs"
+          >
             Analiza los ingresos totales desglosados por periodos de tiempo.
           </div>
         </div>
@@ -343,35 +399,45 @@
           [(ngModel)]="dateIncomeSelected"
         ></p-dropdown>
       </div>
-      <div class="w-full flex justify-content-between">
-        <div class="flex gap-3 md:gap-4 align-items-center">
-          <div class="flex gap-2 align-items-center">
-            <div class="h-1rem w-1rem bg-primary-300 border-round-sm"></div>
-            <div class="text-700 text-sm">Ingresos</div>
+      <div class="w-full flex justify-between">
+        <div class="flex gap-3 md:gap-4 items-center">
+          <div class="flex gap-2 items-center">
+            <div class="h-4 w-4 bg-primary-300 rounded-sm"></div>
+            <div class="text-slate-700 dark:text-gray-200 text-sm">
+              Ingresos
+            </div>
           </div>
-          <div class="flex gap-2 align-items-center">
-            <div class="h-1rem w-1rem bg-orange-300 border-round-sm"></div>
-            <div class="text-700 text-sm">Salidas</div>
+          <div class="flex gap-2 items-center">
+            <div class="h-4 w-4 bg-orange-400 rounded-sm"></div>
+            <div class="text-slate-700 dark:text-gray-200 text-sm">Salidas</div>
           </div>
         </div>
-        <div class="flex gap-3 md:gap-4 align-items-center">
-          <div class="flex gap-2 align-items-center">
+        <div class="flex gap-3 md:gap-4 items-center">
+          <div class="flex gap-2 items-center">
             <i class="pi pi-chart-bar text-3xl text-primary-300"></i>
-            <div class="flex flex-column gap-1">
-              <div class="text-xs text-500">Ingresos</div>
+            <div class="flex flex-col gap-1">
+              <div class="text-xs text-slate-500 dark:text-gray-400">
+                Ingresos
+              </div>
               @if(loadingOrders()){
-              <p-skeleton height="1rem" class="w-3rem" />} @else {
-              <div class="text-sm text-700">249,032</div>
+              <p-skeleton height="4" class="w-3rem" />} @else {
+              <div class="text-sm text-slate-700 dark:text-gray-200">
+                249,032
+              </div>
               }
             </div>
           </div>
-          <div class="flex gap-2 align-items-center">
+          <div class="flex gap-2 items-center">
             <i class="pi pi-chart-bar text-3xl text-orange-500"></i>
-            <div class="flex flex-column gap-1">
-              <div class="text-xs text-500">Salidas</div>
+            <div class="flex flex-col gap-1">
+              <div class="text-xs text-slate-500 dark:text-gray-400">
+                Salidas
+              </div>
               @if(loadingOrders()){
-              <p-skeleton height="1rem" class="w-3rem" />} @else {
-              <div class="text-sm text-700">184,325</div>
+              <p-skeleton height="4" class="w-3rem" />} @else {
+              <div class="text-sm text-slate-700 dark:text-gray-200">
+                184,325
+              </div>
               }
             </div>
           </div>
@@ -385,19 +451,24 @@
   </div>
 </section>
 
-<section class="w-full grid m-0 p-0">
-  <div class="col-12 md:col-9 px-2 md:px-3 h-auto">
+<section class="w-full grid grid-cols-4 gap-4 p-0 m-0">
+  <!-- Tarjeta que ocupa 3 de 4 columnas -->
+  <div class="col-span-3 w-full p-2 md:p-3 h-auto">
     <div
-      class="w-full relative h-full bg-white md:py-4 p-2 pt-3 md:px-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-3 md:justify-content-between"
+      class="w-full relative h-full bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 p-2 pt-3 md:px-6 transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-3 md:justify-between"
     >
       <div
-        class="flex flex-column md:flex-row w-full md:justify-content-between align-items-center md:align-items-start gap-2"
+        class="flex flex-col md:flex-row w-full md:justify-between items-center md:items-start gap-2"
       >
-        <div class="flex flex-column gap-2">
-          <div class="text-800 font-medium text-xl text-center md:text-left">
+        <div class="flex flex-col gap-2">
+          <div
+            class="text-slate-800 dark:text-gray-200 font-medium text-xl text-center md:text-left"
+          >
             Mapeo de clientes nuevos
           </div>
-          <div class="text-500 text-center md:text-left text-xs">
+          <div
+            class="text-slate-500 dark:text-gray-400 text-center md:text-left text-xs"
+          >
             Visualiza el crecimiento de la base de clientes en diferentes
             períodos.
           </div>
@@ -407,10 +478,10 @@
           [(ngModel)]="value"
           optionLabel="label"
           [allowEmpty]="false"
-          styleClass="align-self-center"
+          styleClass="self-center"
         />
       </div>
-      @if(loadingOrders()){
+      @if(loadingOrders()) {
       <p-skeleton height="200px" class="w-full" />} @else {
       <p-chart
         type="bar"
@@ -420,24 +491,26 @@
       />}
     </div>
   </div>
-  <div class="col-12 md:col-3 px-2 md:px-3 h-auto">
+
+  <!-- Tarjeta que ocupa 1 de 4 columnas -->
+  <div class="col-span-1 p-2 md:p-3 h-auto">
     <div
-      class="overflow-hidden w-full h-full relative surface-700 md:py-4 p-4 md:px-4 transition-colors transition-duration-300 hover:surface-600 hover:shadow-4 border-300 shadow-2 border-1 border-round flex flex-column gap-2 md:gap-3"
+      class="overflow-hidden w-full h-full relative bg-slate-700 md:py-8 p-4 md:px-4 transition-colors duration-300 hover:bg-slate-600 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-2 md:gap-3"
     >
       <i
         [style]="
           layoutService.isMobile()
-            ? 'font-size: 10rem; margin-top: -3.6rem; margin-right: -2rem'
+            ? 'font-size: 10rem; margin-top: -3.24rem; margin-right: -2rem'
             : 'font-size: 13rem; margin-top: -3rem; margin-right: -2rem'
         "
         class="absolute top-0 right-0 pi pi-th-large text-white opacity-30"
       ></i>
-      <div class="w-full flex flex-column h-full justify-content-end gap-4">
+      <div class="w-full flex flex-col h-full justify-end gap-4">
         <i class="pi pi-th-large text-white text-7xl"></i>
         <div class="text-white text-2xl md:text-xl">
           Manejo el orden de tu tablero
         </div>
-        <div class="w-full flex align-items-center justify-content-between">
+        <div class="w-full flex items-center justify-between">
           <div class="text-400 text-sm">Acceso rápido al orden de tablero</div>
           <p-button
             [text]="true"
@@ -449,4 +522,5 @@
     </div>
   </div>
 </section>
+
 <p-toast position="top-center"></p-toast>

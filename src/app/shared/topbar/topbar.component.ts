@@ -21,6 +21,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { OrderComponent } from '@shared/order/order.component';
 import { Order } from '@interfaces/order';
+import { ThemeService } from '@services/theme.service';
 
 @Component({
   selector: 'app-topbar',
@@ -52,12 +53,12 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public layoutService = inject(LayoutService);
   private customerService = inject(CustomersService);
   private confirmationService = inject(ConfirmationService);
+  private themeService = inject(ThemeService);
   public router = inject(Router);
 
   public ref: DynamicDialogRef | undefined;
 
   items: MenuItem[] = [{ label: 'Cliente' }, { label: 'Pedidos' }];
-  
 
   home: MenuItem = { icon: 'pi pi-home', routerLink: '/dashboard' };
 
@@ -65,23 +66,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   public user = this.customerService.customer;
 
-  public isLightMode: boolean = true;
+  public isDarkMode = this.themeService.isDarkMode;
 
-  public ngOnInit(): void {
-    const themeMode = localStorage.getItem('theme_mode');
-    if (!themeMode) return; // Si no hay valor, no hacemos nada.
-  
-    this.isLightMode = themeMode === 'on';
-    const element = document.querySelector('html');
-  
-    if (element) {
-      if (!this.isLightMode) {
-        element.classList.add('my-app-dark', 'dark');
-      } else {
-        element.classList.remove('my-app-dark', 'dark');
-      }
-    }
-  }
+  public ngOnInit(): void {}
 
   public ngOnDestroy(): void {
     this.ref?.destroy();
@@ -133,12 +120,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   toggleDarkMode() {
-    const element = document.querySelector('html');
-    if (!element !== null) {
-      this.isLightMode = !this.isLightMode;
-      localStorage.setItem('theme_mode', this.isLightMode ? 'on' : 'off');
-      element?.classList.toggle('my-app-dark');
-      element?.classList.toggle('dark');
-    }
+    this.themeService.toggleDarkMode();
   }
 }
