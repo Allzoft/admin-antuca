@@ -1,6 +1,6 @@
-<div class="w-full flex flex-column gap-3 mt-2 md:mt-0">
-  <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
-    <div class="flex flex-column gap-2 w-full">
+<div class="w-full flex flex-col gap-3 mt-2 md:mt-0">
+  <div class="flex flex-col md:flex-row w-full gap-3 md:gap-5">
+    <div class="flex flex-col gap-2 w-full">
       <label for="client" class="poppins-regular"
         >Cliente <i class="pi pi-user mx-1"></i>
       </label>
@@ -24,21 +24,21 @@
       >
         <ng-template pTemplate="selectedItem">
           <div
-            class="flex align-items-center poppins-regular text-sm gap-2"
+            class="flex items-center poppins-regular text-sm gap-2"
             *ngIf="order.client"
           >
             <div>{{ order.client!.name }} {{ order.client!.lastname }}</div>
           </div>
         </ng-template>
         <ng-template let-client pTemplate="item">
-          <div class="flex align-items-center poppins-regular text-sm gap-2">
+          <div class="flex items-center poppins-regular text-sm gap-2">
             <div>{{ client.name }} {{ client.lastname }}</div>
           </div>
         </ng-template>
       </p-dropdown>
     </div>
 
-    <div class="flex flex-column gap-2 w-full">
+    <div class="flex flex-col gap-2 w-full">
       <label for="customer" class="poppins-regular"
         >Vendedor <i class="pi pi-user-plus mx-1"></i
       ></label>
@@ -57,21 +57,21 @@
       >
         <ng-template pTemplate="selectedItem">
           <div
-            class="flex align-items-center poppins-regular text-sm gap-2"
+            class="flex items-center poppins-regular text-sm gap-2"
             *ngIf="order.customer"
           >
             <div>{{ order.customer!.name }} {{ order.customer!.lastname }}</div>
           </div>
         </ng-template>
         <ng-template let-customer pTemplate="item">
-          <div class="flex align-items-center poppins-regular text-sm gap-2">
+          <div class="flex items-center poppins-regular text-sm gap-2">
             <div>{{ customer.name }} {{ customer.lastname }}</div>
           </div>
         </ng-template>
       </p-dropdown>
     </div>
   </div>
-  <div class="flex flex-column gap-2 w-full">
+  <div class="flex flex-col gap-2 w-full">
     <label for="username" class="poppins-regular"
       >Notas importantes sobre la orden: <i class="pi pi-pencil mx-1"></i
     ></label>
@@ -86,8 +86,8 @@
       [ngClass]="{ 'ng-invalid ng-dirty': order.notes.length === 0 }"
     ></textarea>
   </div>
-  <div class="flex flex-column md:flex-row w-full gap-3 md:gap-5">
-    <div class="flex flex-column w-full gap-2">
+  <div class="flex flex-col md:flex-row w-full gap-3 md:gap-5">
+    <div class="flex flex-col w-full gap-2">
       <label for="state" class="poppins-regular"
         >Estado <i class="pi pi-tag mx-1"></i
       ></label>
@@ -105,8 +105,8 @@
         "
       >
         <ng-template pTemplate="selectedItem">
-          <div class="flex align-items-center gap-2" *ngIf="order.state">
-            <div class="flex align-items-center gap-2 poppins-regular text-sm">
+          <div class="flex items-center gap-2" *ngIf="order.state">
+            <div class="flex items-center gap-2 poppins-regular text-sm">
               @switch (order.state!.priority) { @case (1) {
               <p-tag
                 icon="pi pi-circle"
@@ -161,8 +161,8 @@
           </div>
         </ng-template>
         <ng-template let-state pTemplate="item">
-          <div class="flex align-items-center gap-2">
-            <div class="flex align-items-center gap-2 poppins-regular text-sm">
+          <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 poppins-regular text-sm">
               @switch (state!.priority) { @case (1) {
               <p-tag
                 icon="pi pi-circle"
@@ -218,13 +218,13 @@
         </ng-template>
       </p-dropdown>
     </div>
-    <div class="flex flex-column w-full gap-2">
+    <div class="flex flex-col w-full gap-2">
       <label for="service_mode">
         Tipo de servicio <i class="pi pi-sign-out mx-1"></i
       ></label>
 
       <div
-        class="flex gap-2 w-full justify-content-around md:justify-content-between"
+        class="flex gap-2 w-full justify-around md:justify-between"
       >
         @for (serviceMode of serviceModes; track $index) {
         <!-- [severity]="serviceMode.label !== 'Para llevar' ? 'warning':''" -->
@@ -233,8 +233,8 @@
           [label]="serviceMode.label"
           [styleClass]="
             serviceMode.isSelect
-              ? 'poppins-medium text-xs border-400 surface-200'
-              : 'poppins-medium text-xs border-400'
+              ? 'poppins-medium text-xs border-slate-400 bg-slate-200 dark:bg-gray-950 dark:border-gray-900'
+              : 'poppins-medium text-xs border-slate-400 '
           "
           [outlined]="!serviceMode.isSelect"
           size="small"
@@ -244,8 +244,8 @@
       </div>
     </div>
   </div>
-  <div class="flex flex-column md:flex-row gap-4 md:gap-2 w-full">
-    <div class="flex flex-column w-full gap-2">
+  <div class="flex flex-col md:flex-row gap-4 md:gap-2 w-full">
+    <div class="flex flex-col w-full gap-2">
       @if (order.orderItems) {
 
       <label for="state"
@@ -279,16 +279,16 @@
         }
       </label>
       }
-      <div class="flex flex-column gap-2 max-h-17rem overflow-auto">
+      <div class="flex flex-col gap-2 max-h-60 overflow-auto">
         @for (item of itemsAvailables; track $index) {
         <div
-          class="border-none transition-colors transition-duration-500 hover:surface-100 hover:shadow-1 h-5rem w-full border-300 border-1 border-round-md flex p-2 gap-3 cursor-pointer"
+          class="border-none transition-colors transition-duration-500 hover:bg-slate-100 dark:hover:bg-gray-950 hover:shadow-1 h-20 w-full border-slate-300 border-2 rounded flex p-2 gap-3 cursor-pointer"
           (click)="
             order.orderItems ? addUpdateItem(item.item!) : addItem(item.item!)
           "
         >
           <div
-            class="ml-2 w-4rem h-4rem border-circle flex justify-content-center align-items-center"
+            class="ml-2 w-16 h-16 border-circle flex justify-center items-center"
           >
             <img
               src="../../../assets/dish.svg"
@@ -297,27 +297,27 @@
             />
           </div>
           <div
-            class="flex flex-column align-items-start justify-content-center w-full gap-2"
+            class="flex flex-col items-start justify-center w-full gap-2"
           >
-            <div class="text-md font-semibold poppins-regular">
+            <div class="text-sm md:text-md font-semibold poppins-regular">
               {{ item.item!.name }}
             </div>
-            <span class="flex align-items-center gap-2">
-              <i class="pi pi-tag text-400"></i>
+            <span class="flex items-center gap-2">
+              <i class="pi pi-tag text-slate-400"></i>
 
-              <span class="font-semibold text-sm text-500 poppins-regular">{{
+              <span class="font-semibold text-xs md:text-sm text-slate-500 poppins-regular">{{
                 item.item?.type_item
               }}</span>
             </span>
           </div>
           <div
-            class="flex flex-column align-items-start justify-content-center align-items-center px-2 gap-1"
+            class="flex flex-col justify-center items-center px-2 gap-1"
           >
-            <div class="text-md font-semibold poppins-regular text-primary">
+            <div class="text-sm md:text-md font-semibold poppins-regular text-primary">
               {{ item.quantity - item.sold }}
             </div>
             <span
-              class="text-sm flex align-items-center text-600 poppins-regular"
+              class="text-xs md:text-sm flex items-center text-600 poppins-regular"
             >
               Disponibles
             </span>
@@ -326,10 +326,10 @@
         } @empty {
         <div
           (click)="getItems()"
-          class="border-none transition-colors transition-duration-500 hover:surface-100 hover:shadow-1 h-5rem w-full border-300 border-1 border-round-md flex p-2 gap-3 cursor-pointer"
+          class="border-none transition-colors transition-duration-500 hover:bg-slate-100 dark:hover:bg-gray-950 hover:shadow-1 h-20 w-full border-slate-300 border-2 rounded flex p-2 gap-3 cursor-pointer"
         >
           <div
-            class="ml-2 w-4rem h-4rem border-circle flex justify-content-center align-items-center"
+            class="ml-2 w-16 h-16 border-circle flex justify-center items-center"
           >
             <img
               src="../../../assets/dish.svg"
@@ -338,12 +338,12 @@
             />
           </div>
           <div
-            class="flex flex-column align-items-start justify-content-center w-full gap-2"
+            class="flex flex-col items-start justify-center w-full gap-2"
           >
             <div class="text-md font-semibold">
               {{ "Sin items disponibles" }}
             </div>
-            <span class="flex align-items-center gap-2">
+            <span class="flex items-center gap-2">
               <i class="pi pi-info-circle text-400"></i>
 
               <span class="font-semibold text-sm text-500"
@@ -355,7 +355,7 @@
         }
       </div>
     </div>
-    <div class="flex flex-column w-full gap-2">
+    <div class="flex flex-col w-full gap-2">
       <label for="service_mode" class="poppins-regular">
         Platos seleccionados <i class="pi pi-shopping-cart mx-1"></i
       ></label>
@@ -364,7 +364,7 @@
         [value]="order.orderItems"
         [styleClass]="
           order.orderItems.length === 0
-            ? 'p-datatable-sm md:p-datatable-md border-red-200 border-1 border-round-lg p-1'
+            ? 'p-datatable-sm md:p-datatable-md border-red-200 border-2 rounded p-1'
             : 'p-datatable-sm md:p-datatable-md p-1'
         "
         [rowHover]="true"
@@ -382,7 +382,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
-          <div class="flex align-items-center justify-content-end">
+          <div class="flex items-center justify-end">
             <span
               >Precio total: @if (editTotal) {
               <input
@@ -396,7 +396,7 @@
                 (click)="editTotal = !editTotal"
                 [rounded]="true"
                 severity="success"
-                styleClass="h-2rem w-2rem ml-2 mb-1"
+                styleClass="h-8 w-8 ml-2 mb-1"
               ></p-button>
               } @else {
               <p-badge
@@ -411,7 +411,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="2" class="text-sm text-300">
+            <td colspan="2" class="text-sm text-slate-300">
               No hay platos seleccionados
             </td>
           </tr>
@@ -422,7 +422,7 @@
         [value]="selectItems"
         [styleClass]="
           selectItems.length === 0
-            ? 'p-datatable-sm md:p-datatable-md border-red-200 border-1 border-round-lg p-1'
+            ? 'p-datatable-sm md:p-datatable-md border-red-200 border-2 rounded p-1'
             : 'p-datatable-sm md:p-datatable-md p-1'
         "
         [rowHover]="true"
@@ -442,31 +442,31 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
-          <div class="flex align-items-center gap-2 justify-content-end">
+          <div class="flex items-center gap-2 justify-end">
             <span>Precio total:</span>
             @if (editTotal) {
             <input
               pInputText
               type="number"
               [(ngModel)]="order.total_amount"
-              class="p-inputtext-sm w-6 text-right"
+              class="p-inputtext-sm w-6/12 text-right mt-2"
             />
             <p-button
               icon="pi pi-check"
               (click)="editTotal = !editTotal"
               [rounded]="true"
               severity="success"
-              styleClass="h-2rem w-2rem ml-2 mb-1"
+              styleClass="h-8 w-8 ml-2 mb-1 mt-2"
             ></p-button>
             } @else {
             <div
               (click)="editTotal = !editTotal"
-              class="cursor-pointer surface-100 p-1"
+              class="cursor-pointer bg-slate-100 dark:bg-gray-900 shadow-md border-2 mt-1 border-gray-400 shadow-primary-500/50 p-1"
               style="border-radius: 30px"
             >
               <div
                 style="border-radius: 30px"
-                class="surface-0 price-style poppins-medium flex align-items-center gap-2 justify-content-center py-1 px-2"
+                class="bg-slate-0 price-style poppins-medium flex items-center gap-2 justify-center py-1 px-2"
               >
                 <span class="text-primary">Bs.</span>
                 <span class="text-900 font-medium text-md">{{
@@ -479,7 +479,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="2" class="text-sm text-300">
+            <td colspan="2" class="text-sm text-slate-300">
               No hay platos seleccionados
             </td>
           </tr>
@@ -500,7 +500,7 @@
       ></p-calendar>
     </div>
   </div>
-  <div class="w-full justify-content-end">
+  <div class="w-full justify-end">
     <p-button
       styleClass="w-full poppins-medium"
       [label]="config.data ? 'Actualizar orden' : 'Crear orden'"
