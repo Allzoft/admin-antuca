@@ -9,6 +9,7 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CustomersService } from '@services/customers.service';
+import { ThemeService } from '@services/theme.service';
 @Component({
     selector: 'app-sidemenu',
     imports: [
@@ -29,10 +30,13 @@ import { CustomersService } from '@services/customers.service';
   `
 })
 export class SidemenuComponent {
+  public themeService = inject(ThemeService)
   public layoutService = inject(LayoutService);
   public messageService = inject(MessageService);
   public customersService = inject(CustomersService)
   public router = inject(Router);
+
+  public isDarkMode = this.themeService.isDarkMode
 
   public toogleMenu() {
     this.layoutService.state.staticMenuDesktopInactive = false;

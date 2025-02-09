@@ -7,6 +7,7 @@ import { TopbarComponent } from '@shared/topbar/topbar.component';
 import UserComponent from './pages/user/user.component';
 import { CustomersService } from '@services/customers.service';
 import { DrawerModule } from 'primeng/drawer';
+import { ThemeService } from '@services/theme.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,5 +22,8 @@ import { DrawerModule } from 'primeng/drawer';
 })
 export default class DashboardComponent {
   public layoutService = inject(LayoutService);
+  public themeService = inject(ThemeService)
   public usersService = inject(CustomersService);
+
+  public isDarkMode = this.themeService.isDarkMode
 }

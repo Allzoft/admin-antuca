@@ -48,11 +48,13 @@
             style="padding-left: 1.35rem"
           >
             @if (isOnModule(item.father + item.link)) {
-            <i [class]="' text-slate-900 dark:text-gray-100 pi pi-' + item.icon"></i>
+            <i
+              [class]="' text-slate-900 dark:text-gray-100 pi pi-' + item.icon"
+            ></i>
             <div class="poppins-medium text-md text-900">{{ item.name }}</div>
             <div
               style="margin-left: -1.7rem"
-              class="absolute left-0 bg-primary-600 w-8 h-full top-0  rounded-r-lg"
+              class="absolute left-0 bg-primary-600 w-8 h-full top-0 rounded-r-lg"
             ></div>
             <div
               class="absolute right-0 w-full h-full top-0"
@@ -63,7 +65,9 @@
             ></div>
             } @else {
             <i [class]="' text-slate-400 pi pi-' + item.icon"></i>
-            <div class="poppins-regular text-slate-400 text-sm">{{ item.name }}</div>
+            <div class="poppins-regular text-slate-400 text-sm">
+              {{ item.name }}
+            </div>
             }
           </a>
           } @if (layoutService.isMobile()) {
@@ -153,6 +157,20 @@
         class="cursor-pointer hover:shadow-3 w-11/12 h-12 bg-slate-100 dark:bg-gray-800 flex mb-3 gap-2 px-3 py-2 items-center content-center"
       >
         <span class="poppins-regular text-xs">Desarrollado por</span>
+        @if (isDarkMode()) {
+
+        <img
+          src="../../assets/logo-allzoft-dark.png"
+          style="height: 2.5rem"
+          alt="logo-allzoft"
+        />
+        <img
+          src="../../assets/name-allzoft-dark.png"
+          style="height: 0.8rem"
+          alt="name-allsoft"
+        />
+        } @else {
+
         <img
           src="../../assets/logo-allzoft.png"
           style="height: 2.5rem"
@@ -163,6 +181,7 @@
           style="height: 0.8rem"
           alt="name-allsoft"
         />
+        }
       </div>
     </div>
     <p-toast position="top-center"></p-toast>
