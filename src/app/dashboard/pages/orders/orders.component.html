@@ -1,33 +1,33 @@
 <section
-  class="w-full px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between"
+  class="w-full px-3 flex flex-col md:flex-row gap-3 mt-3 justify-between"
 >
-  <div class="flex flex-column gap-1 md:gap-2">
-    <span class="text-4xl">Ordenes</span>
-    <span class="text-lg text-400">Aqui estan las ordenes registradas</span>
+  <div class="flex flex-col gap-1 md:gap-2">
+    <span class="text-3xl poppins-medium">Ordenes</span>
+    <span class="text-lg text-slate-400">Aqui estan las ordenes registradas</span>
   </div>
   <div
-    class="flex flex-column md:flex-row align-items-center gap-3 md:gap-4 w-full md:w-auto"
+    class="flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full md:w-auto"
   >
     <div
-      class="flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      class="flex bg-slate-100 dark:bg-gray-900 shadow-md px-3 w-full md:w-auto py-2 md:py-3 rounded items-center gap-2"
     >
-      <i class="text-primary pi pi-bolt text-3xl md:text-6xl"></i>
-      <div class="flex flex-column gap-2">
+      <i class="text-primary-500 dark:text-primary-400 pi pi-bolt text-3xl md:text-5xl"></i>
+      <div class="flex flex-col gap-2">
         <p-dropdown
           [(ngModel)]="filterStateSelect"
-          styleClass="border-none surface-100 shadow-none"
+          styleClass="border-none bg-slate-100 dark:bg-gray-900 shadow-none"
           [options]="optionsFilterState"
         ></p-dropdown>
       </div>
     </div>
     <div
-      class="flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      class="flex bg-slate-100 dark:bg-gray-900 shadow-md px-3 w-full md:w-auto py-2 md:py-3 rounded items-center gap-2"
     >
-      <i class="text-primary pi pi-calendar text-3xl md:text-6xl"></i>
-      <div class="flex flex-column gap-2">
+      <i class="text-primary-500 dark:text-primary-400 pi pi-calendar text-3xl md:text-5xl"></i>
+      <div class="flex flex-col gap-2">
         <p-dropdown
           [(ngModel)]="filterDateSelect"
-          styleClass="border-none surface-100 shadow-none"
+          styleClass="border-none bg-slate-100 dark:bg-gray-900 shadow-none"
           [options]="options"
         ></p-dropdown>
       </div>
@@ -36,17 +36,17 @@
     @if(!layoutService.isMobile()){
     <div
       (click)="createOrder()"
-      class="transition-colors transition-duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 hover:shadow-3 shadow-2 px-3 w-full md:w-auto py-3 border-round align-items-center gap-2"
+      class="transition-colors transition-duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 dark:bg-primary-400/10 dark:hover:bg-primary-400/20 hover:shadow-3 shadow-md px-3 w-full md:w-auto py-3 rounded items-center gap-2"
     >
-      <i class="text-primary pi pi-plus text-6xl"></i>
+      <i class="text-primary-500 dark:text-primary-400 pi pi-plus text-5xl"></i>
     </div>
     } @else {
     <div
       (click)="createOrder()"
-      class="flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      class="flex bg-slate-100 dark:bg-gray-900 shadow-md px-3 w-full md:w-auto py-2 md:py-3 rounded items-center gap-2"
     >
-      <i class="text-primary pi pi-plus text-3xl md:text-6xl"></i>
-      <div class="flex flex-column gap-2">
+      <i class="text-primary-500 dark:text-primary-400 pi pi-plus text-3xl md:text-6xl"></i>
+      <div class="flex flex-col gap-2">
         <span class="ml-3 text-700">Añadir orden</span>
       </div>
     </div>
@@ -55,7 +55,7 @@
 </section>
 
 <div class="px-3 mt-3 md:mt-4">
-  <div class="p-0 border-round">
+  <div class="p-0 rounded">
     <p-table
       [value]="orders()"
       styleClass=""
@@ -65,14 +65,14 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="id_order" class="py-3 pl-8 white-space-nowrap">
+          <th pSortableColumn="id_order" class="py-3 pl-8 whitespace-nowrap">
             Id de orden <p-sortIcon field="id_order" />
           </th>
           <th pSortableColumn="date">Fecha <p-sortIcon field="date" /></th>
-          <th pSortableColumn="client.name" class="py-3 white-space-nowrap">
+          <th pSortableColumn="client.name" class="py-3 whitespace-nowrap">
             Cliente <p-sortIcon field="client.name" />
           </th>
-          <th pSortableColumn="phone" class="py-3 white-space-nowrap">
+          <th pSortableColumn="phone" class="py-3 whitespace-nowrap">
             Pedido <p-sortIcon field="phone" />
           </th>
           <th class="py-3">Monto</th>
@@ -85,10 +85,10 @@
           <td class="pl-8">{{ "OAR-" + order.id_order }}</td>
           <td>{{ order.date | date : "dd/MM/yyyy" }}</td>
           <td>
-            <div class="flex align-items-center gap-2">
+            <div class="flex items-center gap-2">
               <img
                 [src]="order!.client.photo | image"
-                class="border-circle w-2rem h-2rem"
+                class="border-circle w-8 h-8"
                 alt="Profile"
               />
               <span
@@ -139,7 +139,7 @@
               icon="pi pi-check"
               severity="success"
               [value]="order.state!.name"
-              styleClass="poppins-medium  bg-green-200"
+              styleClass="poppins-medium  bg-green-200 dark:bg-green-700/30"
             />
             } @case (0) {
             <p-tag
@@ -150,25 +150,25 @@
             />
             } }
           </td>
-          <td class="white-space-nowrap">
+          <td class="whitespace-nowrap">
             <p-button
               icon="pi pi-pencil"
               [outlined]="true"
-              styleClass="h-2rem w-2rem"
+              styleClass="h-8 w-8"
               (onClick)="showOrder(order)"
             />
             <p-button
               icon="pi pi-trash"
               severity="danger"
               [outlined]="true"
-              styleClass="h-2rem w-2rem ml-2"
+              styleClass="h-8 w-8 ml-2"
               (onClick)="deleteOrder(order)"
             />
             <p-button
               [loading]="loadingOrderImpress"
               icon="pi pi-print"
               [outlined]="true"
-              styleClass="h-2rem w-2rem ml-2"
+              styleClass="h-8 w-8 ml-2"
               (onClick)="getImpressOrder(order)"
             />
           </td>
@@ -202,7 +202,7 @@
     [paginator]="true"
   >
     <ng-template pTemplate="header">
-      <div class="flex gap-2 justify-content-between text-white">
+      <div class="flex gap-2 justify-between text-white">
         <span> Cantidad: {{ orders().length }} </span>
         <span> Total: {{ totalAmount }} </span>
       </div>
@@ -215,13 +215,13 @@
           *ngFor="let order of orders()"
         >
           <div
-            class="p-4 border-1 surface-border bg-white-alpha-10 border-round"
+            class="p-4 border-1 bg-slate-bor dark:bg-gray-900der bg-white-alpha-10 rounded"
           >
             <div
-              class="flex flex-column align-items-center justify-content-center gap-2"
+              class="flex flex-col items-center justify-center gap-2"
             >
               <span
-                class="flex align-items-center gap-2 cursor-pointer hover:text-bluegray-400 text-center"
+                class="flex items-center gap-2 cursor-pointer hover:text-bluegray-400 text-center"
                 (click)="showOrder(order.order!)"
               >
                 <i class="pi pi-user"></i>
@@ -234,7 +234,7 @@
                 [severity]="order.state!.color"
               ></p-tag>
             </div>
-            <div class="flex flex-column align-items-center gap-3 p-3">
+            <div class="flex flex-col items-center gap-3 p-3">
               @for (item of order.orderItems; track $index) {
               <div class="flex w-full gap-2">
                 <span class="font-semibold">{{ item.quantity }}</span>
@@ -248,17 +248,17 @@
               <p>Sin items del menú</p>
               }
             </div>
-            <div class="flex flex-column align-items-center gap-3 py-1">
+            <div class="flex flex-col items-center gap-3 py-1">
               <div class="text-xl text-orange-400 font-bold">
                 {{ order.service_mode.toUpperCase() }}
               </div>
             </div>
-            <div class="flex align-items-center justify-content-center mt-2">
+            <div class="flex items-center justify-center mt-2">
               <span class="text-2xl font-semibold">{{
                 "Bs. " + order.total_amount
               }}</span>
             </div>
-            <div class="flex align-items-center justify-content-center mt-2">
+            <div class="flex items-center justify-center mt-2">
               <span class="text-lg font-semibold">
                 <i class="pi pi-calendar mr-2"></i
                 >{{ order.date | date : "yyyy-MM-dd" }}</span
@@ -272,7 +272,7 @@
               severity="warning"
               [rounded]="true"
               [text]="true"
-              styleClass="h-2rem w-2rem"
+              styleClass="h-8 w-8"
               (onClick)="menu.toggle($event)"
               (onClick)="selectOptionOrder(order)"
             ></p-button>
