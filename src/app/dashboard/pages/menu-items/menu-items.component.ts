@@ -29,34 +29,38 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DailyAvailabilityServices } from '../../../services/dailyAvailability.service';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { LayoutService } from '@services/layout.service';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
-    selector: 'app-menu-items',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ButtonModule,
-        CardModule,
-        DataViewModule,
-        PipesModule,
-        RatingModule,
-        TagModule,
-        InputTextModule,
-        ImageModule,
-        ConfirmDialogModule,
-        ToastModule,
-        DropdownModule,
-        OverlayPanelModule,
-        CalendarModule,
-        InputNumberModule,
-    ],
-    providers: [
-        ConfirmationService,
-        MessageService,
-        DialogService,
-        DynamicDialogConfig,
-    ],
-    templateUrl: './menu-items.component.html'
+  selector: 'app-menu-items',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    CardModule,
+    DataViewModule,
+    PipesModule,
+    RatingModule,
+    TagModule,
+    InputTextModule,
+    ImageModule,
+    ConfirmDialogModule,
+    ToastModule,
+    DropdownModule,
+    OverlayPanelModule,
+    CalendarModule,
+    InputNumberModule,
+    InputIconModule,
+    IconFieldModule
+  ],
+  providers: [
+    ConfirmationService,
+    MessageService,
+    DialogService,
+    DynamicDialogConfig,
+  ],
+  templateUrl: './menu-items.component.html',
 })
 export default class MenuItemsComponent implements OnDestroy, OnInit {
   public layoutService = inject(LayoutService);
@@ -171,7 +175,8 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
     this.ref = this.dialogService.open(ItemComponent, {
       header: item.name,
       draggable: true,
-      styleClass: 'w-11 md:w-5',
+      styleClass: 'w-11/12 md:w-5/12',
+      closable: true,
       data: {
         item: item,
       },
@@ -194,7 +199,8 @@ export default class MenuItemsComponent implements OnDestroy, OnInit {
     this.ref = this.dialogService.open(ItemComponent, {
       header: 'Nuevo item',
       draggable: true,
-      styleClass: 'w-11 md:w-5',
+      styleClass: 'w-11/12 md:w-5/12',
+      closable: true,
     });
 
     this.ref.onClose.subscribe((item: Items) => {
