@@ -29,8 +29,12 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: MyPreset,
         options: {
-          darkModeSelector: '.my-app-dark'
-        }
+          darkModeSelector: '.my-app-dark',
+          cssLayer: {
+            name: 'primeng',
+            order: 'tailwind-base, primeng, tailwind-utilities',
+          },
+        },
       },
     }),
     provideRouter(

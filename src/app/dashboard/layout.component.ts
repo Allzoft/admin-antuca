@@ -5,27 +5,21 @@ import { LayoutService } from '@services/layout.service';
 import { SidemenuComponent } from '@shared/sidemenu/sidemenu.component';
 import { TopbarComponent } from '@shared/topbar/topbar.component';
 import UserComponent from './pages/user/user.component';
-import { SidebarModule } from 'primeng/sidebar';
 import { CustomersService } from '@services/customers.service';
+import { DrawerModule } from 'primeng/drawer';
 
 @Component({
-    selector: 'app-dashboard',
-    imports: [
-        CommonModule,
-        SidemenuComponent,
-        TopbarComponent,
-        RouterOutlet,
-        SidebarModule,
-    ],
-    templateUrl: './layout.component.html',
-    styles: `
-  .w-0 {
-    width: 0%;
-  }
-  `
+  selector: 'app-dashboard',
+  imports: [
+    CommonModule,
+    SidemenuComponent,
+    DrawerModule,
+    TopbarComponent,
+    RouterOutlet,
+  ],
+  templateUrl: './layout.component.html',
 })
 export default class DashboardComponent {
   public layoutService = inject(LayoutService);
-  public usersService = inject(CustomersService)
-  public sidebarVisible: boolean = true
+  public usersService = inject(CustomersService);
 }

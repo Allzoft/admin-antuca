@@ -1,21 +1,21 @@
 <section
-  class="w-full px-3 flex flex-column md:flex-row gap-3 mt-3 justify-content-between"
+  class="w-full px-3 flex flex-col md:flex-row gap-3 mt-3 justify-between"
 >
-  <div class="flex flex-column gap-1 md:gap-2">
+  <div class="flex flex-col gap-1 md:gap-2">
     <span class="text-4xl">Lista de platos</span>
     <span class="text-lg text-400"
       >Gestión de los platos del menú y su disponibilidad diaria</span
     >
   </div>
   <div
-    class="flex flex-column md:flex-row align-items-center gap-3 md:gap-4 w-full md:w-auto"
+    class="flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full md:w-auto"
   >
     <div
       (click)="showFilters = !showFilters"
-      class="hover:surface-50 cursor-pointer flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      class="hover:surface-50 cursor-pointer flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round items-center gap-2"
     >
       <i class="text-primary pi pi- pi-sliders-h text-3xl md:text-6xl"></i>
-      <div class="flex flex-column gap-2">
+      <div class="flex flex-col gap-2">
         <div class="md:px-3">Filtros</div>
       </div>
     </div>
@@ -23,17 +23,17 @@
     @if(!layoutService.isMobile()){
     <div
       (click)="createItem()"
-      class="transition-colors transition-duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 hover:shadow-3 shadow-2 px-3 w-full md:w-auto py-3 border-round align-items-center gap-2"
+      class="transition-colors transition-duration-300 flex cursor-pointer hover:bg-primary-200 bg-primary-100 hover:shadow-3 shadow-2 px-3 w-full md:w-auto py-3 border-round items-center gap-2"
     >
       <i class="text-primary pi pi-plus text-6xl"></i>
     </div>
     } @else {
     <div
       (click)="createItem()"
-      class="flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round align-items-center gap-2"
+      class="flex surface-100 shadow-2 px-3 w-full md:w-auto py-2 md:py-3 border-round items-center gap-2"
     >
       <i class="text-primary pi pi-plus text-3xl md:text-6xl"></i>
-      <div class="flex flex-column gap-2">
+      <div class="flex flex-col gap-2">
         <span class="">Añadir item</span>
       </div>
     </div>
@@ -42,7 +42,7 @@
 </section>
 <div class="px-3 mt-2 md:mt-4">
   @if (showFilters) {
-  <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+  <div class="flex flex-col md:flex-row md:justify-between gap-2">
     <p-dropdown
       [options]="sortOptions"
       placeholder="Filtrar por tipo de item"
@@ -66,7 +66,7 @@
     <div class="grid grid-nogutter mt-2">
       <div class="col-12" *ngFor="let item of items; let first = first">
         <div
-          class="flex bg-white flex-column xl:flex-row xl:align-items-start p-4 gap-4 border-top-1 surface-border"
+          class="flex bg-white flex-col xl:flex-row xl:items-start p-4 gap-4 border-top-1 surface-border"
           [ngClass]="{ 'border-top-1 surface-border': !first }"
         >
           <p-image
@@ -77,30 +77,30 @@
             [alt]="item.name"
           />
           <div
-            class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-center flex-1 gap-4"
+            class="flex flex-col sm:flex-row justify-between items-center xl:items-center flex-1 gap-4"
           >
             <div
-              class="flex flex-column align-items-center sm:align-items-start gap-3"
+              class="flex flex-col items-center sm:items-start gap-3"
             >
               <div class="text-2xl font-bold text-900">{{ item.name }}</div>
               <p-rating
                 [(ngModel)]="star"
                 [readonly]="false"
               ></p-rating>
-              <div class="flex align-items-center gap-3">
-                <span class="flex align-items-center gap-2">
+              <div class="flex items-center gap-3">
+                <span class="flex items-center gap-2">
                   <i class="pi pi-tag"></i>
                   <span class="font-semibold">{{ item.type_item }}</span>
                 </span>
               </div>
             </div>
             <div
-              class="flex flex-column justify-content-center align-items-center sm:align-items-end gap-3 md:gap-4"
+              class="flex flex-col justify-center items-center sm:items-end gap-3 md:gap-4"
             >
               <div class="surface-100 p-1" style="border-radius: 30px">
                 <div
                   style="border-radius: 30px"
-                  class="surface-0 price-style poppins-medium flex align-items-center gap-2 justify-content-center py-1 px-2"
+                  class="surface-0 price-style poppins-medium flex items-center gap-2 justify-center py-1 px-2"
                 >
                   <span class="text-primary">Bs.</span>
                   <span class="text-900 font-medium text-lg">{{
@@ -113,7 +113,7 @@
                   styleClass="border-none bg-primary-50"
                   icon="pi pi-pencil font-medium text-xl"
                   [outlined]="true"
-                  class="md:align-self-end"
+                  class="md:self-end"
                   (onClick)="showItem(item)"
                 />
                 <p-button
@@ -121,21 +121,21 @@
                   icon="pi pi-trash font-medium text-xl"
                   severity="secondary"
                   [outlined]="true"
-                  class="md:align-self-end"
+                  class="md:self-end"
                   (onClick)="deleteItem(item)"
                 />
                 <p-button
                   styleClass="border-none bg-primary-50"
                   icon="pi pi-eye font-medium text-xl"
                   [outlined]="true"
-                  class="md:align-self-end"
+                  class="md:self-end"
                   (onClick)="op.toggle($event)"
                   (onClick)="onSelectedItem(item)"
                 />
               </div>
               @if(item.dailyAvailabilities!.length === 0){
               <div
-                class="flex gap-2 align-items-center text-500 text-xs md:text-sm poppins-regular"
+                class="flex gap-2 items-center text-500 text-xs md:text-sm poppins-regular"
               >
                 <i class="pi pi-circle text-400"> </i>
                 <span>
@@ -148,7 +148,7 @@
                   onSelectedAvailable(item, item.dailyAvailabilities![0])
                 "
                 (click)="op2.toggle($event)"
-                class="flex gap-2 align-items-center text-700 px-3 py-2 cursor-pointer hover:surface-100 border-round text-sm md:text-base poppins-regular text-center"
+                class="flex gap-2 items-center text-700 px-3 py-2 cursor-pointer hover:surface-100 border-round text-sm md:text-base poppins-regular text-center"
               >
                 <i class="pi pi-circle-fill text-green-400"> </i>
                 <span>
@@ -172,7 +172,7 @@
 <p-confirmDialog styleClass="w-auto md:w-5" position="bottom"></p-confirmDialog>
 
 <p-overlayPanel #op>
-  <div class="flex flex-column gap-3 w-full">
+  <div class="flex flex-col gap-3 w-full">
     <span class="text-lg font-semibold">Agregar disponilidad de item</span>
     <p-calendar
       [(ngModel)]="date"
@@ -201,7 +201,7 @@
 </p-overlayPanel>
 
 <p-overlayPanel #op2>
-  <div class="flex flex-column gap-3 w-full">
+  <div class="flex flex-col gap-3 w-full">
     <span class="text-lg font-semibold">Actualizar disponilidad de item</span>
     <p-calendar
       [(ngModel)]="selectAvailable!.date"

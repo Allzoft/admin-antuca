@@ -1,8 +1,8 @@
 <section
-  class="flex md:justify-content-between w-12 px-2 md:px-4 surface-100 md:surface-50"
+  class="flex md:justify-between w-full px-2 md:px-4 py-3 bg-slate-100 dark:bg-gray-900"
   [ngClass]="{ fixed: layoutService.isMobile() }"
 >
-  <div class="flex align-items-center gap-2">
+  <div class="flex items-center gap-2">
     <p-button
       #menubutton
       [icon]="
@@ -16,23 +16,22 @@
     />
     @if (!layoutService.isMobile()) { @if
     (!router.url.includes('admin/settings')) {
-
-    <p-iconField iconPosition="right" class="z-0">
-      <p-inputIcon styleClass="pi pi-search text-xl  mr-2" />
+    <p-iconfield>
       <input
         type="text"
         variant="filled"
         pInputText
         placeholder="Buscar aqui"
-        class="w-30rem h-3rem"
+        class="w-96 h-3rem"
       />
-    </p-iconField>
+      <p-inputIcon styleClass="pi pi-search text-xl  mr-2" />
+    </p-iconfield>
     } @else {
-    <div class="flex gap-2 align-items-center">
+    <div class="flex gap-2 items-center">
       <p-button
         severity="secondary"
         icon="pi pi-arrow-left"
-        styleClass="surface-200 border-none"
+        styleClass="bg-slate-200 border-none"
         (onClick)="router.navigateByUrl('control-panel/daily-summary')"
       />
       <div class="text-3xl poppins-medium">Configuración</div>
@@ -41,59 +40,63 @@
   </div>
 
   @if (!layoutService.isMobile()) {
-  <div class="flex align-items-center gap-3 poppins-regular">
-    <span class="hover:underline text-700 cursor-pointer hover:text-primary"
+  <div class="flex items-center gap-3 poppins-regular">
+    <span
+      class="hover:underline text-slate-700 dark:text-gray-200 text cursor-pointer hover:text-[--p-primary-500] dark:hover:text-[--p-primary-300]"
       >Sobre nosotros</span
     >
-    <span class="hover:underline text-700 cursor-pointer hover:text-primary"
+    <span
+      class="hover:underline text-slate-700 dark:text-gray-200 cursor-pointer hover:text-[--p-primary-500] dark:hover:text-[--p-primary-300]"
       >Herramientas</span
     >
-    <span class="hover:underline text-700 cursor-pointer hover:text-primary"
+    <span
+      class="hover:underline text-slate-700 dark:text-gray-200 cursor-pointer hover:text-[--p-primary-500] dark:hover:text-[--p-primary-300]"
       >Ayuda</span
     >
   </div>
   }
 
   <ul
-    class="list-none w-full md:w-auto flex gap-2 justify-content-center align-items-center"
+    class="list-none w-full md:w-auto flex gap-2 justify-content-center items-center"
   >
     @if (!layoutService.isMobile()) {
-    <li class="flex align-items-center gap-2 mr-4">
+    <li class="flex items-center gap-2 mr-4">
       <p-button
         severity="danger"
-        icon="pi pi-cog text-red-500 "
+        [outlined]="true"
+        icon="pi pi-cog dark:text-gray-200"
         (onClick)="router.navigate(['/admin/settings'])"
-        styleClass="bg-red-100 border-none"
+        styleClass="border-none bg-red-200 dark:bg-red-500 w-9 h-9"
       />
     </li>
     }
-    <li class="flex align-items-center gap-2 mr-5 md:mr-4">
+    <li class="flex items-center gap-3 mr-5 md:mr-4">
       <div class="relative">
         <div
           [style]="{ height: '0.7rem', width: '0.7rem' }"
-          class="bg-yellow-300 border-circle absolute right-0 top-0 z-2 -mt-1 -mr-1"
+          class="bg-primary-600 rounded-full absolute right-0 top-0 z-10 -mt-1 -mr-1"
         ></div>
         <p-button
-          icon="pi pi-bell"
+          icon="pi pi-bell dark:text-gray-50"
           [outlined]="true"
-          styleClass="bg-primary-100 border-none"
+          styleClass="bg-primary-100 dark:bg-primary-300/80 border-none w-9 h-9"
         />
       </div>
       <div class="relative">
         <!-- <div
           [style]="{'height': '0.7rem', 'width': '0.7rem'}"
-          class="bg-yellow-300 border-circle absolute right-0 top-0 z-2 -mt-1 -mr-1"
+          class="bg-yellow-300 rounded-full absolute right-0 top-0 z-2 -mt-1 -mr-1"
         ></div> -->
         <p-button
-          [icon]="isLightMode ?  'pi pi-sun' : 'pi pi-moon'"
+          [icon]="isLightMode ? 'pi pi-sun text-lg' : 'pi pi-moon dark:text-gray-50'"
           [outlined]="true"
-          styleClass="bg-primary-100 border-none"
+          styleClass="bg-primary-100 dark:bg-primary-300/80 border-none w-9 h-9"
           (onClick)="toggleDarkMode()"
         />
       </div>
       <div class="relative">
         <div
-          class="surface-100 border-1 border-200 border-circle absolute right-0 p-1 top-0 z-2 -mt-2 -mr-2 flex justify-content-center align-items-center"
+          class="bg-slate-300 border-1 border-200 rounded-full absolute right-0 p-1 top-0 z-10 -mt-2 -mr-2 flex justify-content-center items-center"
         >
           <i class="pi pi-plus text-xs"></i>
         </div>
@@ -102,21 +105,21 @@
           icon="pi pi-list"
           severity="contrast"
           [outlined]="true"
-          styleClass="surface-200 md:surface-100 border-none"
+          styleClass="bg-slate-200 dark:bg-gray-300/80 border-none w-9 h-9"
         />
       </div>
     </li>
 
-    <li class="flex align-items-center">
+    <li class="flex items-center">
       <p-button
         (onClick)="closeSession()"
         [label]="
           layoutService.isMobile() ? user()!.name : 'Hola,   ' + user()!.name
         "
-        styleClass="pr-4 poppins-regular"
+        styleClass="pr-4 dark:bg-primary-400/80 border-none poppins-regular"
       ></p-button>
       <div
-        class="border-circle border-3 border-100 cursor-pointer hover:surface-300 h-3rem w-3rem surface-200 flex align-items-center justify-content-center -ml-3 z-1"
+        class="rounded-full border-4 border-slate-100 dark:border-gray-900 cursor-pointer hover:bg-slate-300 h-14 w-14 bg-slate-200 dark:bg-gray-700 flex items-center justify-center -ml-3 z-10"
       >
         <i class="pi pi-user text-600 text-xl"></i>
       </div>

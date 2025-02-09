@@ -57,6 +57,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public ref: DynamicDialogRef | undefined;
 
   items: MenuItem[] = [{ label: 'Cliente' }, { label: 'Pedidos' }];
+  
 
   home: MenuItem = { icon: 'pi pi-home', routerLink: '/dashboard' };
 
