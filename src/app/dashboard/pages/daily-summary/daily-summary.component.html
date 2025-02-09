@@ -35,16 +35,16 @@
   </div>
 </section>
 
-<section class="w-full grid md:grid-cols-4 m-0 mt-3 p-0">
+<section class="w-full grid grid-cols-2 md:grid-cols-4 m-0 mt-3 p-0">
   <div class="p-2 md:p-3">
     <div
       class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
+        class="flex items-center justify-center md:h-24 md:w-24 h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
         <i
-          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-clipboard"
+          class="text-4xl md:text-6xl text-primary-600 dark:text-primary-400 pi pi-clipboard"
         ></i>
       </div>
       <div class="flex flex-col justify-center">
@@ -73,15 +73,20 @@
           class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
         >
           @if(dailyReport()!.weeklyGrowthRate_menus > 0){
-          <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-up text-green-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_menus < 0){
-          <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-down text-red-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_menus === 0){
           <i
-            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_menus?.toFixed(2) }} % (7 días)
+          {{ dailyReport()?.weeklyGrowthRate_menus?.toFixed(2) }}
+          @if (!layoutService.isMobile()) { % (7 días) }
         </span>
         }
       </div>
@@ -93,10 +98,10 @@
       class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
+        class="flex items-center justify-center md:h-24 md:w-24 h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
         <i
-          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-dollar"
+          class="text-4xl md:text-6xl text-primary-600 dark:text-primary-400 pi pi-dollar"
         ></i>
       </div>
       <div class="flex flex-col justify-center">
@@ -125,16 +130,22 @@
           class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
         >
           @if(dailyReport()!.weeklyGrowthRate_incomes > 0){
-          <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-up text-green-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_incomes < 0){
-          <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-down text-red-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_incomes === 0){
           <i
-            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_incomes?.toFixed(2) }} % (7 días) </span
-        >}
+          {{ dailyReport()?.weeklyGrowthRate_incomes?.toFixed(2) }}
+          @if (!layoutService.isMobile()) { % (7 días) }
+        </span>
+        }
       </div>
     </div>
   </div>
@@ -143,10 +154,10 @@
       class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
+        class="flex items-center justify-center md:h-24 md:w-24 h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
         <i
-          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-ticket"
+          class="text-4xl md:text-6xl text-primary-600 dark:text-primary-400 pi pi-ticket"
         ></i>
       </div>
       <div class="flex flex-col justify-center">
@@ -175,16 +186,22 @@
           class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
         >
           @if(dailyReport()!.weeklyGrowthRate_orders > 0){
-          <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-up text-green-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_orders < 0){
-          <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-down text-red-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_orders === 0){
           <i
-            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_orders?.toFixed(2) }} % (7 días) </span
-        >}
+          {{ dailyReport()?.weeklyGrowthRate_orders?.toFixed(2) }}
+          @if (!layoutService.isMobile()) { % (7 días) }
+        </span>
+        }
       </div>
     </div>
   </div>
@@ -194,10 +211,10 @@
       class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 items-center p-2 justify-center transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex gap-2 md:gap-9"
     >
       <div
-        class="flex items-center justify-center md:h-24 md:w-24 h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-100/10"
+        class="flex items-center justify-center md:h-24 md:w-24 h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-100/10"
       >
         <i
-          class="text-6xl text-primary-600 dark:text-primary-400 pi pi-users"
+          class="text-4xl md:text-6xl text-primary-600 dark:text-primary-400 pi pi-users"
         ></i>
       </div>
       <div class="flex flex-col justify-center">
@@ -226,15 +243,20 @@
           class="text-xs mt-1 text-slate-600 dark:text-gray-300 flex items-center gap-1"
         >
           @if(dailyReport()!.weeklyGrowthRate_customers > 0){
-          <i class="pi pi-arrow-circle-up text-green-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-up text-green-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_customers < 0){
-          <i class="pi pi-arrow-circle-down text-red-500 text-sm"></i>
+          <i
+            class="pi pi-arrow-circle-down text-red-500 text-xs md:text-sm"
+          ></i>
           } @if(dailyReport()!.weeklyGrowthRate_customers === 0){
           <i
-            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-sm"
+            class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_customers?.toFixed(2) }} % (7 días)
+          {{ dailyReport()?.weeklyGrowthRate_customers?.toFixed(2) }}
+          @if (!layoutService.isMobile()) { % (7 días) }
         </span>
         }
       </div>
@@ -242,7 +264,7 @@
   </div>
 </section>
 
-<section class="w-full grid grid-cols-2 m-0 p-0">
+<section class="w-full grid md:grid-cols-2 m-0 p-0">
   <div class="p-2 md:p-3 h-auto">
     <div
       class="w-full relative h-full bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 p-2 pt-3 md:px-6 transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-3 md:justify-between"
@@ -451,9 +473,9 @@
   </div>
 </section>
 
-<section class="w-full grid grid-cols-4 gap-4 p-0 m-0">
+<section class="w-full grid md:grid-cols-4 gap-4 p-0 m-0">
   <!-- Tarjeta que ocupa 3 de 4 columnas -->
-  <div class="col-span-3 w-full p-2 md:p-3 h-auto">
+  <div class="md:scol-span-3 w-full p-2 md:p-3 h-auto">
     <div
       class="w-full relative h-full bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 p-2 pt-3 md:px-6 transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-3 md:justify-between"
     >
@@ -493,7 +515,7 @@
   </div>
 
   <!-- Tarjeta que ocupa 1 de 4 columnas -->
-  <div class="col-span-1 p-2 md:p-3 h-auto">
+  <div class="md:col-span-1 p-2 md:p-3 h-auto">
     <div
       class="overflow-hidden w-full h-full relative bg-slate-700 md:py-8 p-4 md:px-4 transition-colors duration-300 hover:bg-slate-600 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-2 md:gap-3"
     >
@@ -511,11 +533,10 @@
           Manejo el orden de tu tablero
         </div>
         <div class="w-full flex items-center justify-between">
-          <div class="text-slate-300 text-sm">Acceso rápido al orden de tablero</div>
-          <p-button
-            icon="pi pi-arrow-right "
-            severity="secondary"
-          />
+          <div class="text-slate-300 text-sm">
+            Acceso rápido al orden de tablero
+          </div>
+          <p-button icon="pi pi-arrow-right " severity="secondary" />
         </div>
       </div>
     </div>
