@@ -1,6 +1,6 @@
 <section class="m-0 z-2">
   <div
-    class="flex relative flex-column align-items-center  px-4 py-3 h-screen m-0 z-2"
+    class="flex relative flex-col dark:bg-gray-950 md:flex-row md:justify-around items-center px-4 py-3 h-screen m-0 z-2"
     style="
       background-image: url('/assets/bg-login.png');
       background-size: cover;
@@ -8,46 +8,89 @@
     "
   >
     <div
-      class="absolute cursor-pointer hover:shadow-3 bottom-0 md:right-0 mb-4 md:mr-4  md:w-auto w-10 h-3rem surface-100 flex gap-2 px-3 py-2 flex align-items-center justify-content-center"
+      class="absolute bg-slate-50 dark:bg-gray-900 cursor-pointer hover:shadow-3 bottom-0 md:right-0 mb-4 md:mr-4 md:w-auto w-10 h-3rem gap-2 px-3 py-2 flex align-items-center justify-content-center"
     >
       <span class="poppins-regular text-sm md:text-xl">Desarrollado por</span>
+      @if(isLightMode){
       <img
         src="../../assets/logo-allzoft.png"
         style="height: 2.5rem"
         alt="logo-allzoft"
       />
+      } @else {
+      <img
+        src="../../assets/logo-allzoft-dark.png"
+        style="height: 2.5rem"
+        alt="logo-allzoft"
+      />
+      } @if(isLightMode){
       <img
         src="../../assets/name-allsoft.png"
         class="h-1rem"
         alt="name-allsoft"
       />
+      } @else {
+      <img
+        src="../../assets/name-allzoft-dark.png"
+        style="height: 1rem"
+        alt="logo-allzoft"
+      />
+      }
     </div>
     <a
       href="#"
       class="flex flex-column align-items-center text-2xl font-semibold"
     >
+      @if(isLightMode){
       <img
         class="w-20rem md:w-28rem z-2"
         src="../../assets/logo.png"
         alt="logo"
       />
+      } @else {
+      <img
+        class="w-20rem md:w-28rem z-2"
+        src="../../assets/logo-dark.png"
+        alt="logo"
+      />
+      } @if(isLightMode){
       <img
         class="w-20rem md:w-28rem z-2 -mt-5"
         src="../../assets/name-slogan.png"
         alt="logo"
       />
+      } @else {
+      <img
+        class="w-20rem md:w-28rem z-2 -mt-5"
+        src="../../assets/name-slogan-dark.png"
+        alt="logo"
+      />
+      }
     </a>
     <div
-      class="md:w-4 w-12 hover:shadow-3 shadow border md:mt-0 xl:p-0 surface-100 z-2"
+      class="md:w-4 w-12 bg-slate-50 dark:bg-gray-900 hover:shadow-3 md:mt-0 xl:p-0 z-2"
     >
-      <div class="px-4 pt-2 pb-5 md:px-5 flex flex-column gap-3">
-        <h1 class="text-lg font-bold md:text-2xl poppins-regular">
-          Ingresa con tus crendenciales
-        </h1>
+      <div class="px-4 pt-4 pb-5 md:px-5 flex flex-col gap-3">
+        <div class="flex w-full items-center justify-between">
+          <span class="text-base md:text-xl font-bold poppins-regular">
+            Ingresa con tus crendenciales
+          </span>
+          <p-button
+            [icon]="
+              isLightMode
+                ? 'pi pi-sun text-amber-500'
+                : 'pi pi-moon text-slate-400'
+            "
+            [outlined]="false"
+            severity="secondary"
+            styleClass=" "
+            (onClick)="toggleDarkMode()"
+          />
+        </div>
         <div>
           <label
             for="email"
-            class="block mb-1 text-sm font-medium poppins-regular flex align-items-center gap-2"
+            class="mb-1 text-sm font-medium poppins-regular flex align-items-center gap-2"
           >
             <i class="pi pi-envelope"></i>
             <span> Correo </span>
@@ -59,7 +102,7 @@
               name="email"
               [(ngModel)]="email"
               id="email"
-              class="text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+              class="sm:text-sm rounded-lg block w-full p-2.5"
               placeholder="name@dishdy.com"
               [required]="true"
             />
@@ -68,7 +111,7 @@
         <div>
           <label
             for="password"
-            class="block mb-1 text-sm font-medium poppins-regular flex align-items-center gap-2"
+            class="mb-1 text-sm font-medium poppins-regular flex align-items-center gap-2"
           >
             <i class="pi pi-lock"></i>
             <span> Contraseña </span>
@@ -81,14 +124,14 @@
               [(ngModel)]="password"
               id="password"
               placeholder="••••••••"
-              class="text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+              class="sm:text-sm rounded-lg block w-full p-2.5"
               required=""
             />
             <i
               [ngClass]="
                 showPassword
-                  ? 'pi pi-eye absolute top-0 right-0 mt-1 mr-2 pt-1 cursor-pointer'
-                  : 'pi pi-eye-slash absolute top-0 right-0 mt-1 mr-2 pt-1 cursor-pointer'
+                  ? 'pi pi-eye absolute top-0 right-0 mt-2 mr-3 pt-1 cursor-pointer'
+                  : 'pi pi-eye-slash absolute top-0 right-0 mt-2 mr-3 pt-1 cursor-pointer'
               "
               (click)="showPassword = !showPassword"
             ></i>
@@ -96,20 +139,22 @@
         </div>
         <div class="flex w-full justify-content-between align-items-center">
           <div class="flex items-start">
-            <div class="flex items-center h-5">
+            <div class="flex items-center gap-2">
               <p-checkbox
-                name="yourName"
-                value="YourValue"
+                inputId="remember"
+                name="remember"
+                value="Recuerdame"
                 [(ngModel)]="remember"
                 [ngModelOptions]="{ standalone: true }"
                 type="checkbox"
-                label="Recuerdame"
                 labelStyleClass="text-700 text-sm"
               />
+              <label for="remember">Recuerdame</label>
             </div>
           </div>
           <span
-            class="text-primary-300 text-xs md:text-md text-right cursor-pointer hover:underline"
+            style="color: var(--p-primary-500)"
+            class="text-xs md:text-md text-right cursor-pointer hover:underline"
           >
             ¿Olvidaste tu contraseña?
           </span>

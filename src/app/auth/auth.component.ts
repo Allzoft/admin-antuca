@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CustomerLogin } from '@interfaces/customer';
@@ -13,21 +13,21 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-    imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule,
-        ToastModule,
-        MessagesModule,
-        TextareaModule,
-        CheckboxModule,
-        InputTextModule,
-        ButtonModule,
-    ],
-    providers: [MessageService],
-    templateUrl: './auth.component.html'
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    ToastModule,
+    MessagesModule,
+    TextareaModule,
+    CheckboxModule,
+    InputTextModule,
+    ButtonModule,
+  ],
+  providers: [MessageService],
+  templateUrl: './auth.component.html',
 })
-export default class AuthComponent {
+export default class AuthComponent implements OnInit {
   private customerService = inject(CustomersService);
   private messageService = inject(MessageService);
 
@@ -40,10 +40,28 @@ export default class AuthComponent {
   public accessSuccess: boolean = false;
 
   public loadingAuth: boolean = false;
+  public isLightMode: boolean = true;
 
   constructor(private route: Router) {
     this.email = localStorage.getItem('email') || '';
   }
+
+  public ngOnInit(): void {
+    const themeMode = localStorage.getItem('theme_mode');
+    if (!themeMode) return; // Si no hay valor, no hacemos nada.
+  
+    this.isLightMode = themeMode === 'on';
+    const element = document.querySelector('html');
+  
+    if (element) {
+      if (!this.isLightMode) {
+        element.classList.add('my-app-dark', 'dark');
+      } else {
+        element.classList.remove('my-app-dark', 'dark');
+      }
+    }
+  }
+  
 
   public authCustomer() {
     const authCustomer: CustomerLogin = {
@@ -76,5 +94,15 @@ export default class AuthComponent {
         });
       }
     );
+  }
+
+  public toggleDarkMode() {
+    const element = document.querySelector('html');
+    if (!element !== null) {
+      this.isLightMode = !this.isLightMode;
+      localStorage.setItem('theme_mode', this.isLightMode ? 'on' : 'off');
+      element?.classList.toggle('my-app-dark');
+      element?.classList.toggle('dark');
+    }
   }
 }

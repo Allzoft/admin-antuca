@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -45,7 +45,7 @@ import { Order } from '@interfaces/order';
   ],
   templateUrl: './topbar.component.html',
 })
-export class TopbarComponent {
+export class TopbarComponent implements OnInit, OnDestroy {
   public configRef = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   private messageService = inject(MessageService);
@@ -65,6 +65,26 @@ export class TopbarComponent {
   public user = this.customerService.customer;
 
   public isLightMode: boolean = true;
+
+  public ngOnInit(): void {
+    const themeMode = localStorage.getItem('theme_mode');
+    if (!themeMode) return; // Si no hay valor, no hacemos nada.
+  
+    this.isLightMode = themeMode === 'on';
+    const element = document.querySelector('html');
+  
+    if (element) {
+      if (!this.isLightMode) {
+        element.classList.add('my-app-dark', 'dark');
+      } else {
+        element.classList.remove('my-app-dark', 'dark');
+      }
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.ref?.destroy();
+  }
 
   onMenuButtonClick() {
     console.log(this.layoutService.state.staticMenuDesktopInactive);
@@ -115,7 +135,9 @@ export class TopbarComponent {
     const element = document.querySelector('html');
     if (!element !== null) {
       this.isLightMode = !this.isLightMode;
+      localStorage.setItem('theme_mode', this.isLightMode ? 'on' : 'off');
       element?.classList.toggle('my-app-dark');
+      element?.classList.toggle('dark');
     }
   }
 }
