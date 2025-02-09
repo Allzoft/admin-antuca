@@ -36,6 +36,7 @@ import { OrdersService } from '@services/orders.service';
 import { DailyMonitorSocket } from '@services/sockets/dailyMonitor.socket';
 import { Subscription } from 'rxjs';
 import { MessageModule } from 'primeng/message';
+import { DrawerModule } from 'primeng/drawer';
 
 interface MessageToasted {
   severity: 'success' | 'info' | 'warn' | 'error';
@@ -51,7 +52,7 @@ interface MessageToasted {
     DropdownModule,
     FormsModule,
     ButtonModule,
-    SidebarModule,
+    DrawerModule,
     MultiSelectModule,
     MessagesModule,
     TagModule,
@@ -265,6 +266,7 @@ export default class DailyMonitorComponent implements OnInit {
     this.ref = this.dialogService.open(OrderComponent, {
       header: `Nueva Orden`,
       draggable: true,
+      closable: true,
       styleClass: 'w-11/12 md:w-1/2',
     });
 

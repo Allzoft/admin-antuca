@@ -6,24 +6,24 @@
     @if (layoutService.isMobile()) {
 
     <div
-      class="bg-slate-200 dark:bg-grey-900 flex gap-2 justify-between md:justify-start md:gap-8 fixed bottom-0 z-1 border-t-2 border-slate-200 dark:border-gray-900 w-full md:w-10/12 px-3 py-2"
+      class="bg-slate-200 dark:bg-gray-900 flex gap-2 justify-between md:justify-start md:gap-8 fixed bottom-0 z-1 border-t-2 border-slate-200 dark:border-gray-900 w-full md:w-10/12 px-3 py-2"
     >
       <p-button
         (onClick)="createClient()"
-        icon="pi pi-user-plus text-primary-500"
+        icon="pi pi-user-plus text-primary-500 dark:text-gray-200"
         badge="+"
-        badgeClass="text-lg text-primary-500"
+        badgeClass="text-lg text-primary-500 dark:text-gray-200"
         label="Cliente"
-        styleClass="bg-primary-50 text-primary-600 text-sm poppins-regular md:mx-8"
+        styleClass="bg-primary-50  dark:bg-primary-400/80 dark:hover:bg-primary-500 dark:border-none text-primary-600 dark:text-gray-100 text-sm poppins-regular md:mx-8"
         size="large"
       ></p-button>
       <p-button
         (onClick)="createOrder()"
-        icon="pi pi-list text-primary-500"
+        icon="pi pi-list text-primary-500 dark:text-gray-200"
         badge="+"
-        badgeClass="text-lg text-primary-500"
+        badgeClass="text-lg text-primary-500 dark:text-gray-200"
         label="Orden"
-        styleClass="bg-primary-50 text-primary-600 text-sm poppins-regular md:mx-8"
+        styleClass="bg-primary-50  dark:bg-primary-400/80 dark:hover:bg-primary-500 dark:border-none text-primary-600 dark:text-gray-100 text-sm poppins-regular md:mx-8"
         size="large"
       ></p-button>
     </div>
@@ -55,7 +55,9 @@
         <div class="text-xl text-primary-600 md:text-lg">
           {{ orders.length }}
         </div>
-        <div class="text-xs text-slate-700 dark:text-gray-100 poppins-regular">Activos</div>
+        <div class="text-xs text-slate-700 dark:text-gray-100 poppins-regular">
+          Activos
+        </div>
       </div>
       @if (!layoutService.isMobile()) {
       <p-button
@@ -75,14 +77,14 @@
       ></p-dropdown>
       <p-button
         [label]="layoutService.isMobile() ? '' : 'Opciones'"
-        styleClass="flex cursor-pointer hover:bg-primary-100 bg-primary-50  dark:bg-primary-500/80 dark:border-none dark:hover:bg-primary-500 text-primary-600 dark:text-gray-100 h-12 w-12 md:w-auto text-primary-600 poppins-medium pl-2  items-center gap-2"
+        styleClass="flex cursor-pointer hover:bg-primary-100 bg-primary-50  dark:bg-primary-500/80 dark:border-none dark:hover:bg-primary-500 text-primary-600 dark:text-gray-100 h-12 w-12 md:w-auto text-primary-600 poppins-medium md:pl-2  items-center gap-2"
         icon="text-primary pi pi-sliders-h text-xl"
         (onClick)="showFilters = !showFilters"
       ></p-button>
     </section>
-    <div class="py-2 overflow-x-scroll white-space-nowrap w-full">
+    <div class="py-2 overflow-x-scroll whitespace-nowrap w-full">
       @for (order of orders; track $index) {
-      <div class="bg-white w-56 mx-2 inline-block p-2">
+      <div class="bg-white dark:bg-gray-900 w-56 mx-2 inline-block p-2">
         <div class="flex w-full flex-col gap-2">
           <div class="flex w-full justify-between">
             @switch (order.state!.priority) { @case (1) {
@@ -150,41 +152,44 @@
             ></p-badge>
           </div>
           <div
-            class="font-semibold text-center white-space-normal text-slate-800 mt-1 poppins-medium"
+            class="font-semibold text-center whitespace-normal text-slate-800 dark:text-gray-100 mt-1 poppins-medium"
           >
             {{ order.client!.name + " " + order.client!.lastname + "" }}
           </div>
-          <div
-            class="flex poppins-regular w-full items-center justify-between"
-          >
-            <div class="flex text-slate-500 text-sm">
+          <div class="flex poppins-regular w-full items-center justify-between">
+            <div class="flex text-slate-500 dark:text-gray-400 text-sm">
               {{ order.created_at | date : "HH:mm" }}
 
               @if (order.state!.name !== 'Completado') {
-              <div class="ml-1 text-slate-800">
+              <div class="ml-1 text-slate-800 dark:text-gray-300">
                 {{ "-" }}
               </div>
-              <div class="ml-1 text-primary-600">
+              <div class="ml-1 text-primary-600 dark:text-primary-300">
                 {{ getOrderTime(order) }}
               </div>
               }
             </div>
-            <div class="bg-slate-100 dark:bg-grey-900 p-1" style="border-radius: 30px">
+            <div
+              class="bg-slate-200/70 dark:bg-gray-950/30 p-1 shadow-md shadow-primary-700/10"
+              style="border-radius: 30px"
+            >
               <div
                 style="border-radius: 30px"
-                class="bg-slate-0 p dark:bg-grey-900 price-style poppins-medium flex items-center gap-2 justify-center py-1 px-2"
+                class="bg-slate-200 dark:bg-gray-900 price-style poppins-medium flex items-center gap-2 justify-center py-1 px-2"
               >
                 <span class="text-primary">Bs.</span>
-                <span class="text-slate-900 font-medium text-md">{{
-                  order.total_amount
-                }}</span>
+                <span
+                  class="text-slate-900 dark:text-gray-100 font-medium text-md"
+                  >{{ order.total_amount }}</span
+                >
               </div>
             </div>
           </div>
           <div class="flex flex-col gap-2 px-2 poppins-light text-sm">
             @for (item of order.orderItems; track $index) {
             <div>
-              {{ item.quantity }} <span class="text-primary-600">-</span>
+              {{ item.quantity }}
+              <span class="text-primary-600 dark:text-primary-300">-</span>
               {{ item.item.name }}
             </div>
             }
@@ -192,16 +197,20 @@
           @if(order.notes){
 
           <div
-            class="flex gap-2 px-2 py-2 items-center border-2 border-slate-100 rounded w-full bg-slate-100 dark:bg-grey-900"
+            class="flex gap-2 px-2 py-2 items-center border-2 border-slate-100 dark:border-gray-800/50 dark:bg-gray-800 rounded w-full bg-slate-100 dark:bg-grey-900"
           >
-            <i class="pi pi-info-circle text-xl text-slate-700"></i>
-            <div class="text-slate-800 text-xs white-space-normal poppins-light">
+            <i
+              class="pi pi-info-circle text-xl text-slate-700 dark:text-gray-300"
+            ></i>
+            <div
+              class="text-slate-800 dark:text-gray-200 text-xs whitespace-normal poppins-light"
+            >
               {{ order.notes }}
             </div>
           </div>
           }
           <div
-            class="w-full text-sm md:text-md poppins-regular border-2 text-center bg-slate-100 dark:bg-grey-900 text-slate-600 rounded border-200 px-2 py-1"
+            class="w-full text-sm md:text-md poppins-regular border-2 text-center bg-slate-100 dark:border-gray-600/50 dark:bg-gray-800 text-slate-600 dark:text-gray-300 rounded border-200 px-2 py-1"
           >
             {{ order.service_mode }}
           </div>
@@ -219,13 +228,17 @@
       } @empty {
       <div class="w-full flex justify-center">
         <div
-          class="md:w-4/12 bg-slate-50  dark:bg-gray-900 rounded border-slate-200 dark:border-gray-900 border-2 p-5 gap-3 flex items-center flex-col"
+          class="md:w-4/12 bg-slate-50 dark:bg-gray-900 rounded border-slate-200 dark:border-gray-900 border-2 p-5 gap-3 flex items-center flex-col"
         >
           <div class="w-full poppins-medium text-center text-2xl">
             Sin pedidos registrados
           </div>
-          <img src="../../../../assets/void.svg" alt="empty-list" class="w-5/12" />
-          <div class="w-full poppins-regular text-center white-space-normal">
+          <img
+            src="../../../../assets/void.svg"
+            alt="empty-list"
+            class="w-5/12"
+          />
+          <div class="w-full poppins-regular text-center whitespace-normal">
             ¡Aún no hay órdenes! Estamos listos para servir cuando tú lo estés
             😊
           </div>
@@ -234,25 +247,26 @@
       }
       <!-- Agrega más tarjetas según sea necesario -->
     </div>
-    <div class="flex border-y-2 border-200 my-1 flex-col gap-1 p-3 md:gap-2">
+    <div
+      class="flex border-y-2 border-slate-200 dark:border-gray-900 my-1 flex-col gap-1 p-3 md:gap-2"
+    >
       <span class="text-3xl poppins-medium">Notificaciones</span>
     </div>
     <div class="px-2">
       @for (message of messages; track message; let first = $first) {
       <p-message
         [severity]="message.severity"
-        [styleClass]="message.styleClass + ' my-2' "
+        [styleClass]="message.styleClass + ' my-2'"
         [text]="message.content"
       />
       }
     </div>
   </div>
   @if (layoutService.isMobile()) {
-
-  <p-sidebar
+  <p-drawer
     [modal]="layoutService.isMobile()"
-    class="w-11/12"
-    styleClass="w-11/12"
+    [class]="!showFilters ? 'w-0' : 'w-11/12'"
+    [styleClass]="!showFilters ? 'w-0' : 'w-11/12'"
     [(visible)]="showFilters"
     position="right"
     transitionOptions="400ms cubic-bezier(0, 0, 0.2, 1)"
@@ -280,7 +294,9 @@
     <div class="w-full text-xl poppins-medium mt-4 mb-2">
       Filtros y mensajes
     </div>
-    <div class="text-md text-slate-700 poppins-regular">Filtros por servicio</div>
+    <div class="text-md text-slate-700 poppins-regular">
+      Filtros por servicio
+    </div>
     <p-multiSelect
       styleClass="mt-2 max-w-full w-full"
       [options]="serviceModes"
@@ -292,10 +308,14 @@
     <div
       class="w-full flex justify-between mt-3 items-center border-y-2 border-200 py-2"
     >
-      <div class="text-md text-slate-700 poppins-regular">Pedidos con detalles</div>
+      <div class="text-md text-slate-700 poppins-regular">
+        Pedidos con detalles
+      </div>
       <p-inputSwitch styleClass="mt-1" />
     </div>
-    <div class="text-md text-slate-700 poppins-regular mt-3">Filtros por estado</div>
+    <div class="text-md text-slate-700 poppins-regular mt-3">
+      Filtros por estado
+    </div>
     <p-multiSelect
       styleClass="mt-2 max-w-full w-full"
       [options]="states()"
@@ -315,9 +335,11 @@
     <div class="w-full text-xl poppins-medium mt-4 mb-2">Mensajes Rápidos</div>
     @for (message of messagesToSend; track $index) {
     <div
-      class="w-full flex white-space-normal items-center justify-between my-1"
+      class="w-full flex whitespace-normal items-center justify-between my-1"
     >
-      <div class="poppins-regular text-slate-700">{{ "- " + message.content }}</div>
+      <div class="poppins-regular text-slate-700">
+        {{ "- " + message.content }}
+      </div>
       <p-button
         severity="secondary"
         [text]="true"
@@ -325,7 +347,7 @@
       ></p-button>
     </div>
     }
-  </p-sidebar>
+  </p-drawer>
   } @if (!layoutService.isMobile()) {
   <div
     class="h-auto border-left-1 border-200 ease-in-out duration-500"
@@ -353,7 +375,9 @@
         />
       </div>
       <div class="w-full text-xl poppins-medium mt-4 mb-2">Filtros</div>
-      <div class="text-md text-slate-700 poppins-regular">Filtros por servicio</div>
+      <div class="text-md text-slate-700 poppins-regular">
+        Filtros por servicio
+      </div>
       <p-multiSelect
         styleClass="mt-2 w-full"
         [maxSelectedLabels]="2"
@@ -366,7 +390,9 @@
       <div
         class="w-full flex justify-between mt-3 items-center border-y-2 border-200 py-2"
       >
-        <div class="text-md text-slate-700 poppins-regular">Pedidos con detalles</div>
+        <div class="text-md text-slate-700 poppins-regular">
+          Pedidos con detalles
+        </div>
         <p-inputSwitch styleClass="mt-1" />
       </div>
       <div class="text-md text-slate-700 poppins-regular mt-3">
@@ -394,9 +420,11 @@
       </div>
       @for (message of messagesToSend; track $index) {
       <div
-        class="w-full flex white-space-normal items-center justify-between my-1"
+        class="w-full flex whitespace-normal items-center justify-between my-1"
       >
-        <div class="poppins-regular text-slate-700">{{ "- " + message.content }}</div>
+        <div class="poppins-regular text-slate-700">
+          {{ "- " + message.content }}
+        </div>
         <p-button
           severity="secondary"
           [text]="true"
