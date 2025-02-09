@@ -69,11 +69,7 @@ interface MessageToasted {
     DynamicDialogConfig,
     DailyMonitorSocket,
   ],
-  styles: `
-    .w-0 {
-      width: 0%;
-    }
-  `,
+
   templateUrl: './daily-monitor.component.html',
 })
 export default class DailyMonitorComponent implements OnInit {
@@ -246,7 +242,7 @@ export default class DailyMonitorComponent implements OnInit {
         order.client!.lastname
       }`,
       draggable: true,
-      styleClass: 'w-11 md:w-6',
+      styleClass: 'w-11/12 md:w-1/2',
       data: {
         order: order,
       },
@@ -269,7 +265,7 @@ export default class DailyMonitorComponent implements OnInit {
     this.ref = this.dialogService.open(OrderComponent, {
       header: `Nueva Orden`,
       draggable: true,
-      styleClass: 'w-11 md:w-6',
+      styleClass: 'w-11/12 md:w-1/2',
     });
 
     this.ref.onClose.subscribe((order: Order) => {
@@ -289,7 +285,7 @@ export default class DailyMonitorComponent implements OnInit {
     this.ref = this.dialogService.open(ClientComponent, {
       header: 'Cliente: ' + client.name + ' ' + client.lastname,
       draggable: true,
-      styleClass: 'w-11 md:w-7',
+      styleClass: 'w-11/12 md:w-1/2',
       data: {
         client: client,
       },
@@ -310,7 +306,7 @@ export default class DailyMonitorComponent implements OnInit {
     this.ref = this.dialogService.open(ClientComponent, {
       header: 'Nuevo cliente',
       draggable: true,
-      styleClass: 'w-11 md:w-7',
+      styleClass: 'w-11/12 md:w-1/2',
     });
 
     this.ref.onClose.subscribe((client: Client) => {
