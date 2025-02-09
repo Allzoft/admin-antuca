@@ -150,7 +150,7 @@ export default class OrdersComponent {
     this.ref = this.dialogService.open(ClientComponent, {
       header: 'Client: ' + client.name + ' ' + client.lastname,
       draggable: true,
-      styleClass: 'w-11 md:w-7',
+      styleClass: 'w-11/12 md:w-7/12',
       data: {
         client: client,
         disabled: true,
@@ -162,7 +162,7 @@ export default class OrdersComponent {
     this.ref = this.dialogService.open(ItemComponent, {
       header: 'Item: ' + item.name,
       draggable: true,
-      styleClass: 'w-11 md:w-5',
+      styleClass: 'w-11/12 md:w-5/12',
       data: {
         item: item,
         disabled: true,
@@ -176,7 +176,7 @@ export default class OrdersComponent {
         order.client!.lastname
       }`,
       draggable: true,
-      styleClass: 'w-11 md:w-6',
+      styleClass: 'w-11/12 md:w-6/12',
       data: {
         order: order,
       },
@@ -199,7 +199,7 @@ export default class OrdersComponent {
     this.ref = this.dialogService.open(OrderComponent, {
       header: `Nueva Orden`,
       draggable: true,
-      styleClass: 'w-11 md:w-6',
+      styleClass: 'w-11/12 md:w-6/12',
     });
 
     this.ref.onClose.subscribe((order: Order) => {
