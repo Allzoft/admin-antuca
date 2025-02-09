@@ -28,28 +28,28 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
-    selector: 'app-users',
-    imports: [
-        CommonModule,
-        CardModule,
-        TableModule,
-        InputTextModule,
-        FormsModule,
-        PipesModule,
-        ButtonModule,
-        ToastModule,
-        ConfirmDialogModule,
-        DropdownModule,
-        RouterModule,
-        InputNumberModule,
-        FileUploadModule,
-        TagModule,
-        DrawerModule,
-            InputIconModule,
-            IconFieldModule
-    ],
-    providers: [ConfirmationService, MessageService],
-    templateUrl: './users.component.html'
+  selector: 'app-users',
+  imports: [
+    CommonModule,
+    CardModule,
+    TableModule,
+    InputTextModule,
+    FormsModule,
+    PipesModule,
+    ButtonModule,
+    ToastModule,
+    ConfirmDialogModule,
+    DropdownModule,
+    RouterModule,
+    InputNumberModule,
+    FileUploadModule,
+    TagModule,
+    DrawerModule,
+    InputIconModule,
+    IconFieldModule,
+  ],
+  providers: [ConfirmationService, MessageService],
+  templateUrl: './users.component.html',
 })
 export default class UsersComponent implements OnInit {
   public layoutService = inject(LayoutService);

@@ -14,27 +14,32 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LayoutService } from '@services/layout.service';
+import { DrawerModule } from 'primeng/drawer';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
-    selector: 'app-states',
-    imports: [
-        CommonModule,
-        FormsModule,
-        TableModule,
-        CardModule,
-        ButtonModule,
-        InputTextModule,
-        SidebarModule,
-        DropdownModule,
-        ToastModule,
-        ConfirmDialogModule,
-    ],
-    providers: [ConfirmationService, MessageService],
-    templateUrl: './states.component.html'
+  selector: 'app-states',
+  imports: [
+    CommonModule,
+    FormsModule,
+    TableModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    DrawerModule,
+    DropdownModule,
+    ToastModule,
+    ConfirmDialogModule,
+    InputIconModule,
+    IconFieldModule,
+  ],
+  providers: [ConfirmationService, MessageService],
+  templateUrl: './states.component.html',
 })
 export default class StatesComponent {
   private confirmationService = inject(ConfirmationService);
-  public layoutService = inject(LayoutService)
+  public layoutService = inject(LayoutService);
   public statesService = inject(StatesService);
   public messageService = inject(MessageService);
   public states = this.statesService.states;
@@ -53,7 +58,7 @@ export default class StatesComponent {
     type: false,
   };
 
-  public stateOptions: string[] = ['order'];
+  public stateOptions: string[] = ['Order'];
 
   public showState: boolean = false;
 
@@ -140,4 +145,3 @@ export default class StatesComponent {
     return Promise.resolve(true);
   }
 }
-
