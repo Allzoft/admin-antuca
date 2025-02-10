@@ -4,6 +4,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '@environment/environment';
 import { Restaurant } from '@interfaces/restaurant';
+import { CustomersService } from './customers.service';
 
 interface State {
   restaurants: Restaurant[];
@@ -15,6 +16,7 @@ interface State {
 })
 export class RestaurantsService {
   public env = environment;
+  public customersService = inject(CustomersService);
 
   private http = inject(HttpClient);
   #state = signal<State>({
@@ -125,7 +127,11 @@ export class RestaurantsService {
   public updateByUser(restaurant: Partial<Restaurant>): Observable<Restaurant> {
     return this.http
       .patch<Restaurant>(`${this.env.url_api}/restaurants`, restaurant)
-      .pipe(tap((resRestaurant) => {}));
+      .pipe(
+        tap((resRestaurant) => {
+          this.customersService.refreshRestaurant(resRestaurant);
+        })
+      );
   }
 
   public deleteRestaurant(id: number) {

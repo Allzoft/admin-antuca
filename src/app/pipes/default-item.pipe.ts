@@ -6,12 +6,11 @@ import { environment } from '@environment/environment';
 })
 export default class ItemImagePipe implements PipeTransform {
   transform(img: any): any {
-    let url = environment.url_public + '/uploads/';
 
     if (img === '') {
       return 'assets/dish.svg';
     }
 
-    return url + img;
+    return img;
   }
 }

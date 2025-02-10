@@ -10,20 +10,18 @@
         class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-2 md:p-4 items-center justify-between colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col md:flex-row gap-2 md:gap-5"
       >
         <div class="flex gap-4 md:gap-2 items-center">
-          @if(isEditingMainInfo){
+          @if(restaurant.logo_image){
+          <div
+            class="h-12 w-12 rounded bg-slate-50 overflow-hidden flex justify-center items-center pt-2"
+          >
+            <p-image
+              [src]="restaurant.logo_image"
+              imageClass="h-full"
+              [preview]="true"
+            />
+          </div>
+          } @if(isEditingMainInfo){
           <div class="flex align-items flex-col gap-2">
-            @if(restaurant.logo_image){
-            <div
-              class="h-12 w-12 rounded bg-slate-50 overflow-hidden flex justify-center items-center"
-            >
-              <p-image
-                [src]="restaurant.logo_image"
-                imageClass="w-full"
-                [preview]="true"
-              />
-            </div>
-            }
-
             <p-fileUpload
               mode="basic"
               name="file[]"

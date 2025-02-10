@@ -71,11 +71,19 @@
           <td class="pl-8">{{ "UAR-" + user.id_customer }}</td>
           <td>
             <div class="flex items-center gap-2">
-              <img
-                [src]="user.photo | image"
-                class="roundedw-8 h-8"
-                alt="Profile"
-              />
+              @if(user.photo) {
+              <img [src]="user.photo" class="rounded w-8 h-8" alt="Profile" />
+              } @else {
+              <div
+                class="rounded w-8 h-8 bg-primary-500/80 flex items-center justify-center"
+              >
+                <img
+                  src="../../../../assets/profile-user.png"
+                  class="w-8 h-8"
+                  alt="Profile"
+                />
+              </div>
+              }
               <span>{{ user.name + " " + user.lastname }} </span>
             </div>
           </td>
@@ -123,7 +131,11 @@
     </p-table>
   </div>
 </div>
-<p-drawer [(visible)]="showUserForm" position="right" styleClass="w-full md:w-5/12">
+<p-drawer
+  [(visible)]="showUserForm"
+  position="right"
+  styleClass="w-full md:w-5/12"
+>
   <ng-template pTemplate="header"
     ><span class="font-semibold text-xl"
       >Formulario de nuevo usuario</span
@@ -133,7 +145,7 @@
     <div class="flex w-full gap-3 md:gap-5">
       <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="username">Nombre</label>
-        <p-iconfield >
+        <p-iconfield>
           <p-inputicon styleClass="pi pi-user"></p-inputicon>
           <input
             id="username"
@@ -150,7 +162,7 @@
 
       <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="lastname">Apellido</label>
-        <p-iconfield >
+        <p-iconfield>
           <p-inputicon styleClass="pi pi-user"></p-inputicon>
           <input
             id="lastname"
@@ -168,7 +180,7 @@
     <div class="flex w-full gap-3 md:gap-5">
       <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="email">C. I.</label>
-        <p-iconfield >
+        <p-iconfield>
           <p-inputicon styleClass="pi pi-id-card"></p-inputicon>
           <input
             id="email"
@@ -184,7 +196,7 @@
 
       <div class="flex flex-col gap-2 w-full">
         <label class="poppins-regular" for="email">Correo</label>
-        <p-iconfield >
+        <p-iconfield>
           <p-inputicon styleClass="pi pi-envelope"></p-inputicon>
           <input
             id="email"
@@ -201,7 +213,7 @@
     <div class="flex flex-col md:flex-row w-full gap-3">
       <div class="flex flex-col gap-2 w-full">
         <label for="email">Contraseña</label>
-        <p-iconfield >
+        <p-iconfield>
           <p-inputicon styleClass="pi pi-lock"></p-inputicon>
           <input
             id="email"
@@ -228,7 +240,11 @@
             <ng-template pTemplate="selectedItem">
               @if (selectedCodeCountry) {
               <div class="flex items-center gap-2 -mt-2">
-                <img [src]="selectedCodeCountry.flag" style="width: 18px" class="" />
+                <img
+                  [src]="selectedCodeCountry.flag"
+                  style="width: 18px"
+                  class=""
+                />
                 <div>{{ selectedCodeCountry.code }}</div>
               </div>
               }
@@ -312,4 +328,7 @@
   </ng-template>
 </p-drawer>
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog styleClass="w-auto md:w-5/12" position="bottom"></p-confirmDialog>
+<p-confirmDialog
+  styleClass="w-auto md:w-5/12"
+  position="bottom"
+></p-confirmDialog>

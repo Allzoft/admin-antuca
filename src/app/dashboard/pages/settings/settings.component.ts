@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { UploadService } from '@services/upload.service';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
+import { environment } from '@environment/environment';
 
 @Component({
   selector: 'app-settings',
@@ -124,7 +125,8 @@ export default class SettingsComponent implements OnInit {
 
       this.uploadService.uploadfile(formData).subscribe((res) => {
         console.log(res);
-        this.restaurant.logo_image = res['filename'];
+        this.restaurant.logo_image =
+          environment.url_public + '/uploads/' + res['filename'];
       });
     }
   }

@@ -25,5 +25,7 @@ export default class DashboardComponent {
   public themeService = inject(ThemeService)
   public usersService = inject(CustomersService);
 
+  public restaurant = this.usersService.restaurant
+
   public isDarkMode = this.themeService.isDarkMode
 }

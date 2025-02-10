@@ -73,11 +73,19 @@
           <td>{{ client.created_at | date : "dd/MM/yyyy" }}</td>
           <td>
             <div class="flex items-center gap-2">
-              <img
-                [src]="client.photo | image"
-                class="rounded w-8 h-8"
-                alt="Profile"
-              />
+              @if(client.photo) {
+              <img [src]="client.photo" class="rounded w-8 h-8" alt="Profile" />
+              } @else {
+              <div
+                class="rounded w-8 h-8 bg-primary-500/80 flex items-center justify-center"
+              >
+                <img
+                  src="../../../../assets/profile-user.png"
+                  class="w-8 h-8"
+                  alt="Profile"
+                />
+              </div>
+              }
               <span>{{ client.name + " " + client.lastname }} </span>
             </div>
           </td>
@@ -131,4 +139,7 @@
   </div>
 </div>
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog styleClass="w-auto md:w-5/12" position="bottom"></p-confirmDialog>
+<p-confirmDialog
+  styleClass="w-auto md:w-5/12"
+  position="bottom"
+></p-confirmDialog>

@@ -9,7 +9,7 @@ export default class ImagenPipe implements PipeTransform {
     let url = environment.url_public + '/uploads/';
 
     if (img === '') {
-      return 'assets/profile-image2.png';
+      return 'assets/profile-image2.svg';
     }
 
     return url + img;

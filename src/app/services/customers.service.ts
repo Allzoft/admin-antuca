@@ -16,7 +16,7 @@ interface State {
   customer: Customer | undefined;
   token: string | undefined;
   access: MenuItem[];
-  restaurant: Restaurant | undefined
+  restaurant: Restaurant | undefined;
   loading: boolean;
 }
 
@@ -40,7 +40,7 @@ export class CustomersService {
     customer: undefined,
     access: [],
     token: undefined,
-    restaurant: undefined
+    restaurant: undefined,
   });
 
   #stateCustomers = signal<StateCustomers>({
@@ -52,7 +52,7 @@ export class CustomersService {
   public loading = computed(() => this.#state().loading);
   public token = computed(() => this.#state().token);
   public access = computed(() => this.#state().access);
-  public restaurant = computed(() => this.#state().restaurant)
+  public restaurant = computed(() => this.#state().restaurant);
 
   public customers = computed(() => this.#stateCustomers().customers);
   public loadingCustomers = computed(
@@ -99,7 +99,7 @@ export class CustomersService {
             customer: res.customer,
             token: res.access_token,
             access: res.customer.role!.access,
-            restaurant: res.customer.restaurant!
+            restaurant: res.customer.restaurant!,
           });
 
           this.changeTheme(res.customer.restaurant!);
@@ -109,13 +109,15 @@ export class CustomersService {
 
   private saveStorage(resCustomer: CustomerResponse) {
     localStorage.setItem('customer', JSON.stringify(resCustomer.customer));
-    localStorage.setItem('restaurant', JSON.stringify(resCustomer.customer.restaurant));
+    localStorage.setItem(
+      'restaurant',
+      JSON.stringify(resCustomer.customer.restaurant)
+    );
     localStorage.setItem(
       'access',
       JSON.stringify(resCustomer.customer.role!.access)
     );
     localStorage.setItem('token', resCustomer.access_token.toString());
-
   }
 
   private saveStorageCustomers(customers: Customer[]) {
@@ -262,6 +264,18 @@ export class CustomersService {
           this.saveStorageCustomers(this.#stateCustomers().customers);
         })
       );
+  }
+
+  public refreshRestaurant(restaurant: Restaurant) {
+    const updateRestaurant = { ...this.restaurant()!, ...restaurant };
+    this.#state.set({
+      loading: false,
+      access: this.#state().access,
+      customer: this.#state().customer,
+      token: this.#state().token,
+      restaurant: updateRestaurant,
+    });
+    localStorage.setItem('restaurant', JSON.stringify(updateRestaurant));
   }
 
   public changeTheme(restaurant: Restaurant) {
