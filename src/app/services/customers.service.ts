@@ -9,6 +9,8 @@ import {
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '@environment/environment';
+import { Restaurant } from '@interfaces/restaurant';
+import { ThemeService } from './theme.service';
 
 interface State {
   customer: Customer | undefined;
@@ -26,6 +28,7 @@ interface StateCustomers {
   providedIn: 'root',
 })
 export class CustomersService {
+  private themeService = inject(ThemeService);
   private router = inject(Router);
 
   public env = environment;
@@ -55,6 +58,21 @@ export class CustomersService {
 
   constructor() {
     this.loadStorage();
+    if (this.customer()) {
+      setTimeout(() => {
+        this.getOneUser(this.customer()?.id_customer!).subscribe((res) => {
+          const restaurant = res.restaurant!;
+          const colorPrimary = restaurant.primary_color;
+          const colorSecondary = restaurant.secondary_color;
+          if (colorPrimary) {
+            this.themeService.changeThemeColors('primary', colorPrimary);
+          }
+          if (colorSecondary) {
+            this.themeService.changeThemeColors('secondary', colorSecondary);
+          }
+        });
+      }, 3000);
+    }
   }
 
   public authLogin(
@@ -79,6 +97,8 @@ export class CustomersService {
             token: res.access_token,
             access: res.customer.role!.access,
           });
+
+          this.changeTheme(res.customer.restaurant!);
         })
       );
   }
@@ -144,6 +164,7 @@ export class CustomersService {
       access: [],
     });
     this.router.navigateByUrl('/auth');
+    this.themeService.setDefaultTheme();
   }
 
   public postCustomer(customer: Partial<Customer>): Observable<Customer> {
@@ -230,5 +251,16 @@ export class CustomersService {
           this.saveStorageCustomers(this.#stateCustomers().customers);
         })
       );
+  }
+
+  public changeTheme(restaurant: Restaurant) {
+    const colorPrimary = restaurant.primary_color;
+    const colorSecondary = restaurant.secondary_color;
+    if (colorPrimary) {
+      this.themeService.changeThemeColors('primary', colorPrimary);
+    }
+    if (colorSecondary) {
+      this.themeService.changeThemeColors('secondary', colorSecondary);
+    }
   }
 }

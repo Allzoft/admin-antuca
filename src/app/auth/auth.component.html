@@ -75,7 +75,7 @@
           <p-button
             [icon]="
               !isDarkMode()
-                ? 'pi pi-sun text-primary-500'
+                ? 'pi pi-sun text-amber-500'
                 : 'pi pi-moon text-slate-400'
             "
             [outlined]="false"
@@ -146,12 +146,11 @@
                 type="checkbox"
                 labelStyleClass="text-700 text-sm"
               />
-              <label for="remember">Recuerdame</label>
+              <label for="remember">Recuérdame</label>
             </div>
           </div>
           <span
-            style="color: var(--p-primary-500)"
-            class="text-xs md:text-md text-right cursor-pointer hover:underline"
+            class="text-xs md:text-md text-right text-primary-500 dark:text-primary-400 cursor-pointer hover:underline"
           >
             ¿Olvidaste tu contraseña?
           </span>

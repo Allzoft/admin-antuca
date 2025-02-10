@@ -8,27 +8,8 @@ import { TagModule } from 'primeng/tag';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { OrdersService } from '@services/orders.service';
 import { LayoutService } from '@services/layout.service';
-import { Order } from '@interfaces/order';
-import moment from 'moment';
-import {
-  DialogService,
-  DynamicDialogConfig,
-  DynamicDialogRef,
-} from 'primeng/dynamicdialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
-import { Client } from '@interfaces/client';
-import { ClientComponent } from '@shared/client/client.component';
-import { ItemComponent } from '@shared/item/item.component';
-import { Items } from '@interfaces/items';
-import { OrderComponent } from '@shared/order/order.component';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { StatesService } from '../../../services/states.service';
-import { State } from '@interfaces/state';
-import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
-import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -57,7 +38,6 @@ import { ReportsService } from '@services/reports.service';
         ProgressSpinnerModule,
         ToastModule,
         MeterGroupModule,
-        OverlayPanelModule,
         DropdownModule,
         PipesModule,
     ],

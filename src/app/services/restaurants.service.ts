@@ -31,7 +31,10 @@ export class RestaurantsService {
 
   private saveStorage(restaurant: Restaurant[]) {
     if (restaurant.length > 0) {
-      localStorage.setItem('restaurants', JSON.stringify(this.#state().restaurants));
+      localStorage.setItem(
+        'restaurants',
+        JSON.stringify(this.#state().restaurants)
+      );
     } else {
       localStorage.removeItem('restaurants');
     }
@@ -48,17 +51,27 @@ export class RestaurantsService {
     }
   }
 
-  public postRestaurant(restaurant: Partial<Restaurant>): Observable<Restaurant> {
-    return this.http.post<Restaurant>(`${this.env.url_api}/restaurants`, restaurant).pipe(
-      tap((resRestaurant) => {
-        const oldRestaurant = this.#state().restaurants;
-        oldRestaurant.push(resRestaurant);
-        this.#state.set({
-          loading: false,
-          restaurants: oldRestaurant,
-        });
-        this.saveStorage(this.#state().restaurants);
-      })
+  public postRestaurant(
+    restaurant: Partial<Restaurant>
+  ): Observable<Restaurant> {
+    return this.http
+      .post<Restaurant>(`${this.env.url_api}/restaurants`, restaurant)
+      .pipe(
+        tap((resRestaurant) => {
+          const oldRestaurant = this.#state().restaurants;
+          oldRestaurant.push(resRestaurant);
+          this.#state.set({
+            loading: false,
+            restaurants: oldRestaurant,
+          });
+          this.saveStorage(this.#state().restaurants);
+        })
+      );
+  }
+
+  public getOneByUser(): Observable<Restaurant> {
+    return this.http.get<Restaurant>(
+      `${this.env.url_api}/restaurants/one/byUser`
     );
   }
 
@@ -73,7 +86,10 @@ export class RestaurantsService {
           loading: false,
           restaurants: res,
         });
-        localStorage.setItem('restaurants', JSON.stringify(this.#state().restaurants));
+        localStorage.setItem(
+          'restaurants',
+          JSON.stringify(this.#state().restaurants)
+        );
       },
       (error) => {
         this.#state.set({
@@ -84,8 +100,10 @@ export class RestaurantsService {
     );
   }
 
-
-  public updateRestaurant(id: number, restaurant: Partial<Restaurant>): Observable<Restaurant> {
+  public updateRestaurant(
+    id: number,
+    restaurant: Partial<Restaurant>
+  ): Observable<Restaurant> {
     return this.http
       .patch<Restaurant>(`${this.env.url_api}/restaurants/${id}`, restaurant)
       .pipe(
@@ -102,6 +120,12 @@ export class RestaurantsService {
           this.saveStorage(this.#state().restaurants);
         })
       );
+  }
+
+  public updateByUser(restaurant: Partial<Restaurant>): Observable<Restaurant> {
+    return this.http
+      .patch<Restaurant>(`${this.env.url_api}/restaurants`, restaurant)
+      .pipe(tap((resRestaurant) => {}));
   }
 
   public deleteRestaurant(id: number) {

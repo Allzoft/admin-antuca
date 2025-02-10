@@ -21,14 +21,20 @@
           </div>
           <div class="flex flex-col gap-1">
             <div class="flex gap-2 items-center">
-              <div class="text-slate-800 dark:text-gray-200 text-2xl font-semibold">
-                Restaurante Antuca
+              <div
+                class="text-slate-800 dark:text-gray-200 text-2xl font-semibold"
+              >
+                {{ restaurant.name }}
               </div>
               <p-tag [value]="'Activo'" styleClass="bg-slate-600 text-white" />
             </div>
             <div class="flex gap-1 items-center">
               <div class="text-400 text-sm">ID de restaurante:</div>
-              <div class="text-slate-700 dark:text-gray-300 text-sm font-semibold">301</div>
+              <div
+                class="text-slate-700 dark:text-gray-300 text-sm font-semibold"
+              >
+                {{ restaurant.id_restaurant }}
+              </div>
             </div>
           </div>
         </div>
@@ -69,24 +75,22 @@
         </div>
         <div class="flex flex-col gap-2">
           <div class="text-slate-500 text-sm">Numero de celular</div>
-          <div class="text-slate-800 dark:text-gray-200 text-base">(+591) 68368073</div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <div class="text-slate-500 text-sm">Correo electrónico</div>
           <div class="text-slate-800 dark:text-gray-200 text-base">
-            {{ "antucarestaurante@gmail.com" }}
+            {{ restaurant.code_country + " " + restaurant.phone_number }}
           </div>
         </div>
+
         <div class="flex flex-col gap-2">
           <div class="text-slate-500 text-sm">Dirección</div>
           <div class="text-slate-800 dark:text-gray-200 text-base">
-            Petot entre Sucre y Bolivar
+            {{ restaurant.address }}
           </div>
         </div>
         <div class="flex flex-col gap-2">
           <div class="text-slate-500 text-sm">Propietario</div>
-          <div class="text-slate-800 dark:text-gray-200 text-base">Dario Zelaya García</div>
-          <div class="text-slate-800 dark:text-gray-200 text-base">(+591) 72312723</div>
+          <div class="text-slate-800 dark:text-gray-200 text-base">
+            {{ restaurant.owner + " - " + restaurant.owner_phone }}
+          </div>
         </div>
       </div>
     </div>
@@ -115,9 +119,15 @@
                 <div class="text-slate-500">Tipo de cocina:</div>
               </div>
               <div class="flex flex-col gap-3">
-                <div class="text-slate-700 dark:text-gray-300">Almuerzo</div>
-                <div class="text-slate-700 dark:text-gray-300">45</div>
-                <div class="text-slate-700 dark:text-gray-300">Italiana / Fusión</div>
+                <div class="text-slate-700 dark:text-gray-300">
+                  {{ restaurant.category }}
+                </div>
+                <div class="text-slate-700 dark:text-gray-300">
+                  {{ restaurant.max_capacity }}
+                </div>
+                <div class="text-slate-700 dark:text-gray-300">
+                  {{ restaurant.type_cuisine }}
+                </div>
               </div>
             </div>
             <div style="width: 5px" class="h-full bg-slate-200"></div>
@@ -127,9 +137,11 @@
                 <div class="text-slate-500">Horario de atención:</div>
               </div>
               <div class="flex flex-col gap-3">
-                <div class="text-slate-700 dark:text-gray-300">Antuca Plus</div>
                 <div class="text-slate-700 dark:text-gray-300">
-                  De Lunes a Sábado de 12:00 a 14:30 Hrs.
+                  Plus Mensual
+                </div>
+                <div class="text-slate-700 dark:text-gray-300">
+                  {{ restaurant.schedule }}
                 </div>
               </div>
             </div>
@@ -142,7 +154,10 @@
         <div
           class="text-slate-800 dark:text-gray-200 font-semibold text-xl text-center md:text-left"
         >
-          Notas del relevantes
+          Notas relevantes
+          <span class="text-gray-600 text-md  ">
+            (Módulo aún en construcción)</span
+          >
         </div>
         <div
           class="text-slate-500 text-sm cursor-pointer hover:underline hover:text-400"
@@ -150,14 +165,18 @@
           Ver todas
         </div>
       </div>
-      <div class="w-full overflow-scroll md:overflow-auto flex p-0 h-auto">
+      <div
+        class="w-full overflow-scroll md:overflow-auto whitespace-nowrap flex p-0 h-auto"
+      >
         <div class="w-6/12 md:w-4/12 p-2 md:p-3 h-auto">
           <div
             class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-3 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-2 md:gap-3"
           >
             <div class="text-sm text-slate-500">Ene 8, 2025, 15:23</div>
-            <div class="text-slate-800 dark:text-gray-200 font-semibold">Pédido destacado</div>
-            <div class="text-slate-600 mt-1">
+            <div class="text-slate-800 dark:text-gray-200 font-semibold">
+              Pédido destacado
+            </div>
+            <div class="text-slate-600 whitespace-normal mt-1">
               Pedido de 30 platos de lasaña para el día de mañana.
             </div>
           </div>
@@ -167,8 +186,10 @@
             class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-3 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-2 md:gap-3"
           >
             <div class="text-sm text-slate-500">Ene 10, 2024, 09:00</div>
-            <div class="text-slate-800 dark:text-gray-200 font-semibold">Problema reciente</div>
-            <div class="text-slate-600 mt-1">
+            <div class="text-slate-800 dark:text-gray-200 font-semibold">
+              Problema reciente
+            </div>
+            <div class="text-slate-600 whitespace-normal mt-1">
               Reporte de un cliente insatisfecho con la atención.
             </div>
           </div>
@@ -178,8 +199,10 @@
             class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-3 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-2 md:gap-3"
           >
             <div class="text-sm text-slate-500">Ene 12, 2024, 17:45</div>
-            <div class="text-slate-800 dark:text-gray-200 font-semibold">Alerta</div>
-            <div class="text-slate-600 mt-1">
+            <div class="text-slate-800 dark:text-gray-200 font-semibold">
+              Alerta
+            </div>
+            <div class="text-slate-600 whitespace-normal mt-1">
               Se ha detectado un aumento en la cantidad de cancelaciones.
             </div>
           </div>
@@ -187,7 +210,9 @@
       </div>
     </div>
   </section>
-  <section class="w-full md:w-1/4 flex flex-col px-3 md:px-0 m-0 h-auto gap-3 py-3">
+  <section
+    class="w-full md:w-1/4 flex flex-col px-3 md:px-0 m-0 h-auto gap-3 py-3"
+  >
     <div
       style="min-height: 15rem; max-height: 15rem"
       class="w-full gap-3 relative h-auto bg-slate-600 dark:bg-gray-950/70 overflow-hidden rounded transition-colors duration-300 hover:bg-slate-500 hover:shadow-xl p-4 flex flex-col justify-between"
@@ -196,7 +221,7 @@
         class="absolute left-0 top-1/2 p-4 bg-slate-900/30 dark:bg-gray-800/80 rounded-r -mt-5 flex items-center justify-center"
       >
         <div class="text-3xl font-bold italic text-primary-400">
-          MIEMBRO VIP
+          MIEMBRO VIP 
         </div>
       </div>
 
@@ -282,13 +307,16 @@
             [preview]="true"
           />
         </div>
-        <div class="text-white text-xl font-bold">Antuca Admin</div>
+        <div class="text-white text-xl font-bold">{{ restaurant.name }}</div>
       </div>
       <div class="flex w-full justify-between">
         <div class="flex gap-2 items-center">
-          <div class="text-slate-100 text-sm">Restaurante Antuca</div>
-          <div style="width: 2px" class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 h-4"></div>
-          <div class="text-white text-sm font-semibold">301</div>
+          <div class="text-slate-100 text-sm">Dishdy Cloud</div>
+          <div
+            style="width: 2px"
+            class="bg-white  h-4"
+          ></div>
+          <div class="text-white text-sm font-semibold">{{ 'DC' + restaurant.id_restaurant }}</div>
         </div>
 
         <div class="text-slate-100 text-sm">Válido hasta 12/25</div>
@@ -306,46 +334,66 @@
         <p-button severity="secondary" [text]="true" icon="pi pi-ellipsis-h" />
       </div>
       <div class="flex flex-col h-full justify-between gap-3">
-        <div class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full rounded gap-2 flex p-2">
+        <div
+          class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full rounded gap-2 flex p-2"
+        >
           <div
             class="w-14 bg-primary-500/40 rounded flex justify-center items-center"
           >
             <i class="pi pi-circle-fill"></i>
           </div>
           <div class="flex flex-col w-full gap-1">
-            <div class="text-slate-700 dark:text-gray-300 poppins-medium text-sm">ambar-500</div>
+            <div
+              class="text-slate-700 dark:text-gray-300 poppins-medium text-sm"
+            >
+              {{ restaurant.primary_color }}
+            </div>
             <div class="text-slate-500 text-xs">Color Principal</div>
           </div>
           <p-button
             severity="secondary"
             icon="pi pi-angle-right"
             styleClass="w-8 h-8"
+            (onClick)="selectPalette('primary')"
+            (onClick)="op.toggle($event)"
           />
         </div>
-        <div class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full rounded gap-2 flex p-2">
+        <div
+          class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full rounded gap-2 flex p-2"
+        >
           <div
             class="w-14 bg-secondary-500 opacity-70 rounded flex justify-center items-center"
           >
             <i class="pi pi-circle"></i>
           </div>
           <div class="flex flex-col w-full gap-1">
-            <div class="text-slate-700 dark:text-gray-300 poppins-medium text-sm">orange-500</div>
+            <div
+              class="text-slate-700 dark:text-gray-300 poppins-medium text-sm"
+            >
+              {{ restaurant.secondary_color }}
+            </div>
             <div class="text-slate-500 text-xs">Color Secundario</div>
           </div>
           <p-button
             severity="secondary"
             icon="pi pi-angle-right"
             styleClass="w-8 h-8"
+            (onClick)="selectPalette('secondary')"
+            (onClick)="op.toggle($event)"
           />
         </div>
-        <div class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full items-center rounded gap-2 flex p-2">
+        <div
+          class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full items-center rounded gap-2 flex p-2"
+        >
           <div
             class="w-14 h-10 bg-primary-500/40 rounded flex justify-center items-center"
           >
             <i class="pi pi-bell"></i>
           </div>
           <div class="flex flex-col w-full gap-1">
-            <div class="text-slate-700 dark:text-gray-300 poppins-medium text-sm">
+            <div
+              class="text-slate-700 dark:text-gray-300 poppins-medium text-sm"
+            >
               ¿Permitir Notificaciones?
             </div>
           </div>
@@ -355,3 +403,89 @@
     </div>
   </section>
 </div>
+<p-popover #op>
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center gap-2">
+      <i class="pi pi-palette"></i>
+      <span class="font-medium block">Paletas de colores</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      <div class="flex gap-2 items-center">
+        <div
+          (click)="updateThemeColor('emerald')"
+          class="h-8 w-8 cursor-pointer hover:bg-emerald-600 rounded-full bg-emerald-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('green')"
+          class="h-8 w-8 cursor-pointer hover:bg-green-600 rounded-full bg-green-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('lime')"
+          class="h-8 w-8 cursor-pointer hover:bg-lime-600 rounded-full bg-lime-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('red')"
+          class="h-8 w-8 cursor-pointer hover:bg-red-600 rounded-full bg-red-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('orange')"
+          class="h-8 w-8 cursor-pointer hover:bg-orange-600 rounded-full bg-orange-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('amber')"
+          class="h-8 w-8 cursor-pointer hover:bg-amber-600 rounded-full bg-amber-500 border-4 black:border-gray-200"
+        ></div>
+      </div>
+      <div class="flex gap-2 items-center">
+        <div
+          (click)="updateThemeColor('yellow')"
+          class="h-8 w-8 cursor-pointer hover:bg-yellow-600 rounded-full bg-yellow-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('teal')"
+          class="h-8 w-8 cursor-pointer hover:bg-teal-600 rounded-full bg-teal-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('cyan')"
+          class="h-8 w-8 cursor-pointer hover:bg-cyan-600 rounded-full bg-cyan-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('sky')"
+          class="h-8 w-8 cursor-pointer hover:bg-sky-600 rounded-full bg-sky-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('blue')"
+          class="h-8 w-8 cursor-pointer hover:bg-blue-600 rounded-full bg-blue-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('indigo')"
+          class="h-8 w-8 cursor-pointer hover:bg-indigo-600 rounded-full bg-indigo-500"
+        ></div>
+      </div>
+      <div class="flex gap-2 items-center">
+        <div
+          (click)="updateThemeColor('violet')"
+          class="h-8 w-8 cursor-pointer hover:bg-violet-600 rounded-full bg-violet-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('purple')"
+          class="h-8 w-8 cursor-pointer hover:bg-purple-600 rounded-full bg-purple-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('fuchsia')"
+          class="h-8 w-8 cursor-pointer hover:bg-fuchsia-600 rounded-full bg-fuchsia-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('pink')"
+          class="h-8 w-8 cursor-pointer hover:bg-pink-600 rounded-full bg-pink-500"
+        ></div>
+        <div
+          (click)="updateThemeColor('rose')"
+          class="h-8 w-8 cursor-pointer hover:bg-rose-600 rounded-full bg-rose-500"
+        ></div>
+      </div>
+    </div>
+  </div>
+</p-popover>
+
+<p-toast position="top-center" />
