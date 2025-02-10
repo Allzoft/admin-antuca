@@ -91,9 +91,9 @@ export default class RolesComponent {
     this.confirmationService.confirm({
       message: 'Esta seguro de eliminar el rol ' + role.name,
       acceptLabel: 'Si',
-      acceptButtonStyleClass: 'p-button-rounded p-button-success w-7rem',
+      acceptButtonStyleClass: 'p-button-rounded p-button-success w-28',
       rejectLabel: 'No',
-      rejectButtonStyleClass: 'p-button-rounded p-button-danger w-7rem',
+      rejectButtonStyleClass: 'p-button-rounded p-button-danger w-28',
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

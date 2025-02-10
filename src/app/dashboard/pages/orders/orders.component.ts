@@ -83,9 +83,9 @@ export default class OrdersComponent {
         this.confirmationService.confirm({
           message: '¿Está seguro de eliminar esta orden?',
           acceptLabel: 'Si',
-          acceptButtonStyleClass: 'p-button-rounded p-button-success w-7rem',
+          acceptButtonStyleClass: 'p-button-rounded p-button-success w-28',
           rejectLabel: 'No',
-          rejectButtonStyleClass: 'p-button-rounded p-button-warning w-7rem',
+          rejectButtonStyleClass: 'p-button-rounded p-button-warning w-28',
           header: 'Confirmación',
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
@@ -129,9 +129,9 @@ export default class OrdersComponent {
     this.confirmationService.confirm({
       message: 'Esta seguro de eliminar la Orden',
       acceptLabel: 'Si',
-      acceptButtonStyleClass: 'p-button-rounded p-button-success w-7rem',
+      acceptButtonStyleClass: 'p-button-rounded p-button-success w-28',
       rejectLabel: 'No',
-      rejectButtonStyleClass: 'p-button-rounded p-button-warning w-7rem',
+      rejectButtonStyleClass: 'p-button-rounded p-button-warning w-28',
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

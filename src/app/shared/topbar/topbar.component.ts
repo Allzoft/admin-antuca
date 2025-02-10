@@ -110,9 +110,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.confirmationService.confirm({
       message: '¿Está seguro que desea cerrar sesión?',
       acceptLabel: 'Si',
-      acceptButtonStyleClass: ' p-button-success w-7rem',
+      acceptButtonStyleClass: ' p-button-success w-28',
       rejectLabel: 'No',
-      rejectButtonStyleClass: ' p-button-warning w-7rem',
+      rejectButtonStyleClass: ' p-button-warning w-28',
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

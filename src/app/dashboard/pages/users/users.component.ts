@@ -133,9 +133,9 @@ export default class UsersComponent implements OnInit {
     this.confirmationService.confirm({
       message: '¿Está seguro de eliminar este usuario?',
       acceptLabel: 'Si',
-      acceptButtonStyleClass: 'p-button-rounded p-button-success w-7rem',
+      acceptButtonStyleClass: 'p-button-rounded p-button-success w-28',
       rejectLabel: 'No',
-      rejectButtonStyleClass: 'p-button-rounded p-button-warning w-7rem',
+      rejectButtonStyleClass: 'p-button-rounded p-button-warning w-28',
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
