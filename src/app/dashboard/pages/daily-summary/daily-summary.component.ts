@@ -21,28 +21,28 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ReportsService } from '@services/reports.service';
 
 @Component({
-    selector: 'app-daily-summary',
-    imports: [
-        CommonModule,
-        FormsModule,
-        CarouselModule,
-        SkeletonModule,
-        ButtonModule,
-        TieredMenuModule,
-        TagModule,
-        CardModule,
-        SelectButtonModule,
-        CalendarModule,
-        ChartModule,
-        CalendarModule,
-        ProgressSpinnerModule,
-        ToastModule,
-        MeterGroupModule,
-        DropdownModule,
-        PipesModule,
-    ],
-    providers: [MessageService],
-    templateUrl: './daily-summary.component.html'
+  selector: 'app-daily-summary',
+  imports: [
+    CommonModule,
+    FormsModule,
+    CarouselModule,
+    SkeletonModule,
+    ButtonModule,
+    TieredMenuModule,
+    TagModule,
+    CardModule,
+    SelectButtonModule,
+    CalendarModule,
+    ChartModule,
+    CalendarModule,
+    ProgressSpinnerModule,
+    ToastModule,
+    MeterGroupModule,
+    DropdownModule,
+    PipesModule,
+  ],
+  providers: [MessageService],
+  templateUrl: './daily-summary.component.html',
 })
 export default class DailySummaryComponent {
   public layoutService = inject(LayoutService);
@@ -80,17 +80,17 @@ export default class DailySummaryComponent {
     {
       label: 'En sala',
       value: 50,
-      color: this.documentStyle.getPropertyValue('--p-yellow-400'),
+      color: this.documentStyle.getPropertyValue('--p-primary-300'),
     },
     {
       label: 'Delivery',
       value: 20,
-      color: this.documentStyle.getPropertyValue('--p-bluegray-500'),
+      color: this.documentStyle.getPropertyValue('--p-gray-300'),
     },
     {
       label: 'Para llevar',
       value: 30,
-      color: this.documentStyle.getPropertyValue('--p-primary-500'),
+      color: this.documentStyle.getPropertyValue('--p-secondary-400'),
     },
   ];
 
@@ -111,6 +111,9 @@ export default class DailySummaryComponent {
     );
     const surfaceBorder = documentStyle.getPropertyValue('--p-xyaxis-500');
 
+    const primaryColor100 = documentStyle.getPropertyValue('--p-primary-900');
+    const secondaryColor100 = documentStyle.getPropertyValue('--p-secondary-900');
+
     this.data = {
       labels: [
         'Ene',
@@ -130,12 +133,11 @@ export default class DailySummaryComponent {
           label: 'Ingresos',
           fill: {
             target: 'origin',
-
-            above: 'rgba(239, 241, 106, 0.1)',
-            below: 'rgba(255, 255, 102, 0.1)',
+            above: this.hexToRgba(primaryColor100, 0.1),
+            below: this.hexToRgba(primaryColor100, 0.1),
           },
-          borderColor: documentStyle.getPropertyValue('--p-primary-300'),
-          backgroundColor: documentStyle.getPropertyValue('--p-primary-300'),
+          borderColor: documentStyle.getPropertyValue('--p-primary-400'),
+          backgroundColor: documentStyle.getPropertyValue('--p-primary-400'),
           yAxisID: 'y',
           tension: 0.4,
           data: [
@@ -148,8 +150,8 @@ export default class DailySummaryComponent {
           label: 'Salidas',
           fill: {
             target: 'origin',
-            above: 'rgba(255, 165, 0, 0.1)',
-            below: 'rgba(255, 184, 77, 0.1)',
+            above: this.hexToRgba(secondaryColor100, 0.1),
+            below: this.hexToRgba(secondaryColor100, 0.1),
           },
           borderColor: documentStyle.getPropertyValue('--p-secondary-400'),
           backgroundColor: documentStyle.getPropertyValue('--p-secondary-400'),
@@ -273,5 +275,13 @@ export default class DailySummaryComponent {
         },
       },
     };
+  }
+
+  private hexToRgba(hex: string, alpha: number): string {
+    hex = hex.trim().replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   }
 }

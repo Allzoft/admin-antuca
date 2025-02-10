@@ -10,6 +10,34 @@
         class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-2 md:p-4 items-center justify-between colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col md:flex-row gap-2 md:gap-5"
       >
         <div class="flex gap-4 md:gap-2 items-center">
+          @if(isEditingMainInfo){
+          <div class="flex align-items flex-col gap-2">
+            @if(restaurant.logo_image){
+            <div
+              class="h-12 w-12 rounded bg-slate-50 overflow-hidden flex justify-center items-center"
+            >
+              <p-image
+                [src]="restaurant.logo_image"
+                imageClass="w-full"
+                [preview]="true"
+              />
+            </div>
+            }
+
+            <p-fileUpload
+              mode="basic"
+              name="file[]"
+              [auto]="true"
+              accept="image/*"
+              styleClass="p-button-help  p-button-outlined border-none p-button-sm"
+              chooseStyleClass="poppins-regular p-button-secondary p-button-sm"
+              chooseLabel="Subir imagen"
+              chooseIcon="pi pi-image"
+              [customUpload]="true"
+              (uploadHandler)="onUpload($event)"
+            />
+          </div>
+          } @else { @if(!restaurant.logo_image){
           <div
             class="h-12 w-12 rounded bg-slate-50 overflow-hidden flex justify-center items-center"
           >
@@ -17,15 +45,20 @@
               src="../../../../assets/logo.png"
               imageClass="w-full"
               [preview]="true"
-            ></p-image>
+            />
           </div>
+          } }
           <div class="flex flex-col gap-1">
             <div class="flex gap-2 items-center">
+              @if (isEditingMainInfo) {
+              <input type="text" pInputText [(ngModel)]="restaurant.name" />
+              } @else {
               <div
                 class="text-slate-800 dark:text-gray-200 text-2xl font-semibold"
               >
                 {{ restaurant.name }}
               </div>
+              }
               <p-tag [value]="'Activo'" styleClass="bg-slate-600 text-white" />
             </div>
             <div class="flex gap-1 items-center">
@@ -49,11 +82,29 @@
             styleClass="bg-slate-200 dark:bg-gray-500/50"
             icon="pi pi-mobile"
           />
+          @if(!isEditingMainInfo){
           <p-button
             [icon]="layoutService.isMobile() ? 'pi pi-pencil' : ''"
             styleClass="bg-slate-600 text-gray-100 border-none h-8"
             [label]="layoutService.isMobile() ? '' : 'Editar datos'"
+            (onClick)="isEditingMainInfo = true"
           />
+          } @else {
+          <p-button
+            [icon]="layoutService.isMobile() ? 'pi pi-times' : ''"
+            styleClass=" border-none h-8"
+            severity="danger"
+            [label]="layoutService.isMobile() ? '' : 'Cancelar'"
+            (onClick)="isEditingMainInfo = false"
+          />
+          <p-button
+            [icon]="layoutService.isMobile() ? 'pi pi-check' : ''"
+            styleClass=" border-none h-8"
+            severity="success"
+            [label]="layoutService.isMobile() ? '' : 'Guardar'"
+            (onClick)="saveMainInfo()"
+          />
+          }
         </div>
       </div>
     </div>
@@ -155,7 +206,7 @@
           class="text-slate-800 dark:text-gray-200 font-semibold text-xl text-center md:text-left"
         >
           Notas relevantes
-          <span class="text-gray-600 text-md  ">
+          <span class="text-gray-600 text-md">
             (Módulo aún en construcción)</span
           >
         </div>
@@ -221,7 +272,7 @@
         class="absolute left-0 top-1/2 p-4 bg-slate-900/30 dark:bg-gray-800/80 rounded-r -mt-5 flex items-center justify-center"
       >
         <div class="text-3xl font-bold italic text-primary-400">
-          MIEMBRO VIP 
+          MIEMBRO VIP
         </div>
       </div>
 
@@ -312,11 +363,10 @@
       <div class="flex w-full justify-between">
         <div class="flex gap-2 items-center">
           <div class="text-slate-100 text-sm">Dishdy Cloud</div>
-          <div
-            style="width: 2px"
-            class="bg-white  h-4"
-          ></div>
-          <div class="text-white text-sm font-semibold">{{ 'DC' + restaurant.id_restaurant }}</div>
+          <div style="width: 2px" class="bg-white h-4"></div>
+          <div class="text-white text-sm font-semibold">
+            {{ "DC" + restaurant.id_restaurant }}
+          </div>
         </div>
 
         <div class="text-slate-100 text-sm">Válido hasta 12/25</div>
@@ -397,7 +447,11 @@
               ¿Permitir Notificaciones?
             </div>
           </div>
-          <p-toggleswitch />
+          <p-toggleswitch
+            [(ngModel)]="restaurant.allow_notifications"
+            [trueValue]="1"
+            [falseValue]="0"
+          />
         </div>
       </div>
     </div>

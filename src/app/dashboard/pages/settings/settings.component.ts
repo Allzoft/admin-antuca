@@ -11,6 +11,10 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ThemeService } from '@services/theme.service';
 import { $dt } from '@primeng/themes';
+import { FormsModule } from '@angular/forms';
+import { UploadService } from '@services/upload.service';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-settings',
@@ -21,6 +25,9 @@ import { $dt } from '@primeng/themes';
     ToggleSwitchModule,
     ToastModule,
     PopoverModule,
+    FormsModule,
+    FileUploadModule,
+    InputTextModule,
   ],
   templateUrl: './settings.component.html',
   providers: [MessageService],
@@ -32,6 +39,7 @@ export default class SettingsComponent implements OnInit {
   public restaurantsService = inject(RestaurantsService);
   public layoutService = inject(LayoutService);
   public themeService = inject(ThemeService);
+  public uploadService = inject(UploadService);
 
   public loadingRestaurant: boolean = false;
   public selectedPalette: 'primary' | 'secondary' = 'primary';
@@ -56,11 +64,31 @@ export default class SettingsComponent implements OnInit {
     type_cuisine: '',
   };
 
+  public isEditingMainInfo: boolean = false;
+
   ngOnInit(): void {
     this.loadingRestaurant = true;
     this.restaurantsService.getOneByUser().subscribe((res) => {
       this.restaurant = res;
       console.log(res);
+    });
+  }
+
+  public saveMainInfo() {
+    const updateRestaurant: Partial<Restaurant> = {
+      name: this.restaurant.name,
+      logo_image: this.restaurant.logo_image,
+    };
+    this.restaurantsService.updateByUser(updateRestaurant).subscribe((res) => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Actualizacion exitosa',
+        detail: '¡La actualización del restaurante se realizó correctamente!',
+      });
+
+      this.isEditingMainInfo = false;
+      this.restaurant.name = res.name;
+      this.restaurant.logo_image = res.logo_image;
     });
   }
 
@@ -84,5 +112,20 @@ export default class SettingsComponent implements OnInit {
       this.themeService.changeThemeColors(this.selectedPalette, color);
       this.op.toggle(event);
     });
+  }
+
+  public onUpload(event: any) {
+    console.log(event);
+
+    if (event.files.length > 0) {
+      const file = event.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.uploadService.uploadfile(formData).subscribe((res) => {
+        console.log(res);
+        this.restaurant.logo_image = res['filename'];
+      });
+    }
   }
 }
