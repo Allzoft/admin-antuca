@@ -16,6 +16,7 @@ interface State {
   customer: Customer | undefined;
   token: string | undefined;
   access: MenuItem[];
+  restaurant: Restaurant | undefined
   loading: boolean;
 }
 
@@ -39,6 +40,7 @@ export class CustomersService {
     customer: undefined,
     access: [],
     token: undefined,
+    restaurant: undefined
   });
 
   #stateCustomers = signal<StateCustomers>({
@@ -50,6 +52,7 @@ export class CustomersService {
   public loading = computed(() => this.#state().loading);
   public token = computed(() => this.#state().token);
   public access = computed(() => this.#state().access);
+  public restaurant = computed(() => this.#state().restaurant)
 
   public customers = computed(() => this.#stateCustomers().customers);
   public loadingCustomers = computed(
@@ -96,6 +99,7 @@ export class CustomersService {
             customer: res.customer,
             token: res.access_token,
             access: res.customer.role!.access,
+            restaurant: res.customer.restaurant!
           });
 
           this.changeTheme(res.customer.restaurant!);
@@ -105,11 +109,13 @@ export class CustomersService {
 
   private saveStorage(resCustomer: CustomerResponse) {
     localStorage.setItem('customer', JSON.stringify(resCustomer.customer));
+    localStorage.setItem('restaurant', JSON.stringify(resCustomer.customer.restaurant));
     localStorage.setItem(
       'access',
       JSON.stringify(resCustomer.customer.role!.access)
     );
     localStorage.setItem('token', resCustomer.access_token.toString());
+
   }
 
   private saveStorageCustomers(customers: Customer[]) {
@@ -128,6 +134,7 @@ export class CustomersService {
       this.#state.set({
         loading: false,
         customer: JSON.parse(localStorage.getItem('customer')!),
+        restaurant: JSON.parse(localStorage.getItem('restaurant')!),
         token: localStorage.getItem('token')!,
         access: JSON.parse(localStorage.getItem('access')!),
       });
@@ -138,6 +145,7 @@ export class CustomersService {
       this.#state.set({
         loading: true,
         customer: undefined,
+        restaurant: undefined,
         token: undefined,
         access: [],
       });
@@ -157,9 +165,11 @@ export class CustomersService {
   public closeSession() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('restaurant');
     this.#state.set({
       loading: true,
       customer: undefined,
+      restaurant: undefined,
       token: undefined,
       access: [],
     });
@@ -233,6 +243,7 @@ export class CustomersService {
         customer: updateCustomer,
         token: localStorage.getItem('token')!,
         access: JSON.parse(localStorage.getItem('access')!),
+        restaurant: JSON.parse(localStorage.getItem('restaurant')!),
       });
     }
     return this.http
