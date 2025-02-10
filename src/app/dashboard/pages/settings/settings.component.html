@@ -1,13 +1,17 @@
-<img src="../../../../assets/settings.svg" alt="settings" class="fixed opacity-30 left-50 -ml-8 bottom-0 w-4"  />
+<img
+  src="../../../../assets/settings.svg"
+  alt="settings"
+  class="fixed opacity-30 left-1/2 -ml-28 bottom-0 w-4/12"
+/>
 <div class="w-full flex flex-wrap m-0 md:mt-3 p-0">
-  <section class="col-12 md:col-9 grid m-0 p-0 h-auto">
-    <div class="col-12 px-2 md:px-3">
+  <section class="w-full md:w-3/4 flex flex-wrap m-0 p-0 h-auto">
+    <div class="w-full p-2 md:p-3">
       <div
-        class="w-full relative bg-white p-2 md:p-4 align-items-center justify-content-between transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-round flex flex-column md:flex-row gap-2 md:gap-5"
+        class="w-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-2 md:p-4 items-center justify-between colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col md:flex-row gap-2 md:gap-5"
       >
-        <div class="flex gap-2 align-items-center">
+        <div class="flex gap-4 md:gap-2 items-center">
           <div
-            class="h-4rem w-4rem border-round surface-50 overflow-hidden flex justify-content-center align-items-center"
+            class="h-12 w-12 rounded bg-slate-50 overflow-hidden flex justify-center items-center"
           >
             <p-image
               src="../../../../assets/logo.png"
@@ -15,46 +19,46 @@
               [preview]="true"
             ></p-image>
           </div>
-          <div class="flex flex-column gap-1 md:gap-2">
-            <div class="flex gap-2 align-items-center">
-              <div class="text-800 text-xl font-semibold">
+          <div class="flex flex-col gap-1">
+            <div class="flex gap-2 items-center">
+              <div class="text-slate-800 dark:text-gray-200 text-2xl font-semibold">
                 Restaurante Antuca
               </div>
-              <p-tag [value]="'Activo'" styleClass="surface-600 text-white" />
+              <p-tag [value]="'Activo'" styleClass="bg-slate-600 text-white" />
             </div>
-            <div class="flex gap-1 align-items-center">
+            <div class="flex gap-1 items-center">
               <div class="text-400 text-sm">ID de restaurante:</div>
-              <div class="text-700 text-sm font-semibold">301</div>
+              <div class="text-slate-700 dark:text-gray-300 text-sm font-semibold">301</div>
             </div>
           </div>
         </div>
-        <div class="flex gap-2 align-items-center">
+        <div class="flex gap-2 items-center">
           <p-button
             severity="secondary"
-            styleClass="surface-200"
+            styleClass="bg-slate-200 dark:bg-gray-500/50"
             icon="pi pi-whatsapp"
           />
           <p-button
             severity="secondary"
-            styleClass="surface-200"
+            styleClass="bg-slate-200 dark:bg-gray-500/50"
             icon="pi pi-mobile"
           />
           <p-button
             [icon]="layoutService.isMobile() ? 'pi pi-pencil' : ''"
-            styleClass="surface-600 border-none"
+            styleClass="bg-slate-600 text-gray-100 border-none h-8"
             [label]="layoutService.isMobile() ? '' : 'Editar datos'"
           />
         </div>
       </div>
     </div>
-    <div class="col-12 md:col-4 px-2 md:px-3 h-auto">
+    <div class="w-full md:w-4/12 p-2 md:p-3 h-auto">
       <div
-        class="w-full h-full relative bg-white md:p-4 p-3 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-round flex flex-column gap-2 md:gap-5"
+        class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:p-4 p-3 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-2 md:gap-5"
       >
-        <div
-          class="flex flex-row w-full justify-content-between align-items-center gap-2"
-        >
-          <div class="text-800 font-semibold text-xl text-center md:text-left">
+        <div class="flex flex-row w-full justify-between items-center gap-2">
+          <div
+            class="text-slate-800 dark:text-gray-200 font-semibold text-xl text-center md:text-left"
+          >
             Información de contácto
           </div>
           <p-button
@@ -63,35 +67,37 @@
             [text]="true"
           />
         </div>
-        <div class="flex flex-column gap-2">
-          <div class="text-500 text-sm">Numero de celular</div>
-          <div class="text-800 text-base">(+591) 68368073</div>
+        <div class="flex flex-col gap-2">
+          <div class="text-slate-500 text-sm">Numero de celular</div>
+          <div class="text-slate-800 dark:text-gray-200 text-base">(+591) 68368073</div>
         </div>
-        <div class="flex flex-column gap-2">
-          <div class="text-500 text-sm">Correo electrónico</div>
-          <div class="text-800 text-base">
+        <div class="flex flex-col gap-2">
+          <div class="text-slate-500 text-sm">Correo electrónico</div>
+          <div class="text-slate-800 dark:text-gray-200 text-base">
             {{ "antucarestaurante@gmail.com" }}
           </div>
         </div>
-        <div class="flex flex-column gap-2">
-          <div class="text-500 text-sm">Dirección</div>
-          <div class="text-800 text-base">Petot entre Sucre y Bolivar</div>
+        <div class="flex flex-col gap-2">
+          <div class="text-slate-500 text-sm">Dirección</div>
+          <div class="text-slate-800 dark:text-gray-200 text-base">
+            Petot entre Sucre y Bolivar
+          </div>
         </div>
-        <div class="flex flex-column gap-2">
-          <div class="text-500 text-sm">Propietario</div>
-          <div class="text-800 text-base">Dario Zelaya García</div>
-          <div class="text-800 text-base">(+591) 72312723</div>
+        <div class="flex flex-col gap-2">
+          <div class="text-slate-500 text-sm">Propietario</div>
+          <div class="text-slate-800 dark:text-gray-200 text-base">Dario Zelaya García</div>
+          <div class="text-slate-800 dark:text-gray-200 text-base">(+591) 72312723</div>
         </div>
       </div>
     </div>
-    <div class="col-12 md:col-8 h-auto p-0 flex flex-column">
-      <div class="col-12 px-2 md:px-3 h-auto">
+    <div class="w-full md:w-8/12 h-auto p-0 flex flex-col">
+      <div class="w-full p-2 md:p-3 h-auto">
         <div
-          class="w-full h-full relative bg-white p-3 md:p-4 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-round flex flex-column gap-3"
+          class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-3 md:p-4 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-3"
         >
-          <div class="flex w-full align-items-center justify-content-between">
+          <div class="flex w-full items-center justify-between">
             <div
-              class="text-800 font-semibold text-xl text-center md:text-left"
+              class="text-slate-800 dark:text-gray-200 font-semibold text-xl text-center md:text-left"
             >
               Información general
             </div>
@@ -103,26 +109,26 @@
           </div>
           <div class="w-full flex gap-2 md:gap-5">
             <div class="w-full flex gap-2">
-              <div class="flex flex-column gap-3">
-                <div class="text-500">Categoría del restaurante:</div>
-                <div class="text-500">Aforo máximo:</div>
-                <div class="text-500">Tipo de cocina:</div>
+              <div class="flex flex-col gap-3">
+                <div class="text-slate-500">Categoría del restaurante:</div>
+                <div class="text-slate-500">Aforo máximo:</div>
+                <div class="text-slate-500">Tipo de cocina:</div>
               </div>
-              <div class="flex flex-column gap-3">
-                <div class="text-700">Almuerzo</div>
-                <div class="text-700">45</div>
-                <div class="text-700">Italiana / Fusión</div>
+              <div class="flex flex-col gap-3">
+                <div class="text-slate-700 dark:text-gray-300">Almuerzo</div>
+                <div class="text-slate-700 dark:text-gray-300">45</div>
+                <div class="text-slate-700 dark:text-gray-300">Italiana / Fusión</div>
               </div>
             </div>
-            <div style="width: 5px" class="h-full surface-200"></div>
+            <div style="width: 5px" class="h-full bg-slate-200"></div>
             <div class="w-full flex gap-2">
-              <div class="flex flex-column gap-3">
-                <div class="text-500">Plan:</div>
-                <div class="text-500">Horario de atención:</div>
+              <div class="flex flex-col gap-3">
+                <div class="text-slate-500">Plan:</div>
+                <div class="text-slate-500">Horario de atención:</div>
               </div>
-              <div class="flex flex-column gap-3">
-                <div class="text-700">Antuca Plus</div>
-                <div class="text-700">
+              <div class="flex flex-col gap-3">
+                <div class="text-slate-700 dark:text-gray-300">Antuca Plus</div>
+                <div class="text-slate-700 dark:text-gray-300">
                   De Lunes a Sábado de 12:00 a 14:30 Hrs.
                 </div>
               </div>
@@ -131,47 +137,49 @@
         </div>
       </div>
       <div
-        class="flex md:flex-row w-full justify-content-between align-items-center px-2 md:px-3 gap-2 py-2"
+        class="flex md:flex-row w-full justify-between items-center p-2 md:p-3 gap-2 py-2"
       >
-        <div class="text-800 font-semibold text-xl text-center md:text-left">
+        <div
+          class="text-slate-800 dark:text-gray-200 font-semibold text-xl text-center md:text-left"
+        >
           Notas del relevantes
         </div>
         <div
-          class="text-500 text-sm cursor-pointer hover:underline hover:text-400"
+          class="text-slate-500 text-sm cursor-pointer hover:underline hover:text-400"
         >
           Ver todas
         </div>
       </div>
-      <div class="col-12 overflow-scroll md:overflow-auto flex p-0 h-auto">
-        <div class="col-6 md:col-4 px-2 md:px-3 h-auto">
+      <div class="w-full overflow-scroll md:overflow-auto flex p-0 h-auto">
+        <div class="w-6/12 md:w-4/12 p-2 md:p-3 h-auto">
           <div
-            class="w-full h-full relative bg-white p-3 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-round flex flex-column gap-2 md:gap-3"
+            class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-3 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-2 md:gap-3"
           >
-            <div class="text-sm text-500">Ene 8, 2025, 15:23</div>
-            <div class="text-800 font-semibold">Pédido destacado</div>
-            <div class="text-600 mt-1">
+            <div class="text-sm text-slate-500">Ene 8, 2025, 15:23</div>
+            <div class="text-slate-800 dark:text-gray-200 font-semibold">Pédido destacado</div>
+            <div class="text-slate-600 mt-1">
               Pedido de 30 platos de lasaña para el día de mañana.
             </div>
           </div>
         </div>
-        <div class="col-6 md:col-4 px-2 md:px-3">
+        <div class="w-6/12 md:w-4/12 p-2 md:p-3">
           <div
-            class="w-full h-full relative bg-white p-3 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-round flex flex-column gap-2 md:gap-3"
+            class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-3 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-2 md:gap-3"
           >
-            <div class="text-sm text-500">Ene 10, 2024, 09:00</div>
-            <div class="text-800 font-semibold">Problema reciente</div>
-            <div class="text-600 mt-1">
+            <div class="text-sm text-slate-500">Ene 10, 2024, 09:00</div>
+            <div class="text-slate-800 dark:text-gray-200 font-semibold">Problema reciente</div>
+            <div class="text-slate-600 mt-1">
               Reporte de un cliente insatisfecho con la atención.
             </div>
           </div>
         </div>
-        <div class="col-6 md:col-4 px-2 md:px-3">
+        <div class="w-6/12 md:w-4/12 p-2 md:p-3">
           <div
-            class="w-full h-full relative bg-white p-3 transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 border-round flex flex-column gap-2 md:gap-3"
+            class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 p-3 colors duration-300 hover:bg-slate-50 hover:shadow-xl rounded flex flex-col gap-2 md:gap-3"
           >
-            <div class="text-sm text-500">Ene 12, 2024, 17:45</div>
-            <div class="text-800 font-semibold">Alerta</div>
-            <div class="text-600 mt-1">
+            <div class="text-sm text-slate-500">Ene 12, 2024, 17:45</div>
+            <div class="text-slate-800 dark:text-gray-200 font-semibold">Alerta</div>
+            <div class="text-slate-600 mt-1">
               Se ha detectado un aumento en la cantidad de cancelaciones.
             </div>
           </div>
@@ -179,174 +187,170 @@
       </div>
     </div>
   </section>
-  <section class="col-12 md:col-3 grid m-0 h-auto gap-3">
+  <section class="w-full md:w-1/4 flex flex-col px-3 md:px-0 m-0 h-auto gap-3 py-3">
     <div
       style="min-height: 15rem; max-height: 15rem"
-      class="col-12 gap-3 relative h-auto surface-500 overflow-hidden border-round-2xl transition-colors transition-duration-300 hover:surface-500 hover:shadow-4 p-3 flex flex-column justify-content-between"
+      class="w-full gap-3 relative h-auto bg-slate-600 dark:bg-gray-950/70 overflow-hidden rounded transition-colors duration-300 hover:bg-slate-500 hover:shadow-xl p-4 flex flex-col justify-between"
     >
       <div
-        class="absolute left-0 top-50 p-4 bg-black-alpha-50 border-round-right -mt-5 flex align-items-center justify-content-center"
+        class="absolute left-0 top-1/2 p-4 bg-slate-900/30 dark:bg-gray-800/80 rounded-r -mt-5 flex items-center justify-center"
       >
-        <div class="font-italic text-2xl font-semibold text-primary-400">
+        <div class="text-3xl font-bold italic text-primary-400">
           MIEMBRO VIP
         </div>
       </div>
 
-      <div class="absolute left-50 opacity-10 flex flex-column gap-3 pl-6">
-        <div class="flex align-items-center gap-3">
+      <div class="absolute left-1/2 opacity-10 flex flex-col gap-3 pl-12">
+        <div class="flex items-center gap-3">
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
-          />
-        </div>
-        <div class="flex align-items-center gap-3">
-          <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
-          />
-          <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
-          />
-          <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
         </div>
-        <div class="flex align-items-center gap-3">
+        <div class="flex items-center gap-3">
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
         </div>
-        <div class="flex align-items-center gap-3">
+        <div class="flex items-center gap-3">
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
           <p-image
-            src="../../../../assets/logo.png"
-            imageClass="w-2rem"
-            class="w-2rem"
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
+          />
+        </div>
+        <div class="flex items-center gap-3">
+          <p-image
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
+          />
+          <p-image
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
+          />
+          <p-image
+            src="../../../../assets/logo-dark.png"
+            imageClass="w-8"
+            class="w-8"
           />
         </div>
       </div>
 
-      <div class="flex gap-2 align-items-center">
+      <div class="flex gap-2 items-center">
         <div
-          class="w-2rem border-circle h-2rem bg-white flex align-items-center justify-content-center"
+          class="w-8 rounded-full h-8 bg-slate-200 flex items-center justify-center"
         >
           <p-image
             src="../../../../assets/logo.png"
             alt="logo"
-            imageClass="w-2rem mt-1"
+            imageClass="w-8 mt-1"
             [preview]="true"
           />
         </div>
-        <div class="text-white font-semibold">Antuca Admin</div>
+        <div class="text-white text-xl font-bold">Antuca Admin</div>
       </div>
-      <div class="flex w-full justify-content-between">
-        <div class="flex gap-2 align-items-center">
-          <div class="text-100 text-sm">Restaurante Antuca</div>
-          <div style="width: 2px" class="bg-white h-1rem"></div>
+      <div class="flex w-full justify-between">
+        <div class="flex gap-2 items-center">
+          <div class="text-slate-100 text-sm">Restaurante Antuca</div>
+          <div style="width: 2px" class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 h-4"></div>
           <div class="text-white text-sm font-semibold">301</div>
         </div>
 
-        <div class="text-100 text-sm">Válido hasta 12/25</div>
+        <div class="text-slate-100 text-sm">Válido hasta 12/25</div>
       </div>
     </div>
     <div
-      class="col-12 gap-3 z-1 bg-white border-round-2xl h-auto transition-colors transition-duration-300 hover:surface-50 hover:shadow-4 p-3 flex flex-column"
+      class="w-full gap-3 z-1 bg-white dark:bg-gray-900 dark:hover:bg-gray-950 rounded h-full colors duration-300 hover:bg-slate-50 hover:shadow-xl p-3 flex flex-col"
     >
-      <div class="flex w-full align-items-center justify-content-between">
-        <div class="flex flex-column gap-1">
-          <div class="text-md text-800 font-semibold">
+      <div class="flex w-full items-center justify-between">
+        <div class="flex flex-col gap-1">
+          <div class="text-md text-slate-800 dark:text-gray-200 font-semibold">
             Personalización
           </div>
         </div>
         <p-button severity="secondary" [text]="true" icon="pi pi-ellipsis-h" />
       </div>
-      <div class="flex flex-column gap-3">
-        <div class="bg-white w-full border-round gap-2 flex p-2">
+      <div class="flex flex-col h-full justify-between gap-3">
+        <div class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full rounded gap-2 flex p-2">
           <div
-            class="w-3rem  bg-primary-200 border-round flex justify-content-center align-items-center"
+            class="w-14 bg-primary-500/40 rounded flex justify-center items-center"
           >
-            <i class="pi pi-circle-fill "></i>
+            <i class="pi pi-circle-fill"></i>
           </div>
-          <div class="flex flex-column w-full gap-1">
-            <div class="text-700 poppins-medium text-sm">Ambar-500</div>
-            <div class="text-500 text-xs">Color Principal</div>
+          <div class="flex flex-col w-full gap-1">
+            <div class="text-slate-700 dark:text-gray-300 poppins-medium text-sm">ambar-500</div>
+            <div class="text-slate-500 text-xs">Color Principal</div>
           </div>
           <p-button
             severity="secondary"
             icon="pi pi-angle-right"
-            styleClass="w-2rem h-2rem"
+            styleClass="w-8 h-8"
           />
         </div>
-        <div class="bg-white w-full border-round gap-2 flex p-2">
+        <div class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full rounded gap-2 flex p-2">
           <div
-            class="w-3rem  bg-primary-200 border-round flex justify-content-center align-items-center"
+            class="w-14 bg-secondary-500 opacity-70 rounded flex justify-center items-center"
           >
             <i class="pi pi-circle"></i>
           </div>
-          <div class="flex flex-column w-full gap-1">
-            <div class="text-700 poppins-medium text-sm">Surface-200</div>
-            <div class="text-500 text-xs">Color Secudanrio</div>
+          <div class="flex flex-col w-full gap-1">
+            <div class="text-slate-700 dark:text-gray-300 poppins-medium text-sm">orange-500</div>
+            <div class="text-slate-500 text-xs">Color Secundario</div>
           </div>
           <p-button
             severity="secondary"
             icon="pi pi-angle-right"
-            styleClass="w-2rem h-2rem"
+            styleClass="w-8 h-8"
           />
         </div>
-        <div class="bg-white w-full border-round gap-2 flex p-2">
+        <div class="bg-white dark:bg-gray-900 dark:hover:bg-gray-950 w-full items-center rounded gap-2 flex p-2">
           <div
-            class="w-3rem  bg-primary-200 border-round flex justify-content-center align-items-center"
+            class="w-14 h-10 bg-primary-500/40 rounded flex justify-center items-center"
           >
             <i class="pi pi-bell"></i>
           </div>
-          <div class="flex flex-column w-full gap-1">
-            <div class="text-700 poppins-medium text-sm">Si</div>
-            <div class="text-500 text-xs">Permitir Notificaciones</div>
+          <div class="flex flex-col w-full gap-1">
+            <div class="text-slate-700 dark:text-gray-300 poppins-medium text-sm">
+              ¿Permitir Notificaciones?
+            </div>
           </div>
-          <p-button
-            severity="secondary"
-            icon="pi pi-angle-right"
-            styleClass="w-2rem h-2rem"
-          />
+          <p-toggleswitch />
         </div>
-        
       </div>
     </div>
   </section>

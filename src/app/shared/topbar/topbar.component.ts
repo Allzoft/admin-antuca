@@ -88,7 +88,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.ref = this.dialogService.open(OrderComponent, {
       header: `Nueva Orden`,
       draggable: true,
-      styleClass: 'w-11 md:w-6',
+      styleClass: 'w-11/12 md:w-6/12',
+      closable: true,
+      modal: true,
     });
 
     this.ref.onClose.subscribe((order: Order) => {

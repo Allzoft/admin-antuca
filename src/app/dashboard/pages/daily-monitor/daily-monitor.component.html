@@ -55,7 +55,7 @@
         <div class="text-xl text-primary-600 md:text-lg">
           {{ orders.length }}
         </div>
-        <div class="text-xs text-slate-700 dark:text-gray-100 poppins-regular">
+        <div class="text-xs text-slate-700 dark:text-gray-300 poppins-regular">
           Activos
         </div>
       </div>
@@ -274,7 +274,7 @@
     <ng-template pTemplate="header">
       <div class="text-xl poppins-medium">Acciones rápidas</div>
     </ng-template>
-    <div class="text-md text-slate-700 poppins-regular">
+    <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
       Para todas las ordenes del día
     </div>
     <div class="flex justify-around items-center mt-2">
@@ -294,7 +294,7 @@
     <div class="w-full text-xl poppins-medium mt-4 mb-2">
       Filtros y mensajes
     </div>
-    <div class="text-md text-slate-700 poppins-regular">
+    <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
       Filtros por servicio
     </div>
     <p-multiSelect
@@ -308,12 +308,12 @@
     <div
       class="w-full flex justify-between mt-3 items-center border-y-2 border-200 py-2"
     >
-      <div class="text-md text-slate-700 poppins-regular">
+      <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
         Pedidos con detalles
       </div>
       <p-inputSwitch styleClass="mt-1" />
     </div>
-    <div class="text-md text-slate-700 poppins-regular mt-3">
+    <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular mt-3">
       Filtros por estado
     </div>
     <p-multiSelect
@@ -328,7 +328,9 @@
     <div
       class="w-full flex justify-between mt-3 items-center border-y-2 border-200 py-2"
     >
-      <div class="text-md text-slate-700 poppins-regular">Pedidos B2B</div>
+      <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
+        Pedidos B2B
+      </div>
       <p-inputSwitch styleClass="mt-1" />
     </div>
     <p-button styleClass="w-full mt-3" label="Aplicar Filtros"></p-button>
@@ -337,7 +339,7 @@
     <div
       class="w-full flex whitespace-normal items-center justify-between my-1"
     >
-      <div class="poppins-regular text-slate-700">
+      <div class="poppins-regular text-slate-700 dark:text-gray-300">
         {{ "- " + message.content }}
       </div>
       <p-button
@@ -357,7 +359,7 @@
       <div class="w-full text-xl poppins-medium my-3 mb-2">
         Acciones rápidas
       </div>
-      <div class="text-md text-slate-700 poppins-regular">
+      <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
         Para todas las ordenes del día
       </div>
       <div class="flex justify-around items-center mt-2">
@@ -365,17 +367,17 @@
           label="Imprimir"
           icon="pi pi-print"
           severity="secondary"
-          styleClass="bg-slate-200 dark:bg-grey-900"
+          styleClass="bg-slate-200 dark:bg-gray-900"
         />
         <p-button
           label="Confirmar"
           icon="pi pi-check"
           severity="secondary"
-          styleClass="bg-slate-200 dark:bg-grey-900"
+          styleClass="bg-slate-200 dark:bg-gray-900"
         />
       </div>
       <div class="w-full text-xl poppins-medium mt-4 mb-2">Filtros</div>
-      <div class="text-md text-slate-700 poppins-regular">
+      <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
         Filtros por servicio
       </div>
       <p-multiSelect
@@ -390,12 +392,14 @@
       <div
         class="w-full flex justify-between mt-3 items-center border-y-2 border-200 py-2"
       >
-        <div class="text-md text-slate-700 poppins-regular">
+        <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
           Pedidos con detalles
         </div>
         <p-inputSwitch styleClass="mt-1" />
       </div>
-      <div class="text-md text-slate-700 poppins-regular mt-3">
+      <div
+        class="text-md text-slate-700 dark:text-gray-300 poppins-regular mt-3"
+      >
         Filtros por estado
       </div>
       <p-multiSelect
@@ -411,7 +415,9 @@
       <div
         class="w-full flex justify-between mt-3 items-center border-y-2 border-200 py-2"
       >
-        <div class="text-md text-slate-700 poppins-regular">Pedidos B2B</div>
+        <div class="text-md text-slate-700 dark:text-gray-300 poppins-regular">
+          Pedidos B2B
+        </div>
         <p-inputSwitch styleClass="mt-1" />
       </div>
       <p-button styleClass="w-full mt-3" label="Aplicar Filtros"></p-button>
@@ -422,7 +428,7 @@
       <div
         class="w-full flex whitespace-normal items-center justify-between my-1"
       >
-        <div class="poppins-regular text-slate-700">
+        <div class="poppins-regular text-slate-700 dark:text-gray-300">
           {{ "- " + message.content }}
         </div>
         <p-button

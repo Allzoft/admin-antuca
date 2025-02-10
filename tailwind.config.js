@@ -17,7 +17,7 @@ module.exports = {
           800: "var(--p-primary-800)",
           900: "var(--p-primary-900)",
         },
-        seconday: {
+        secondary: {
           50: "var(--p-secondary-50)",
           100: "var(--p-secondary-100)",
           200: "var(--p-secondary-200)",

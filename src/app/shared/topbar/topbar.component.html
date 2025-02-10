@@ -31,7 +31,7 @@
       <p-button
         severity="secondary"
         icon="pi pi-arrow-left"
-        styleClass="bg-slate-200 border-none"
+        styleClass="bg-slate-200 dark:bg-gray-900 border-none"
         (onClick)="router.navigateByUrl('control-panel/daily-summary')"
       />
       <div class="text-3xl poppins-medium">Configuración</div>
@@ -64,9 +64,9 @@
       <p-button
         severity="danger"
         [outlined]="true"
-        icon="pi pi-cog dark:text-gray-200"
+        icon="pi pi-cog dark:text-red-400"
         (onClick)="router.navigate(['/admin/settings'])"
-        styleClass="border-none bg-red-200 dark:bg-red-500 w-9 h-9"
+        styleClass="border-none bg-red-200 dark:bg-red-400/20 dark:hover:bg-red-400/30 w-9 h-9"
       />
     </li>
     }
@@ -74,12 +74,12 @@
       <div class="relative">
         <div
           [style]="{ height: '0.7rem', width: '0.7rem' }"
-          class="bg-primary-600 rounded-full absolute right-0 top-0 z-10 -mt-1 -mr-1"
+          class="bg-primary-600 dark:bg-primary-400 rounded-full absolute right-0 top-0 z-10 -mt-1 -mr-1"
         ></div>
         <p-button
-          icon="pi pi-bell dark:text-gray-50"
+          icon="pi pi-bell dark:text-primary-400"
           [outlined]="true"
-          styleClass="bg-primary-100 dark:bg-primary-300/80 border-none w-9 h-9"
+          styleClass="bg-primary-100 dark:bg-primary-400/10 dark:hover:bg-primary-400/20 border-none w-9 h-9"
         />
       </div>
       <div class="relative">
@@ -88,15 +88,15 @@
           class="bg-yellow-300 rounded-full absolute right-0 top-0 z-2 -mt-1 -mr-1"
         ></div> -->
         <p-button
-          [icon]="!isDarkMode() ? 'pi pi-sun text-lg' : 'pi pi-moon dark:text-gray-50'"
+          [icon]="!isDarkMode() ? 'pi pi-sun text-lg' : 'pi pi-moon dark:text-primary-400'"
           [outlined]="true"
-          styleClass="bg-primary-100 dark:bg-primary-300/80 border-none w-9 h-9"
+          styleClass="bg-primary-100 dark:bg-primary-400/10 dark:hover:bg-primary-400/20 border-none w-9 h-9"
           (onClick)="toggleDarkMode()"
         />
       </div>
       <div class="relative">
         <div
-          class="bg-slate-300 border-1 border-200 rounded-full absolute right-0 p-1 top-0 z-10 -mt-2 -mr-2 flex justify-center items-center"
+          class="bg-slate-300 dark:bg-gray-700 border-1 border-200 rounded-full absolute right-0 p-1 top-0 z-10 -mt-2 -mr-2 flex justify-center items-center"
         >
           <i class="pi pi-plus text-xs"></i>
         </div>
@@ -105,7 +105,7 @@
           icon="pi pi-list"
           severity="contrast"
           [outlined]="true"
-          styleClass="bg-slate-200 dark:bg-gray-300/80 border-none w-9 h-9"
+          styleClass="bg-slate-200 dark:bg-gray-300/30 dark:hover:bg-gray-300/60 border-none w-9 h-9"
         />
       </div>
     </li>
@@ -116,7 +116,7 @@
         [label]="
           layoutService.isMobile() ? user()!.name : 'Hola,   ' + user()!.name
         "
-        styleClass="pr-4 dark:bg-primary-400/80 border-none poppins-regular"
+        styleClass="pr-4 dark:bg-primary-400/80 dark:hover:bg-primary-400/90 dark:text-gray-200 border-none poppins-regular"
       ></p-button>
       <div
         class="rounded-full border-4 border-slate-100 dark:border-gray-800 cursor-pointer hover:bg-slate-300 h-14 w-14 bg-slate-200 dark:bg-gray-700 flex items-center justify-center -ml-3 z-10"
