@@ -9,90 +9,24 @@ export interface DailyReport {
   weeklyGrowthRate_customers: number;
 }
 
-export interface FinancialSummaryByMonth {
-  total_incomes: number;
-  total_outcomes: number;
-  incomes_by_month: [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number
-  ];
-  outcomes_by_month: [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number
-  ];
+export interface FinancialSummary {
+  total_income: number;
+  total_outcome: number;
+  incomes: number[];
+  outcomes: number[];
+  labels: string[];
 }
 
-export interface FinancialSumaryByWeek {
-  total_incomes: number;
-  total_outcomes: number;
-  incomes_by_week: [number, number, number, number];
-  outcomes_by_week: [number, number, number, number];
+export interface NewClientsSummary {
+  total_clients: number;
+  clients_value: number[];
+  labels: string[];
 }
 
-export interface FinancialSumaryByDay {
-  total_incomes: number;
-  total_outcomes: number;
-  incomes_by_day: [number, number, number, number, number, number, number];
-  outcomes_by_day: [number, number, number, number, number, number, number];
-}
-
-export interface NewClientsByMonth {
-  new_clients_by_month: [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number
-  ];
-}
-
-export interface NewClientsByWeek {
-  new_clients_by_week: [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number
-  ];
-}
-
-export interface NewClientsByDay {
-  new_clients_by_day: [number, number, number, number, number, number, number];
-}
-
-export interface OrderSumaryByMode {
+export interface OrderSummaryByMode {
   total_orders: number;
   orders_by_delivery: number;
   orders_by_pickup: number;
   orders_by_table: number;
+  orders_by_mix: number;
 }

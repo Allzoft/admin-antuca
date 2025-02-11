@@ -22,7 +22,7 @@
           class="text-slate-600 dark:text-gray-300 text-md font-semibold pl-3 -mb-1"
           >Periodo de filtro</span
         >
-        <p-calendar
+        <p-datepicker
           [(ngModel)]="filterDate"
           inputStyleClass="cursor-pointer bg-slate-100 dark:bg-gray-900 border-none text-slate-600 dark:text-gray-300 dark:text-gray-100 text-sm shadow-none"
           variant="filled"
@@ -85,7 +85,7 @@
             class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_menus?.toFixed(2) }}
+          {{ dailyReport()?.weeklyGrowthRate_menus?.toFixed(0) }}
           @if (!layoutService.isMobile()) { % (7 días) }
         </span>
         }
@@ -142,7 +142,7 @@
             class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_incomes?.toFixed(2) }}
+          {{ dailyReport()?.weeklyGrowthRate_incomes?.toFixed(0) }}
           @if (!layoutService.isMobile()) { % (7 días) }
         </span>
         }
@@ -198,7 +198,7 @@
             class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_orders?.toFixed(2) }}
+          {{ dailyReport()?.weeklyGrowthRate_orders?.toFixed(0) }}
           @if (!layoutService.isMobile()) { % (7 días) }
         </span>
         }
@@ -255,7 +255,7 @@
             class="pi pi-arrow-circle-right text-slate-500 dark:text-gray-400 text-xs md:text-sm"
           ></i>
           }
-          {{ dailyReport()?.weeklyGrowthRate_customers?.toFixed(2) }}
+          {{ dailyReport()?.weeklyGrowthRate_customers?.toFixed(0) }}
           @if (!layoutService.isMobile()) { % (7 días) }
         </span>
         }
@@ -285,24 +285,27 @@
           </div>
         </div>
         <p-selectButton
-          [options]="stateOptions"
-          [(ngModel)]="value"
+          [options]="stateOptionsOrdersSummary"
+          [(ngModel)]="valueOrdersSummary"
           optionLabel="label"
           [allowEmpty]="false"
           styleClass="self-center"
+          (onChange)="onSelectOrdersChange($event)"
         />
       </div>
-      <!-- <div
-        class="w-full bg-green-50 rounded p-3 flex justify-between gap-1"
+      <div
+        class="w-full bg-green-100 dark:bg-green-400/20 rounded p-3 flex justify-between gap-1"
       >
         <div class="flex gap-2 md:gap-3 items-center">
           <p-tag
             severity="success"
-            [value]="'25'"
+            [value]="
+              ordersSummary() ? ordersSummary()!.total_orders!.toString() : '0'
+            "
             styleClass="h-2rem w-4rem text-lg"
           ></p-tag>
           <div class="text-slate-800 dark:text-gray-200 text-sm font-semibold">
-            Nuevas ordendes
+            Ordenes totales
             <i
               class="pi pi-circle-fill text-green-400 md:ml-2 ml-1 mt-1 text-xs"
             ></i>
@@ -312,16 +315,17 @@
         <p-button
           severity="info"
           icon="pi pi-angle-right text-sm"
-          [label]="layoutService.isMobile() ? '' : 'Manejar ordenes'"
+          [label]="layoutService.isMobile() ? '' : 'Ordenes en tiempo real'"
           iconPos="right"
+          (onClick)="router.navigateByUrl('control-panel/daily-monitor')"
           [text]="true"
         />
-      </div> -->
-      <div class="w-full flex gap-2">
+      </div>
+      <div class="w-full grid grid-cols-2 md:grid-cols-4 flex-wrap gap-2">
         <div
           class="w-full border-slate-200 dark:border-gray-800 border-2 rounded p-3 flex flex-col gap-1"
         >
-          @if(loadingOrders()){
+          @if(loadingOrdersSummary()){
           <p-skeleton
             height="1.8rem"
             [width]="layoutService.isMobile() ? 'w-24' : '11.2rem'"
@@ -330,7 +334,7 @@
           <div
             class="text-xl md:text-3xl font-bold text-slate-600 dark:text-gray-300"
           >
-            50
+            {{ ordersSummary()?.orders_by_table }}
           </div>
           }
           <div class="text-slate-600 dark:text-gray-300 text-sm">En sala</div>
@@ -338,7 +342,7 @@
         <div
           class="w-full border-slate-200 dark:border-gray-800 border-2 rounded p-3 flex flex-col gap-1"
         >
-          @if(loadingOrders()){
+          @if(loadingOrdersSummary()){
           <p-skeleton
             height="1.8rem"
             [width]="layoutService.isMobile() ? 'w-24' : '11.2rem'"
@@ -347,7 +351,7 @@
           <div
             class="text-xl md:text-3xl font-bold text-slate-600 dark:text-gray-300"
           >
-            20
+            {{ ordersSummary()?.orders_by_delivery }}
           </div>
           }
           <div class="text-slate-600 dark:text-gray-300 text-sm">Delivery</div>
@@ -355,7 +359,7 @@
         <div
           class="w-full border-slate-200 dark:border-gray-800 border-2 rounded p-3 flex flex-col gap-1"
         >
-          @if(loadingOrders()){
+          @if(loadingOrdersSummary()){
           <p-skeleton
             height="1.8rem"
             [width]="layoutService.isMobile() ? 'w-24' : '11.2rem'"
@@ -364,12 +368,29 @@
           <div
             class="text-xl md:text-3xl font-bold text-slate-600 dark:text-gray-300"
           >
-            30
+            {{ ordersSummary()?.orders_by_pickup }}
           </div>
           }
           <div class="text-slate-600 dark:text-gray-300 text-sm">
             Para llevar
           </div>
+        </div>
+        <div
+          class="w-full border-slate-200 dark:border-gray-800 border-2 rounded p-3 flex flex-col gap-1"
+        >
+          @if(loadingOrdersSummary()){
+          <p-skeleton
+            height="1.8rem"
+            [width]="layoutService.isMobile() ? 'w-24' : '11.2rem'"
+          />
+          } @else {
+          <div
+            class="text-xl md:text-3xl font-bold text-slate-600 dark:text-gray-300"
+          >
+            {{ ordersSummary()?.orders_by_mix }}
+          </div>
+          }
+          <div class="text-slate-600 dark:text-gray-300 text-sm">Mixto</div>
         </div>
       </div>
       @if(loadingOrders()){
@@ -389,10 +410,11 @@
         />
       </div>
       } @else {
-      <p-meterGroup [value]="valueMeter" class="mt-1" />
+      <p-meterGroup #mg [value]="valueMeter" class="mt-1" />
       }
     </div>
   </div>
+
   <div class="p-2 md:p-3 h-auto">
     <div
       class="w-full h-full relative bg-white dark:bg-gray-900 dark:hover:bg-gray-950 md:py-6 p-2 pt-3 md:px-6 transition-colors duration-300 hover:bg-slate-50 hover:shadow-xl border-2 shadow-lg border-slate-200 dark:border-gray-800 rounded flex flex-col gap-2 md:gap-3"
@@ -419,6 +441,7 @@
           styleClass="border-none"
           [options]="dateIncomeOptions"
           [(ngModel)]="dateIncomeSelected"
+          (onChange)="fetchIncomesByPeriods()"
         ></p-dropdown>
       </div>
       <div class="w-full flex justify-between">
@@ -430,8 +453,8 @@
             </div>
           </div>
           <div class="flex gap-2 items-center">
-            <div class="h-4 w-4 bg-secondary-400 rounded-sm"></div>
-            <div class="text-slate-700 dark:text-gray-200 text-sm">Salidas</div>
+            <div class="h-4 w-4 bg-secondary-500 rounded-sm"></div>
+            <div class="text-slate-700 dark:text-gray-200 text-sm">Salidas <span class="text-slate-400 text-xs">(proximamente)</span></div>
           </div>
         </div>
         <div class="flex gap-3 md:gap-4 items-center">
@@ -441,10 +464,10 @@
               <div class="text-xs text-slate-500 dark:text-gray-400">
                 Ingresos
               </div>
-              @if(loadingOrders()){
+              @if(loadingFinancialSummary()){
               <p-skeleton height="4" class="w-3rem" />} @else {
               <div class="text-sm text-slate-700 dark:text-gray-200">
-                249,032
+                {{ "Bs. " + financialSummary()?.total_income }}
               </div>
               }
             </div>
@@ -455,19 +478,24 @@
               <div class="text-xs text-slate-500 dark:text-gray-400">
                 Salidas
               </div>
-              @if(loadingOrders()){
+              @if(loadingFinancialSummary()){
               <p-skeleton height="4" class="w-3rem" />} @else {
               <div class="text-sm text-slate-700 dark:text-gray-200">
-                184,325
+                {{ "Bs. " + financialSummary()?.total_outcome }}
               </div>
               }
             </div>
           </div>
         </div>
       </div>
-      @if(loadingOrders()){
+      @if(loadingFinancialSummary()){
       <p-skeleton height="230px" class="w-full" />} @else {
-      <p-chart height="230px" type="line" [data]="data" [options]="options" />
+      <p-chart
+        height="230px"
+        type="line"
+        [data]="chartData()"
+        [options]="options"
+      />
       }
     </div>
   </div>
@@ -496,19 +524,20 @@
           </div>
         </div>
         <p-selectButton
-          [options]="stateOptions"
-          [(ngModel)]="value"
+          [options]="stateOptionsNewClients"
+          [(ngModel)]="valueNewClients"
           optionLabel="label"
           [allowEmpty]="false"
           styleClass="self-center"
+          (onChange)="fetchNewClients()"
         />
       </div>
-      @if(loadingOrders()) {
+      @if(loadingNewClientsSummary()) {
       <p-skeleton height="200px" class="w-full" />} @else {
       <p-chart
         type="bar"
         height="200px"
-        [data]="dataBar"
+        [data]="chartDataClients()"
         [options]="optionsBar"
       />}
     </div>
@@ -534,7 +563,7 @@
         </div>
         <div class="w-full flex items-center justify-between">
           <div class="text-slate-300 text-sm">
-            Acceso rápido al orden de tablero
+            Acceso rápido al orden de tablero (próximamente)
           </div>
           <p-button icon="pi pi-arrow-right " severity="secondary" />
         </div>

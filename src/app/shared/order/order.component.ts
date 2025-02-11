@@ -29,6 +29,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
 import { TagModule } from 'primeng/tag';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-order',
@@ -46,7 +47,7 @@ import { TagModule } from 'primeng/tag';
     TableModule,
     CarouselModule,
     TagModule,
-    CalendarModule,
+    DatePickerModule,
   ],
   templateUrl: './order.component.html',
 })

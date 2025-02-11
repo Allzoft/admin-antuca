@@ -223,9 +223,7 @@
         Tipo de servicio <i class="pi pi-sign-out mx-1"></i
       ></label>
 
-      <div
-        class="flex gap-2 w-full justify-around md:justify-between"
-      >
+      <div class="flex gap-2 w-full justify-around md:justify-between">
         @for (serviceMode of serviceModes; track $index) {
         <!-- [severity]="serviceMode.label !== 'Para llevar' ? 'warning':''" -->
         <p-button
@@ -296,24 +294,23 @@
               class="w-full h-full"
             />
           </div>
-          <div
-            class="flex flex-col items-start justify-center w-full gap-2"
-          >
+          <div class="flex flex-col items-start justify-center w-full gap-2">
             <div class="text-sm md:text-md font-semibold poppins-regular">
               {{ item.item!.name }}
             </div>
             <span class="flex items-center gap-2">
               <i class="pi pi-tag text-slate-400"></i>
 
-              <span class="font-semibold text-xs md:text-sm text-slate-500 poppins-regular">{{
-                item.item?.type_item
-              }}</span>
+              <span
+                class="font-semibold text-xs md:text-sm text-slate-500 poppins-regular"
+                >{{ item.item?.type_item }}</span
+              >
             </span>
           </div>
-          <div
-            class="flex flex-col justify-center items-center px-2 gap-1"
-          >
-            <div class="text-sm md:text-md font-semibold poppins-regular text-primary">
+          <div class="flex flex-col justify-center items-center px-2 gap-1">
+            <div
+              class="text-sm md:text-md font-semibold poppins-regular text-primary"
+            >
               {{ item.quantity - item.sold }}
             </div>
             <span
@@ -337,9 +334,7 @@
               class="w-full h-full"
             />
           </div>
-          <div
-            class="flex flex-col items-start justify-center w-full gap-2"
-          >
+          <div class="flex flex-col items-start justify-center w-full gap-2">
             <div class="text-md font-semibold">
               {{ "Sin items disponibles" }}
             </div>
@@ -486,7 +481,7 @@
         </ng-template>
       </p-table>
       }
-      <p-calendar
+      <p-datepicker
         [(ngModel)]="order.date"
         dateFormat="yy-mm-dd"
         [monthNavigator]="true"
@@ -495,9 +490,8 @@
         [inputStyleClass]=""
         styleClass="w-full"
         [showIcon]="true"
-        [touchUI]="true"
         [readonlyInput]="true"
-      ></p-calendar>
+      />
     </div>
   </div>
   <div class="w-full justify-end">
