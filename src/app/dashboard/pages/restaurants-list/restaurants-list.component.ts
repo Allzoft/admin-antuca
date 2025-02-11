@@ -23,6 +23,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { DrawerModule } from 'primeng/drawer';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { environment } from '@environment/environment';
 
 @Component({
   selector: 'app-restaurants-list',
@@ -104,7 +105,7 @@ export default class RestaurantsListComponent implements OnInit {
 
       this.uploadService.uploadfile(formData).subscribe((res) => {
         console.log(res);
-        this.restaurant.logo_image = res['filename'];
+        this.restaurant.logo_image = environment.url_public + '/uploads/' + res['filename'];
       });
     }
   }
@@ -123,7 +124,7 @@ export default class RestaurantsListComponent implements OnInit {
 
   public removeRestaurant(restaurant: Restaurant) {
     this.confirmationService.confirm({
-      message: '¿Está seguro de eliminar este usuario?',
+      message: '¿Está seguro de eliminar este restaurante?',
       acceptLabel: 'Si',
       acceptButtonStyleClass: 'p-button-rounded p-button-success w-28',
       rejectLabel: 'No',

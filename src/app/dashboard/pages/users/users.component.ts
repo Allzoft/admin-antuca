@@ -26,6 +26,7 @@ import { Role } from '@interfaces/role';
 import { DrawerModule } from 'primeng/drawer';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { environment } from '@environment/environment';
 
 @Component({
   selector: 'app-users',
@@ -106,7 +107,7 @@ export default class UsersComponent implements OnInit {
 
       this.uploadService.uploadfile(formData).subscribe((res) => {
         console.log(res);
-        this.user.photo = res['filename'];
+        this.user.photo = environment + '/uploads/' + res['filename'];
       });
     }
   }
