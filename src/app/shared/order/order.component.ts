@@ -24,19 +24,19 @@ import { Items, TypeItem } from '@interfaces/items';
 import { CarouselModule } from 'primeng/carousel';
 import { LayoutService } from '@services/layout.service';
 import moment from 'moment';
-import { CalendarModule } from 'primeng/calendar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
 import { TagModule } from 'primeng/tag';
 import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-order',
   imports: [
     CommonModule,
     FormsModule,
-    DropdownModule,
+    SelectModule,
     TextareaModule,
     InputTextModule,
     RadioButtonModule,
@@ -66,6 +66,7 @@ export class OrderComponent {
   public clients = this.clientsService.clients;
   public customers = this.customerService.customers;
   public states = this.statesService.states;
+  public loadingClients = this.clientsService.loading;
   public loadingStates = this.statesService.loading;
 
   public selectItems: any[] = [];
@@ -73,7 +74,6 @@ export class OrderComponent {
   public initialState = this.states().find((s) => s.priority === 2);
 
   public editTotal: boolean = false;
-  public showAllItems: boolean = false;
 
   public order: Order = {
     id_order: 0,
@@ -127,6 +127,7 @@ export class OrderComponent {
       });
       console.log(this.config.data.order);
     }
+    this.clientsService.getClient();
     this.statesService.getAllStates();
     this.getItems();
   }
@@ -134,13 +135,18 @@ export class OrderComponent {
   public getItems() {
     this.loadingItems = true;
     const today = new Date();
-    // today.setDate(today.getDate() + 1); // quitar para prod
     this.dailyAvailabilityServices
       .getAllByDatesDailyAvailability(today, today)
-      .subscribe((res) => {
-        this.loadingItems = false;
-        this.itemsAvailables = res;
-      });
+      .subscribe(
+        (res) => {
+          this.loadingItems = false;
+          this.itemsAvailables = res;
+        },
+        (error) => {
+          this.loadingItems = false;
+          this.itemsAvailables = [];
+        }
+      );
   }
 
   public selectServiceMode(i: number) {
@@ -167,6 +173,7 @@ export class OrderComponent {
     }
     this.calculateAmount();
   }
+
   public addUpdateItem(item: Items) {
     const selectItem = this.order.orderItems!.find(
       (i) => i.itemIdItem === item.id_item
@@ -216,43 +223,19 @@ export class OrderComponent {
   }
 
   public calculateAmount(): void {
-    const serviceModeSelected = this.serviceModes.find((s) => s.isSelect);
-
     this.order.total_amount = 0.0;
     if (this.selectItems.length === 0) {
       this.order.total_amount = 0.0;
       return;
     }
-    const startersItems = this.selectItems.filter((i) => i.type_item === 0);
-    const secondsItems = this.selectItems.filter((i) => i.type_item === 1);
-    const otherItemsItems = this.selectItems.filter((i) => i.type_item === 2);
 
-    let startersCount = 0;
-    let secondsCount = 0;
+    console.log(this.selectItems);
+    
 
-    startersItems.forEach((i) => (startersCount += i.quantity));
-    secondsItems.forEach((i) => (secondsCount += i.quantity));
-    otherItemsItems.forEach(
-      (i) => (this.order.total_amount += i.price * i.quantity)
+    this.order.total_amount = this.selectItems.reduce(
+      (acc, item) => acc + Number(item.price * item.quantity),
+      0
     );
-    if (serviceModeSelected!.label === ServiceMode.EN_SALA) {
-      if (startersCount - secondsCount === 0) {
-        this.order.total_amount += startersCount * 15;
-      } else if (startersCount - secondsCount > 0) {
-        this.order.total_amount += secondsCount * 15;
-        this.order.total_amount += (startersCount - secondsCount) * 5;
-      } else if (startersCount - secondsCount < 0) {
-        this.order.total_amount += startersCount * 15;
-        this.order.total_amount += (startersCount - secondsCount) * -1 * 12;
-      }
-    } else {
-      startersItems.forEach(
-        (i) => (this.order.total_amount += i.quantity * i.price)
-      );
-      secondsItems.forEach(
-        (i) => (this.order.total_amount += i.quantity * i.price)
-      );
-    }
   }
 
   public calculateUpdateAmount(): void {

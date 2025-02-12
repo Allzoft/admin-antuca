@@ -69,6 +69,8 @@ export class ClientsService {
     });
     this.http.get<Client[]>(`${this.env.url_api}/clients`).subscribe(
       (res) => {
+        console.log(res);
+        
         this.#state.set({
           loading: false,
           clients: res,
