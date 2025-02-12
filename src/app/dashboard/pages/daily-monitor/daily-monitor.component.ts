@@ -40,7 +40,8 @@ import { DrawerModule } from 'primeng/drawer';
 
 interface MessageToasted {
   severity: 'success' | 'info' | 'warn' | 'error';
-  content: string;
+  summary?: string;
+  detail?: string;
   styleClass?: string;
   icon?: string;
 }
@@ -104,7 +105,7 @@ export default class DailyMonitorComponent implements OnInit {
   public messages: Partial<MessageToasted>[] = [
     {
       severity: 'success',
-      content: 'Hola! ' + this.usersService.customer()!.name + ', a trabajar.',
+      detail: 'Hola! ' + this.usersService.customer()!.name + ', a trabajar.',
       icon: 'pi pi-check',
     },
   ];
@@ -143,7 +144,7 @@ export default class DailyMonitorComponent implements OnInit {
     this.dailyMonitorSocket.on('message', (msg: string) => {
       const newMessage: MessageToasted = {
         severity: 'info',
-        content: msg,
+        detail: msg,
         icon: 'pi pi-info-circle',
       };
       this.messages.push(newMessage);
@@ -160,7 +161,7 @@ export default class DailyMonitorComponent implements OnInit {
       .subscribe((order: Order) => {
         const newMessage: MessageToasted = {
           severity: 'warn',
-          content:
+          detail:
             'Creacion de orden con ID ' +
             order.id_order +
             ' al cliente: ' +
@@ -170,6 +171,7 @@ export default class DailyMonitorComponent implements OnInit {
         };
 
         this.onNewOrder(order);
+        this.messages.push(newMessage);
         this.messageService.add(newMessage);
       });
     this.updateOrderSubscription = this.dailyMonitorSocket
@@ -177,13 +179,14 @@ export default class DailyMonitorComponent implements OnInit {
       .subscribe((order: Order) => {
         const newMessage: MessageToasted = {
           severity: 'info',
-          content:
+          detail:
             'Actualizacion de la orden ' +
             order.id_order +
             ' al cliente: ' +
             order.client?.name,
         };
         this.onUpdateNewOrder(order);
+        this.messages.push(newMessage);
         this.messageService.add(newMessage);
       });
     this.deleteOrderSubscription = this.dailyMonitorSocket
@@ -191,10 +194,11 @@ export default class DailyMonitorComponent implements OnInit {
       .subscribe((order: Order) => {
         const newMessage: MessageToasted = {
           severity: 'error',
-          content: 'Eliminacion',
+          detail: 'Eliminacion',
           icon: 'pi pi-info-circle',
         };
         this.onDeleteOrder(order);
+        this.messages.push(newMessage);
         this.messageService.add(newMessage);
       });
   }
@@ -243,6 +247,8 @@ export default class DailyMonitorComponent implements OnInit {
         order.client!.lastname
       }`,
       draggable: true,
+      maximizable: true,
+      closable: true,
       styleClass: 'w-11/12 md:w-1/2',
       data: {
         order: order,
@@ -266,6 +272,7 @@ export default class DailyMonitorComponent implements OnInit {
     this.ref = this.dialogService.open(OrderComponent, {
       header: `Nueva Orden`,
       draggable: true,
+      maximizable: true,
       closable: true,
       styleClass: 'w-11/12 md:w-1/2',
     });
@@ -287,6 +294,8 @@ export default class DailyMonitorComponent implements OnInit {
     this.ref = this.dialogService.open(ClientComponent, {
       header: 'Cliente: ' + client.name + ' ' + client.lastname,
       draggable: true,
+      maximizable: true,
+      closable: true,
       styleClass: 'w-11/12 md:w-1/2',
       data: {
         client: client,
@@ -308,6 +317,8 @@ export default class DailyMonitorComponent implements OnInit {
     this.ref = this.dialogService.open(ClientComponent, {
       header: 'Nuevo cliente',
       draggable: true,
+      maximizable: true,
+      closable: true,
       styleClass: 'w-11/12 md:w-1/2',
     });
 
@@ -319,6 +330,14 @@ export default class DailyMonitorComponent implements OnInit {
           detail: `Cliente ${client.name} creado exitosamente`,
         });
       }
+    });
+  }
+
+  public showMessage() {
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Aún no disponible',
+      detail: 'Módulo en construccion',
     });
   }
 
