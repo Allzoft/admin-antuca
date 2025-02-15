@@ -36,8 +36,7 @@ export const routes: Routes = [
       {
         path: 'admin/roles',
         title: 'Roles',
-        loadComponent: () =>
-          import('./dashboard/pages/roles/roles.component'),
+        loadComponent: () => import('./dashboard/pages/roles/roles.component'),
       },
       {
         path: 'admin/menu-items',
@@ -76,7 +75,9 @@ export const routes: Routes = [
         path: 'admin/restaurants-list',
         title: 'Lista de restaurantes',
         loadComponent: () =>
-          import('./dashboard/pages/restaurants-list/restaurants-list.component'),
+          import(
+            './dashboard/pages/restaurants-list/restaurants-list.component'
+          ),
       },
       {
         path: 'admin/settings',
@@ -95,5 +96,14 @@ export const routes: Routes = [
     path: '',
     redirectTo: '',
     pathMatch: 'full',
+  },
+  {
+    path: '404',
+    title: 'Not found Page',
+    loadComponent: () => import('./dashboard/pages/error404Page/error404Page.component')
+  },
+  {
+    path: '**',
+    redirectTo: '404',
   },
 ];
