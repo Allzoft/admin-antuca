@@ -22,6 +22,13 @@ import {
 import { OrderComponent } from '@shared/order/order.component';
 import { Order } from '@interfaces/order';
 import { ThemeService } from '@services/theme.service';
+import { AutocompleteService } from '@services/automcomplete.service';
+import {
+  AutoCompleteCompleteEvent,
+  AutoCompleteModule,
+  AutoCompleteSelectEvent,
+} from 'primeng/autocomplete';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-topbar',
@@ -34,9 +41,11 @@ import { ThemeService } from '@services/theme.service';
     RouterModule,
     ConfirmDialogModule,
     InputIconModule,
+    FormsModule,
     SplitButtonModule,
     ToastModule,
     IconFieldModule,
+    AutoCompleteModule,
   ],
   providers: [
     ConfirmationService,
@@ -52,9 +61,13 @@ export class TopbarComponent implements OnInit, OnDestroy {
   private messageService = inject(MessageService);
   public layoutService = inject(LayoutService);
   private customerService = inject(CustomersService);
+  private autocompleteService = inject(AutocompleteService);
   private confirmationService = inject(ConfirmationService);
   private themeService = inject(ThemeService);
   public router = inject(Router);
+
+  public loading = this.autocompleteService.loading;
+  public data = this.autocompleteService.data;
 
   public ref: DynamicDialogRef | undefined;
 
@@ -67,6 +80,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public user = this.customerService.customer;
 
   public isDarkMode = this.themeService.isDarkMode;
+  public selectedItem: any;
+
+  public sugestions: string[] = [];
 
   public ngOnInit(): void {}
 
@@ -123,7 +139,32 @@ export class TopbarComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onSearchSuggest(event: AutoCompleteCompleteEvent): void {
+    const query = event.query;
+    this.autocompleteService.getData(query);
+  }
+
   toggleDarkMode() {
     this.themeService.toggleDarkMode();
+  }
+
+  public onItemSelect(selected: AutoCompleteSelectEvent) {
+    const value = selected.value;
+    this.messageService.add({
+      severity: 'info',
+      summary: 'En construcción!',
+      detail: `Módulo en construcción`,
+    });
+    
+    console.log(value);
+    
+    if (value.value.id_order) {
+      this.router.navigateByUrl('/orders/orders-list');
+    }
+    if (value.value.id_client) {
+      this.router.navigateByUrl('/orders/clients-list');
+    }
+
+    this.selectedItem = null;
   }
 }

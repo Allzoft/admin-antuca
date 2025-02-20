@@ -14,17 +14,35 @@
       [text]="true"
       (click)="onMenuButtonClick()"
     />
-    @if (!layoutService.isMobile()) { @if
-    (!router.url.includes('settings')) {
+    @if (!layoutService.isMobile()) { @if (!router.url.includes('settings')) {
     <p-iconfield>
-      <input
-        type="text"
-        variant="filled"
-        pInputText
+      <p-inputIcon styleClass="pi pi-search text-xl  mr-2 z-10" />
+      <p-autocomplete
+        [(ngModel)]="selectedItem"
+        [suggestions]="data()"
+        (completeMethod)="onSearchSuggest($event)"
+        [group]="true"
+        field="label"
+        (onSelect)="onItemSelect($event)"
         placeholder="Buscar aqui"
-        class="w-96 h-3rem"
-      />
-      <p-inputIcon styleClass="pi pi-search text-xl  mr-2" />
+        styleClass="w-96 h-3rem"
+        variant="filled"
+        inputStyleClass="w-96 h-3rem pl-10"
+      >
+        <!-- Template para el nombre del grupo -->
+        <ng-template let-group #group>
+          <div class="flex items-center gap-2">
+            @if (group.label === 'Clientes') {
+            <i class="pi pi-users"></i>
+            } @else {
+            <i class="pi pi-list"></i>
+            }
+            <div class="font-semibold text-md p-2">
+              {{ group.label }}
+            </div>
+          </div>
+        </ng-template>
+      </p-autocomplete>
     </p-iconfield>
     } @else {
     <div class="flex gap-2 items-center">
@@ -107,7 +125,7 @@
       </div>
     </li>
 
-    <li class="flex items-center justify-self-end ">
+    <li class="flex items-center justify-self-end">
       <p-button
         (onClick)="closeSession()"
         [label]="
