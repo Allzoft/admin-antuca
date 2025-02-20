@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  LOCALE_ID,
+} from '@angular/core';
 import {
   RouterModule,
   RouterOutlet,
@@ -18,11 +22,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { authInterceptor } from '@services/interceptors/auth.interceptor';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeng/themes/aura';
 import { MyPreset } from './presets/primarypreset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: LOCALE_ID, useValue: 'es-BO' },
     provideAnimationsAsync(),
     providePrimeNG({
       ripple: true,
