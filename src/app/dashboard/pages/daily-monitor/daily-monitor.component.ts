@@ -74,7 +74,7 @@ interface MessageToasted {
 
   templateUrl: './daily-monitor.component.html',
 })
-export default class DailyMonitorComponent implements OnInit {
+export default class DailyMonitorComponent implements OnInit, OnDestroy {
   private messageService = inject(MessageService);
   public configRef = inject(DynamicDialogConfig);
   public usersService = inject(CustomersService);
@@ -153,6 +153,10 @@ export default class DailyMonitorComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.dailyMonitorSocket.closeConnection();
+    
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
   constructor() {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Signal, inject } from '@angular/core';
+import { Component, OnDestroy, Signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Client } from '@interfaces/client';
 import { Items } from '@interfaces/items';
@@ -51,7 +51,7 @@ import { PipesModule } from '../../../pipes/pipes.module';
     ],
     templateUrl: './orders.component.html'
 })
-export default class OrdersComponent {
+export default class OrdersComponent implements OnDestroy {
   public configRef = inject(DynamicDialogConfig);
   public dialogService = inject(DialogService);
   public ordersService = inject(OrdersService);
@@ -115,6 +115,12 @@ export default class OrdersComponent {
     this.statesService.getAllStates();
     this.refreshData();
     this.optionsFilterState.push('Todos los estados');
+  }
+
+  public ngOnDestroy(): void {
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
   public refreshData(): void {

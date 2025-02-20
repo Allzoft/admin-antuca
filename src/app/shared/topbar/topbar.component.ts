@@ -71,7 +71,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {}
 
   public ngOnDestroy(): void {
-    this.ref?.destroy();
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
   onMenuButtonClick() {
