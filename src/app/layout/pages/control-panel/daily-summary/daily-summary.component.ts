@@ -17,7 +17,6 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { LayoutService } from '@services/layout.service';
 import { ToastModule } from 'primeng/toast';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { SkeletonModule } from 'primeng/skeleton';
 import {
   SelectButtonChangeEvent,
@@ -31,6 +30,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ReportsService } from '@services/reports.service';
 import { Router } from '@angular/router';
 import { DatePickerModule } from 'primeng/datepicker';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @Component({
   selector: 'app-daily-summary',

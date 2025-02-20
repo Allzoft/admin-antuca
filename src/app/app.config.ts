@@ -24,6 +24,10 @@ import { authInterceptor } from '@services/interceptors/auth.interceptor';
 import { providePrimeNG } from 'primeng/config';
 import { MyPreset } from './presets/primarypreset';
 
+import localeEsBO from '@angular/common/locales/es-BO';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEsBO);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: LOCALE_ID, useValue: 'es-BO' },

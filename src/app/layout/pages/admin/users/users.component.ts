@@ -5,7 +5,6 @@ import { CustomersService } from '@services/customers.service';
 import { TitleComponent } from '@shared/title/title.component';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
@@ -27,6 +26,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { environment } from '@environment/environment';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @Component({
   selector: 'app-users',

@@ -10,10 +10,8 @@ import { StatesService } from '@services/states.service';
 import { ClientComponent } from '@shared/client/client.component';
 import { ItemComponent } from '@shared/item/item.component';
 import { OrderComponent } from '@shared/order/order.component';
-import { TitleComponent } from '@shared/title/title.component';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
@@ -26,7 +24,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ToastModule } from 'primeng/toast';
-import { PipesModule } from '../../../pipes/pipes.module';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @Component({
     selector: 'app-orders',

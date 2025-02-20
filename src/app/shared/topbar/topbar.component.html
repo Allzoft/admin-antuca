@@ -15,7 +15,7 @@
       (click)="onMenuButtonClick()"
     />
     @if (!layoutService.isMobile()) { @if
-    (!router.url.includes('admin/settings')) {
+    (!router.url.includes('settings')) {
     <p-iconfield>
       <input
         type="text"
@@ -62,7 +62,7 @@
         severity="danger"
         [outlined]="true"
         icon="pi pi-cog dark:text-red-400"
-        (onClick)="router.navigate(['/admin/settings'])"
+        (onClick)="router.navigate(['/settings'])"
         styleClass="border-none bg-red-200 dark:bg-red-400/20 dark:hover:bg-red-400/30 w-9 h-9"
       />
     </li>

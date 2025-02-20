@@ -11,10 +11,10 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @Component({
     selector: 'app-user',

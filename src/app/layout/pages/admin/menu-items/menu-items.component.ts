@@ -5,7 +5,6 @@ import { TitleComponent } from '@shared/title/title.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DataView, DataViewModule } from 'primeng/dataview';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
@@ -26,11 +25,12 @@ import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { CalendarModule } from 'primeng/calendar';
 import moment from 'moment';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { DailyAvailabilityServices } from '../../../services/dailyAvailability.service';
 import { DailyAvailability } from '@interfaces/dailyAvailability';
 import { LayoutService } from '@services/layout.service';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { PipesModule } from '../../../../pipes/pipes.module';
+import { DailyAvailabilityServices } from '@services/dailyAvailability.service';
 
 @Component({
   selector: 'app-menu-items',

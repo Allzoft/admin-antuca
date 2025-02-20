@@ -7,83 +7,109 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./dashboard/layout.component'),
+    loadComponent: () => import('./layout/layout.component'),
     children: [
       {
-        path: 'control-panel/daily-summary',
-        title: 'Resúmen diario',
-        loadComponent: () =>
-          import('./dashboard/pages/daily-summary/daily-summary.component'),
+        path: 'control-panel',
+        children: [
+          {
+            path: 'daily-summary',
+            title: 'Resúmen diario',
+            loadComponent: () =>
+              import(
+                './layout/pages/control-panel/daily-summary/daily-summary.component'
+              ),
+          },
+          {
+            path: 'daily-monitor',
+            title: 'Monitor diario',
+            loadComponent: () =>
+              import(
+                './layout/pages/control-panel/daily-monitor/daily-monitor.component'
+              ),
+          },
+        ],
       },
       {
-        path: 'control-panel/daily-monitor',
-        title: 'Monitor diario',
-        loadComponent: () =>
-          import('./dashboard/pages/daily-monitor/daily-monitor.component'),
+        path: 'orders',
+        children: [
+          {
+            path: 'orders-list',
+            title: 'Ordenes',
+            loadComponent: () =>
+              import('./layout/pages/orders/orders-list/orders.component'),
+          },
+          {
+            path: 'clients-list',
+            title: 'Clientes',
+            loadComponent: () =>
+              import('./layout/pages/orders/clients-list/clients.component'),
+          },
+        ],
       },
       {
-        path: 'orders/orders-list',
-        title: 'Ordenes',
-        loadComponent: () =>
-          import('./dashboard/pages/orders/orders.component'),
+        path: 'admin',
+        children: [
+          {
+            path: 'roles',
+            title: 'Roles',
+            loadComponent: () =>
+              import('./layout/pages/admin/roles/roles.component'),
+          },
+          {
+            path: 'menu-items',
+            title: 'Menu Items',
+            loadComponent: () =>
+              import('./layout/pages/admin/menu-items/menu-items.component'),
+          },
+          {
+            path: 'payments-type',
+            title: 'Tipos de pago',
+            loadComponent: () =>
+              import(
+                './layout/pages/admin/payments-type/payments-type.component'
+              ),
+          },
+          {
+            path: 'users-list',
+            title: 'Lista de usuarios',
+            loadComponent: () =>
+              import('./layout/pages/admin/users/users.component'),
+          },
+          {
+            path: 'user/:id',
+            title: 'Usuario',
+            loadComponent: () =>
+              import('./layout/pages/admin/user/user.component'),
+          },
+          {
+            path: 'user/create',
+            title: 'Usuario',
+            loadComponent: () =>
+              import('./layout/pages/admin/user/user.component'),
+          },
+          {
+            path: 'states',
+            title: 'Estados',
+            loadComponent: () =>
+              import('./layout/pages/admin/states/states.component'),
+          },
+          {
+            path: 'restaurants-list',
+            title: 'Lista de restaurantes',
+            loadComponent: () =>
+              import(
+                './layout/pages/admin/restaurants-list/restaurants-list.component'
+              ),
+          },
+        ],
       },
+
       {
-        path: 'orders/clients-list',
-        title: 'Clientes',
-        loadComponent: () =>
-          import('./dashboard/pages/clients/clients.component'),
-      },
-      {
-        path: 'admin/roles',
-        title: 'Roles',
-        loadComponent: () => import('./dashboard/pages/roles/roles.component'),
-      },
-      {
-        path: 'admin/menu-items',
-        title: 'Menu Items',
-        loadComponent: () =>
-          import('./dashboard/pages/menu-items/menu-items.component'),
-      },
-      {
-        path: 'admin/payments-type',
-        title: 'Tipos de pago',
-        loadComponent: () =>
-          import('./dashboard/pages/payments-type/payments-type.component'),
-      },
-      {
-        path: 'admin/users-list',
-        title: 'Lista de usuarios',
-        loadComponent: () => import('./dashboard/pages/users/users.component'),
-      },
-      {
-        path: 'user/:id',
-        title: 'Usuario',
-        loadComponent: () => import('./dashboard/pages/user/user.component'),
-      },
-      {
-        path: 'user/create',
-        title: 'Usuario',
-        loadComponent: () => import('./dashboard/pages/user/user.component'),
-      },
-      {
-        path: 'admin/states',
-        title: 'Estados',
-        loadComponent: () =>
-          import('./dashboard/pages/states/states.component'),
-      },
-      {
-        path: 'admin/restaurants-list',
-        title: 'Lista de restaurantes',
-        loadComponent: () =>
-          import(
-            './dashboard/pages/restaurants-list/restaurants-list.component'
-          ),
-      },
-      {
-        path: 'admin/settings',
+        path: 'settings',
         title: 'Configuración',
         loadComponent: () =>
-          import('./dashboard/pages/settings/settings.component'),
+          import('./layout/pages/settings/settings.component'),
       },
       {
         path: '',
@@ -100,7 +126,8 @@ export const routes: Routes = [
   {
     path: '404',
     title: 'Not found Page',
-    loadComponent: () => import('./dashboard/pages/error404Page/error404Page.component')
+    loadComponent: () =>
+      import('./layout/pages/error404Page/error404Page.component'),
   },
   {
     path: '**',

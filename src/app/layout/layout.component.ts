@@ -4,7 +4,6 @@ import { RouterOutlet } from '@angular/router';
 import { LayoutService } from '@services/layout.service';
 import { SidemenuComponent } from '@shared/sidemenu/sidemenu.component';
 import { TopbarComponent } from '@shared/topbar/topbar.component';
-import UserComponent from './pages/user/user.component';
 import { CustomersService } from '@services/customers.service';
 import { DrawerModule } from 'primeng/drawer';
 import { ThemeService } from '@services/theme.service';

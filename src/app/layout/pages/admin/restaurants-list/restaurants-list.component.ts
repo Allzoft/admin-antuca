@@ -8,7 +8,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SidebarModule } from 'primeng/sidebar';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
@@ -24,6 +23,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { environment } from '@environment/environment';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @Component({
   selector: 'app-restaurants-list',

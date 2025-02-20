@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { TitleComponent } from '@shared/title/title.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { Client } from '@interfaces/client';
 import { ClientsService } from '@services/clients.service';
 import {
@@ -20,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { LayoutService } from '@services/layout.service';
 import { TagModule } from 'primeng/tag';
+import { PipesModule } from '../../../../pipes/pipes.module';
 
 @Component({
     selector: 'app-clients',
